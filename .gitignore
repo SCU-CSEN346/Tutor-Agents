@@ -1,0 +1,25 @@
+# OS / editor cruft
+**/.DS_Store
+**/.idea/
+**/__pycache__/
+**/*.pyc
+
+# SLURM output logs
+**/*.out
+
+# Runtime logs
+Coding-Tutor/func_call.log
+
+# Build artifacts
+Coding-Tutor/build/
+
+# Benchmark data (too large — fetch separately via EvoCodeBench setup)
+Coding-Tutor/EvoCodeBench-2403/
+Coding-Tutor/EvoCodeBench-main/
+
+# Model outputs (regenerable)
+Coding-Tutor/output/
+
+# HPC scratch
+Coding-Tutor/hpc/
+Coding-Tutor/hpc_subset/
