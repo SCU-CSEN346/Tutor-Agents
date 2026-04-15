@@ -1,0 +1,19 @@
+Namespace(student_pretest=False, student_posttest=True, prompt_element_file='/WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/prompt/prompt_elements_final.jsonl', simulated_file='/WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/output/dialogue/vanilla/Llama-3.3-70B-Instruct/med_level/simulated_dialogs.jsonl', output_dir='/WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/prompt/student_posttest/vanilla/Llama-3.3-70B-Instruct/med_level', student_level='med_level', max_interaction_round=8, max_cognitive_load=60, max_code_context=1024)
+  0%|          | 0/100 [00:00<?, ?it/s]100%|██████████| 100/100 [00:00<00:00, 7650.35it/s]
+Prompt file is saved to /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/prompt/student_posttest/vanilla/Llama-3.3-70B-Instruct/med_level/prompt_all_rounds.jsonl
+  0%|          | 0/100 [00:00<?, ?it/s]100%|██████████| 100/100 [00:00<00:00, 15955.81it/s]
+Prompt file is saved to /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/prompt/student_posttest/vanilla/Llama-3.3-70B-Instruct/med_level/prompt_round_1.jsonl
+  0%|          | 0/100 [00:00<?, ?it/s]100%|██████████| 100/100 [00:00<00:00, 11214.42it/s]
+Prompt file is saved to /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/prompt/student_posttest/vanilla/Llama-3.3-70B-Instruct/med_level/prompt_round_2.jsonl
+  0%|          | 0/100 [00:00<?, ?it/s]100%|██████████| 100/100 [00:00<00:00, 14713.24it/s]
+Prompt file is saved to /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/prompt/student_posttest/vanilla/Llama-3.3-70B-Instruct/med_level/prompt_round_3.jsonl
+  0%|          | 0/100 [00:00<?, ?it/s]100%|██████████| 100/100 [00:00<00:00, 12714.64it/s]
+Prompt file is saved to /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/prompt/student_posttest/vanilla/Llama-3.3-70B-Instruct/med_level/prompt_round_4.jsonl
+  0%|          | 0/100 [00:00<?, ?it/s]100%|██████████| 100/100 [00:00<00:00, 11342.09it/s]
+Prompt file is saved to /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/prompt/student_posttest/vanilla/Llama-3.3-70B-Instruct/med_level/prompt_round_5.jsonl
+  0%|          | 0/100 [00:00<?, ?it/s]100%|██████████| 100/100 [00:00<00:00, 9671.65it/s]
+Prompt file is saved to /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/prompt/student_posttest/vanilla/Llama-3.3-70B-Instruct/med_level/prompt_round_6.jsonl
+  0%|          | 0/100 [00:00<?, ?it/s]100%|██████████| 100/100 [00:00<00:00, 12451.18it/s]
+Prompt file is saved to /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/prompt/student_posttest/vanilla/Llama-3.3-70B-Instruct/med_level/prompt_round_7.jsonl
+  0%|          | 0/100 [00:00<?, ?it/s]100%|██████████| 100/100 [00:00<00:00, 13482.17it/s]
+Prompt file is saved to /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/prompt/student_posttest/vanilla/Llama-3.3-70B-Instruct/med_level/prompt_round_8.jsonl

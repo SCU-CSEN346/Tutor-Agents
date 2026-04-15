@@ -1,0 +1,29 @@
+Traver Codegen Results
+Started: Mon Apr 13 19:33:04 PDT 2026
+
+  codegen low_level round-1: 241s
+  codegen low_level round-2: 247s
+  codegen low_level round-3: 144s
+  codegen low_level round-4: 141s
+  codegen low_level round-5: 139s
+  codegen low_level round-6: 129s
+  codegen low_level round-7: 101s
+  codegen low_level round-8: 78s
+  codegen med_level round-1: 146s
+  codegen med_level round-2: 147s
+  codegen med_level round-3: 144s
+  codegen med_level round-4: 140s
+  codegen med_level round-5: 131s
+  codegen med_level round-6: 99s
+  codegen med_level round-7: 65s
+  codegen med_level round-8: 38s
+  codegen high_level round-1: 150s
+  codegen high_level round-2: 150s
+  codegen high_level round-3: 155s
+  codegen high_level round-4: 145s
+  codegen high_level round-5: 128s
+  codegen high_level round-6: 107s
+  codegen high_level round-7: 61s
+  codegen high_level round-8: 28s
+
+Completed: Mon Apr 13 20:24:10 PDT 2026

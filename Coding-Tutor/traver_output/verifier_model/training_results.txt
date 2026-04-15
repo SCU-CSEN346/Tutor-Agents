@@ -1,0 +1,10 @@
+Verifier Training Results
+Started: Mon Apr 13 14:44:20 PDT 2026
+
+  part0: 849s
+  part1: 901s
+  part2: 896s
+  part3: 820s
+  part4: 869s
+
+Completed: Mon Apr 13 15:56:35 PDT 2026

@@ -1,0 +1,12 @@
+['Llama-3.3-70B-Instruct']
+Processing vanilla Llama-3.3-70B-Instruct - low_level student dialogue data
+Processing vanilla Llama-3.3-70B-Instruct - med_level student dialogue data
+Processing vanilla Llama-3.3-70B-Instruct - high_level student dialogue data
+Total number of raw data samples: 2123
+Total number of data samples after balance sampling: 496
+All data saved to /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/output/verifier_data/verifier_data.jsonl
+Data part 0 saved to /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/output/verifier_data/verifier_data_part0.jsonl
+Data part 1 saved to /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/output/verifier_data/verifier_data_part1.jsonl
+Data part 2 saved to /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/output/verifier_data/verifier_data_part2.jsonl
+Data part 3 saved to /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/output/verifier_data/verifier_data_part3.jsonl
+Data part 4 saved to /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/output/verifier_data/verifier_data_part4.jsonl

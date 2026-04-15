@@ -1,0 +1,110 @@
+================================================================
+  TRAVER PIPELINE PROGRESS
+  Started: Mon Apr 13 21:34:28 PDT 2026
+================================================================
+  Tutor:    meta-llama/Llama-3.3-70B-Instruct
+  Student:  meta-llama/Meta-Llama-3-8B-Instruct
+  GPU:      Tesla V100-PCIE-32GB
+================================================================
+
+  Step 1/6: Prepare verifier data ......... PENDING
+  Step 2/6: Download base model ........... PENDING
+  Step 3/6: Train verifier (5 folds) ...... PENDING
+  Step 4/6: Traver dialogue simulation .... PENDING
+  Step 5/6: Code generation (async) ....... PENDING
+  Step 6/6: Coding test evaluation ........ PENDING
+
+================================================================
+  DETAILED LOG:
+================================================================
+[2026-04-13 21:34:28] ▶ STEP 1/6: Preparing verifier training data...
+[2026-04-13 21:34:28]   ✓ SKIP — Verifier data already exists
+[2026-04-13 21:34:28] ▶ STEP 2/6: Checking base model for verifier training...
+[2026-04-13 21:34:28]   ✓ SKIP — Base model found at /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/models/Meta-Llama-3.1-8B-Instruct
+[2026-04-13 21:34:28] ▶ STEP 3/6: Training verifier (5-fold cross-validation)...
+[2026-04-13 21:34:28]   ✓ SKIP — All verifier folds already trained
+[2026-04-13 21:34:28] ▶ STEP 4/6: Running Traver dialogue simulation...
+[2026-04-13 21:34:28]   ✓ SKIP — All Traver dialogues already exist and are complete
+[2026-04-13 21:34:28] ▶ STEP 5/6: Running code generation (async API)...
+[2026-04-13 21:34:28]   ✓ SKIP — Traver codegen results found and complete
+[2026-04-13 21:34:28] ▶ STEP 6/6: Running coding test evaluation...
+[2026-04-13 21:34:28]   🔄 Evaluating low_level/round_1 (1/24)...
+[2026-04-13 21:46:22]   ✓ low_level/round_1 — 61/964 pass (6.3%) (0h 11m 54s) (1/24)
+[2026-04-13 21:46:22]   🔄 Evaluating low_level/round_2 (2/24)...
+[2026-04-13 22:49:35]   ✓ low_level/round_2 — 71/957 pass (7.4%) (1h 3m 13s) (2/24)
+[2026-04-13 22:49:35]   🔄 Evaluating low_level/round_3 (3/24)...
+[2026-04-13 23:54:25]   ✓ low_level/round_3 — 80/922 pass (8.7%) (1h 4m 50s) (3/24)
+[2026-04-13 23:54:25]   🔄 Evaluating low_level/round_4 (4/24)...
+[2026-04-14 00:48:18]   ✓ low_level/round_4 — 53/850 pass (6.2%) (0h 53m 53s) (4/24)
+[2026-04-14 00:48:18]   🔄 Evaluating low_level/round_5 (5/24)...
+[2026-04-14 01:34:43]   ✓ low_level/round_5 — 45/726 pass (6.2%) (0h 46m 25s) (5/24)
+[2026-04-14 01:34:43]   🔄 Evaluating low_level/round_6 (6/24)...
+[2026-04-14 02:09:39]   ✓ low_level/round_6 — 31/590 pass (5.3%) (0h 34m 56s) (6/24)
+[2026-04-14 02:09:39]   🔄 Evaluating low_level/round_7 (7/24)...
+[2026-04-14 02:36:28]   ✓ low_level/round_7 — 28/449 pass (6.2%) (0h 26m 49s) (7/24)
+[2026-04-14 02:36:28]   🔄 Evaluating low_level/round_8 (8/24)...
+[2026-04-14 02:54:51]   ✓ low_level/round_8 — 27/314 pass (8.6%) (0h 18m 23s) (8/24)
+[2026-04-14 02:54:51]   🔄 Evaluating med_level/round_1 (9/24)...
+[2026-04-14 03:56:30]   ✓ med_level/round_1 — 67/957 pass (7.0%) (1h 1m 39s) (9/24)
+[2026-04-14 03:56:30]   🔄 Evaluating med_level/round_2 (10/24)...
+[2026-04-14 04:58:23]   ✓ med_level/round_2 — 72/925 pass (7.8%) (1h 1m 53s) (10/24)
+[2026-04-14 04:58:23]   🔄 Evaluating med_level/round_3 (11/24)...
+[2026-04-14 05:55:47]   ✓ med_level/round_3 — 77/855 pass (9.0%) (0h 57m 24s) (11/24)
+[2026-04-14 05:55:47]   🔄 Evaluating med_level/round_4 (12/24)...
+[2026-04-14 06:43:32]   ✓ med_level/round_4 — 53/736 pass (7.2%) (0h 47m 45s) (12/24)
+[2026-04-14 06:43:32]   🔄 Evaluating med_level/round_5 (13/24)...
+[2026-04-14 07:21:40]   ✓ med_level/round_5 — 28/579 pass (4.8%) (0h 38m 8s) (13/24)
+[2026-04-14 07:21:40]   🔄 Evaluating med_level/round_6 (14/24)...
+[2026-04-14 07:49:15]   ✓ med_level/round_6 — 15/417 pass (3.6%) (0h 27m 35s) (14/24)
+[2026-04-14 07:49:15]   🔄 Evaluating med_level/round_7 (15/24)...
+[2026-04-14 08:05:55]   ✓ med_level/round_7 — 4/268 pass (1.5%) (0h 16m 40s) (15/24)
+[2026-04-14 08:05:55]   🔄 Evaluating med_level/round_8 (16/24)...
+[2026-04-14 08:17:57]   ✓ med_level/round_8 — 4/160 pass (2.5%) (0h 12m 2s) (16/24)
+[2026-04-14 08:17:57]   🔄 Evaluating high_level/round_1 (17/24)...
+[2026-04-14 09:20:11]   ✓ high_level/round_1 — 77/921 pass (8.4%) (1h 2m 14s) (17/24)
+[2026-04-14 09:20:11]   🔄 Evaluating high_level/round_2 (18/24)...
+[2026-04-14 10:18:31]   ✓ high_level/round_2 — 71/881 pass (8.1%) (0h 58m 20s) (18/24)
+[2026-04-14 10:18:31]   🔄 Evaluating high_level/round_3 (19/24)...
+[2026-04-14 11:12:09]   ✓ high_level/round_3 — 67/780 pass (8.6%) (0h 53m 38s) (19/24)
+[2026-04-14 11:12:09]   🔄 Evaluating high_level/round_4 (20/24)...
+[2026-04-14 11:55:42]   ✓ high_level/round_4 — 33/623 pass (5.3%) (0h 43m 33s) (20/24)
+[2026-04-14 11:55:42]   🔄 Evaluating high_level/round_5 (21/24)...
+[2026-04-14 12:29:02]   ✓ high_level/round_5 — 24/518 pass (4.6%) (0h 33m 20s) (21/24)
+[2026-04-14 12:29:02]   🔄 Evaluating high_level/round_6 (22/24)...
+[2026-04-14 12:50:30]   ✓ high_level/round_6 — 9/371 pass (2.4%) (0h 21m 28s) (22/24)
+[2026-04-14 12:50:30]   🔄 Evaluating high_level/round_7 (23/24)...
+[2026-04-14 13:04:32]   ✓ high_level/round_7 — 2/197 pass (1.0%) (0h 14m 2s) (23/24)
+[2026-04-14 13:04:32]   🔄 Evaluating high_level/round_8 (24/24)...
+[2026-04-14 13:10:36]   ✓ high_level/round_8 — 1/69 pass (1.4%) (0h 6m 4s) (24/24)
+[2026-04-14 13:10:36]   ✓ DONE — Evaluation complete (15h 36m 8s)
+[2026-04-14 13:10:36] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2026-04-14 13:10:36]   🎉 TRAVER PIPELINE COMPLETE
+[2026-04-14 13:10:36]   Total time: 15h 36m 8s
+[2026-04-14 13:10:36]   End: Tue Apr 14 13:10:36 PDT 2026
+[2026-04-14 13:10:36] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2026-04-14 13:10:36] 
+[2026-04-14 13:10:36]   📊 TRAVER RESULTS SUMMARY (pass rate per round)
+[2026-04-14 13:10:36]   ─────────────────────────────────────────────────
+[2026-04-14 13:10:36]   Round   low_level     med_level     high_level
+[2026-04-14 13:10:36]   R1       6.3%          7.0%          8.4%       
+[2026-04-14 13:10:36]   R2       7.4%          7.8%          8.1%       
+[2026-04-14 13:10:36]   R3       8.7%          9.0%          8.6%       
+[2026-04-14 13:10:37]   R4       6.2%          7.2%          5.3%       
+[2026-04-14 13:10:37]   R5       6.2%          4.8%          4.6%       
+[2026-04-14 13:10:37]   R6       5.3%          3.6%          2.4%       
+[2026-04-14 13:10:37]   R7       6.2%          1.5%          1.0%       
+[2026-04-14 13:10:37]   R8       8.6%          2.5%          1.4%       
+[2026-04-14 13:10:37]   ─────────────────────────────────────────────────
+[2026-04-14 13:10:37] 
+[2026-04-14 13:10:37]   📊 VANILLA BASELINE COMPARISON (pass rate per round)
+[2026-04-14 13:10:37]   ─────────────────────────────────────────────────
+[2026-04-14 13:10:37]   Round   low_level     med_level     high_level
+[2026-04-14 13:10:37]   R1       6.5%          6.9%          8.6%       
+[2026-04-14 13:10:37]   R2       6.3%          9.2%          8.9%       
+[2026-04-14 13:10:37]   R3       7.8%          6.8%          6.5%       
+[2026-04-14 13:10:37]   R4       7.3%          5.5%          3.9%       
+[2026-04-14 13:10:38]   R5       8.0%          5.4%          6.0%       
+[2026-04-14 13:10:38]   R6       7.0%          5.2%          6.2%       
+[2026-04-14 13:10:38]   R7       6.4%          9.0%          6.5%       
+[2026-04-14 13:10:38]   R8       7.0%          8.3%          6.9%       
+[2026-04-14 13:10:38]   ─────────────────────────────────────────────────

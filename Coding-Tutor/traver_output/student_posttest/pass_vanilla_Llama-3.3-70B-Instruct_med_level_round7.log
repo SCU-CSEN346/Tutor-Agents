@@ -1,0 +1,645 @@
+TODO Completions:  393
+  0%|          | 0/393 [00:00<?, ?it/s]  0%|          | 1/393 [00:00<04:18,  1.52it/s]  1%|          | 2/393 [00:01<03:33,  1.83it/s]  1%|          | 3/393 [00:01<03:20,  1.95it/s]  1%|          | 4/393 [00:02<03:13,  2.01it/s]  1%|▏         | 5/393 [00:02<03:08,  2.06it/s]  2%|▏         | 6/393 [00:03<03:05,  2.09it/s]  2%|▏         | 7/393 [00:03<03:02,  2.12it/s]  2%|▏         | 8/393 [00:03<03:00,  2.14it/s]  2%|▏         | 9/393 [00:04<03:00,  2.13it/s]  3%|▎         | 11/393 [00:04<02:17,  2.78it/s]  3%|▎         | 12/393 [00:05<02:27,  2.59it/s]  3%|▎         | 13/393 [00:05<02:33,  2.48it/s]  4%|▎         | 14/393 [00:06<02:40,  2.36it/s]  4%|▍         | 15/393 [00:06<02:50,  2.22it/s]  4%|▍         | 16/393 [00:07<02:52,  2.19it/s]  4%|▍         | 17/393 [00:07<02:51,  2.19it/s]  5%|▍         | 18/393 [00:09<06:00,  1.04it/s]  5%|▍         | 19/393 [00:11<07:59,  1.28s/it]  5%|▌         | 20/393 [00:13<09:21,  1.50s/it]  5%|▌         | 21/393 [00:16<10:19,  1.67s/it]  6%|▌         | 22/393 [00:18<11:09,  1.81s/it]  6%|▌         | 23/393 [00:20<11:54,  1.93s/it]  6%|▌         | 24/393 [00:22<12:06,  1.97s/it]  6%|▋         | 25/393 [00:24<12:38,  2.06s/it]  7%|▋         | 26/393 [00:26<12:45,  2.09s/it]  7%|▋         | 27/393 [00:28<12:37,  2.07s/it]  7%|▋         | 28/393 [00:30<12:31,  2.06s/it]  7%|▋         | 29/393 [00:32<12:26,  2.05s/it]  8%|▊         | 30/393 [00:35<12:26,  2.06s/it]  8%|▊         | 31/393 [00:37<12:23,  2.06s/it]  8%|▊         | 32/393 [00:39<12:41,  2.11s/it]  8%|▊         | 33/393 [00:41<12:48,  2.13s/it]  9%|▊         | 34/393 [00:43<12:35,  2.11s/it]  9%|▉         | 35/393 [00:45<12:27,  2.09s/it]  9%|▉         | 36/393 [00:47<12:20,  2.07s/it]  9%|▉         | 37/393 [00:49<12:13,  2.06s/it] 10%|▉         | 38/393 [00:51<12:14,  2.07s/it] 10%|▉         | 39/393 [00:53<12:09,  2.06s/it] 10%|█         | 40/393 [00:55<12:14,  2.08s/it] 10%|█         | 41/393 [00:57<12:08,  2.07s/it] 11%|█         | 42/393 [00:59<12:02,  2.06s/it] 11%|█         | 43/393 [01:02<12:02,  2.06s/it] 11%|█         | 44/393 [01:04<12:00,  2.06s/it] 11%|█▏        | 45/393 [01:06<11:56,  2.06s/it] 12%|█▏        | 46/393 [01:08<12:02,  2.08s/it] 12%|█▏        | 47/393 [01:10<12:09,  2.11s/it] 12%|█▏        | 48/393 [01:10<09:18,  1.62s/it] 12%|█▏        | 49/393 [01:11<07:29,  1.31s/it] 13%|█▎        | 50/393 [01:12<06:17,  1.10s/it] 13%|█▎        | 51/393 [01:12<05:11,  1.10it/s] 13%|█▎        | 52/393 [01:13<04:25,  1.28it/s] 13%|█▎        | 53/393 [01:13<03:52,  1.46it/s] 14%|█▎        | 54/393 [01:14<03:30,  1.61it/s] 14%|█▍        | 55/393 [01:14<03:14,  1.74it/s] 14%|█▍        | 56/393 [01:14<03:01,  1.86it/s] 15%|█▍        | 57/393 [01:15<02:53,  1.93it/s] 15%|█▍        | 58/393 [01:15<02:48,  1.99it/s] 15%|█▌        | 59/393 [01:16<02:46,  2.00it/s] 15%|█▌        | 60/393 [01:16<02:43,  2.04it/s] 16%|█▌        | 61/393 [01:17<02:41,  2.05it/s] 16%|█▌        | 62/393 [01:17<02:42,  2.04it/s] 16%|█▌        | 63/393 [01:18<02:39,  2.06it/s] 16%|█▋        | 64/393 [01:18<02:37,  2.09it/s]Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+ 17%|█▋        | 65/393 [01:19<02:35,  2.11it/s] 17%|█▋        | 66/393 [01:19<02:33,  2.12it/s] 17%|█▋        | 67/393 [01:20<02:35,  2.09it/s] 17%|█▋        | 68/393 [01:20<02:51,  1.89it/s] 18%|█▊        | 69/393 [01:21<02:56,  1.83it/s] 18%|█▊        | 70/393 [01:21<02:59,  1.80it/s] 18%|█▊        | 71/393 [01:22<03:00,  1.78it/s] 18%|█▊        | 72/393 [01:23<03:06,  1.72it/s] 19%|█▊        | 73/393 [01:23<02:54,  1.83it/s] 19%|█▉        | 74/393 [01:24<02:45,  1.93it/s] 19%|█▉        | 75/393 [01:24<02:38,  2.01it/s] 19%|█▉        | 76/393 [01:25<02:34,  2.05it/s] 20%|█▉        | 77/393 [01:25<02:32,  2.08it/s] 20%|█▉        | 78/393 [01:25<02:28,  2.12it/s] 20%|██        | 79/393 [01:26<02:26,  2.14it/s] 20%|██        | 80/393 [01:26<02:31,  2.07it/s] 21%|██        | 81/393 [01:27<02:28,  2.10it/s] 21%|██        | 82/393 [01:27<02:26,  2.12it/s] 21%|██        | 83/393 [01:28<02:25,  2.13it/s] 21%|██▏       | 84/393 [01:28<02:30,  2.05it/s] 22%|██▏       | 85/393 [01:29<02:31,  2.04it/s] 22%|██▏       | 86/393 [01:29<02:35,  1.98it/s] 22%|██▏       | 87/393 [01:30<02:35,  1.97it/s] 22%|██▏       | 88/393 [01:44<23:13,  4.57s/it] 23%|██▎       | 89/393 [01:46<19:35,  3.87s/it] 23%|██▎       | 90/393 [01:48<16:53,  3.34s/it] 23%|██▎       | 91/393 [01:50<15:00,  2.98s/it] 23%|██▎       | 92/393 [01:53<13:51,  2.76s/it] 24%|██▎       | 93/393 [01:55<12:52,  2.58s/it] 24%|██▍       | 94/393 [01:57<12:14,  2.46s/it] 24%|██▍       | 95/393 [01:59<11:46,  2.37s/it] 24%|██▍       | 96/393 [02:01<11:30,  2.33s/it] 25%|██▍       | 97/393 [02:04<11:24,  2.31s/it] 25%|██▍       | 98/393 [02:06<11:06,  2.26s/it] 25%|██▌       | 99/393 [02:08<10:58,  2.24s/it] 25%|██▌       | 100/393 [02:10<10:53,  2.23s/it] 26%|██▌       | 101/393 [02:12<10:43,  2.20s/it] 26%|██▌       | 102/393 [02:15<10:40,  2.20s/it] 26%|██▌       | 103/393 [02:17<10:33,  2.18s/it] 26%|██▋       | 104/393 [02:19<10:32,  2.19s/it] 27%|██▋       | 105/393 [02:21<10:34,  2.20s/it] 27%|██▋       | 106/393 [02:23<10:26,  2.18s/it] 27%|██▋       | 107/393 [02:25<10:21,  2.17s/it] 27%|██▋       | 108/393 [02:28<10:16,  2.16s/it] 28%|██▊       | 109/393 [02:30<10:12,  2.16s/it] 28%|██▊       | 110/393 [02:32<10:08,  2.15s/it] 28%|██▊       | 111/393 [02:34<10:17,  2.19s/it] 28%|██▊       | 112/393 [02:36<10:13,  2.18s/it] 29%|██▉       | 113/393 [02:38<10:08,  2.17s/it] 29%|██▉       | 114/393 [02:41<10:05,  2.17s/it] 29%|██▉       | 115/393 [02:43<10:01,  2.16s/it] 30%|██▉       | 116/393 [02:45<09:55,  2.15s/it] 30%|██▉       | 117/393 [02:47<09:51,  2.14s/it] 30%|███       | 118/393 [02:49<09:47,  2.14s/it] 30%|███       | 119/393 [02:51<09:47,  2.15s/it] 31%|███       | 120/393 [02:53<09:53,  2.18s/it] 31%|███       | 121/393 [02:56<09:46,  2.16s/it] 31%|███       | 122/393 [02:58<09:45,  2.16s/it] 31%|███▏      | 123/393 [03:00<09:40,  2.15s/it] 32%|███▏      | 124/393 [03:02<09:43,  2.17s/it] 32%|███▏      | 125/393 [03:04<09:47,  2.19s/it] 32%|███▏      | 126/393 [03:07<09:45,  2.19s/it] 32%|███▏      | 127/393 [03:09<09:36,  2.17s/it] 33%|███▎      | 128/393 [03:11<09:45,  2.21s/it] 33%|███▎      | 129/393 [03:13<09:38,  2.19s/it] 33%|███▎      | 130/393 [03:15<09:40,  2.21s/it]Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+ 33%|███▎      | 131/393 [03:18<09:32,  2.19s/it] 34%|███▎      | 132/393 [03:20<09:26,  2.17s/it] 34%|███▍      | 133/393 [03:22<09:22,  2.16s/it] 34%|███▍      | 134/393 [03:24<09:28,  2.19s/it] 34%|███▍      | 135/393 [03:26<09:26,  2.20s/it] 35%|███▍      | 136/393 [03:28<09:23,  2.19s/it] 35%|███▍      | 137/393 [03:33<11:45,  2.76s/it] 35%|███▌      | 138/393 [03:36<12:57,  3.05s/it] 35%|███▌      | 139/393 [03:40<13:45,  3.25s/it] 36%|███▌      | 140/393 [03:44<14:18,  3.39s/it] 36%|███▌      | 141/393 [03:47<14:42,  3.50s/it] 36%|███▌      | 142/393 [03:51<14:52,  3.56s/it] 36%|███▋      | 143/393 [03:55<15:13,  3.65s/it] 37%|███▋      | 144/393 [03:59<15:27,  3.72s/it] 37%|███▋      | 145/393 [04:03<15:31,  3.75s/it] 37%|███▋      | 146/393 [04:07<15:38,  3.80s/it] 37%|███▋      | 147/393 [04:11<15:43,  3.83s/it] 38%|███▊      | 148/393 [04:14<15:43,  3.85s/it] 38%|███▊      | 149/393 [04:18<15:42,  3.86s/it] 38%|███▊      | 150/393 [04:22<15:42,  3.88s/it] 38%|███▊      | 151/393 [04:26<15:43,  3.90s/it] 39%|███▊      | 152/393 [04:30<15:31,  3.86s/it] 39%|███▉      | 153/393 [04:37<18:40,  4.67s/it] 39%|███▉      | 154/393 [04:43<20:36,  5.18s/it] 39%|███▉      | 155/393 [04:49<21:50,  5.50s/it] 40%|███▉      | 156/393 [04:55<22:39,  5.74s/it] 40%|███▉      | 157/393 [05:02<23:13,  5.91s/it] 40%|████      | 158/393 [05:06<20:47,  5.31s/it] 40%|████      | 159/393 [05:10<19:04,  4.89s/it] 41%|████      | 160/393 [05:14<18:22,  4.73s/it] 41%|████      | 161/393 [05:18<17:49,  4.61s/it] 41%|████      | 162/393 [05:22<17:18,  4.50s/it] 41%|████▏     | 163/393 [05:27<16:58,  4.43s/it] 42%|████▏     | 164/393 [05:31<16:21,  4.28s/it] 42%|████▏     | 165/393 [05:35<16:25,  4.32s/it] 42%|████▏     | 166/393 [05:39<16:22,  4.33s/it] 42%|████▏     | 167/393 [05:44<16:11,  4.30s/it] 43%|████▎     | 168/393 [05:46<13:55,  3.71s/it] 43%|████▎     | 169/393 [05:48<12:04,  3.24s/it] 43%|████▎     | 170/393 [05:50<10:52,  2.93s/it] 44%|████▎     | 171/393 [05:52<09:55,  2.68s/it] 44%|████▍     | 172/393 [05:55<09:16,  2.52s/it] 44%|████▍     | 173/393 [05:57<08:50,  2.41s/it] 44%|████▍     | 174/393 [05:59<08:29,  2.33s/it] 45%|████▍     | 175/393 [06:01<08:13,  2.26s/it] 45%|████▍     | 176/393 [06:03<08:01,  2.22s/it] 45%|████▌     | 177/393 [06:05<07:55,  2.20s/it] 45%|████▌     | 178/393 [06:09<09:57,  2.78s/it] 46%|████▌     | 179/393 [06:14<11:25,  3.20s/it] 46%|████▌     | 180/393 [06:18<12:25,  3.50s/it] 46%|████▌     | 181/393 [06:22<13:07,  3.72s/it] 46%|████▋     | 182/393 [06:26<13:24,  3.81s/it] 47%|████▋     | 183/393 [06:30<13:31,  3.87s/it] 47%|████▋     | 184/393 [06:34<13:49,  3.97s/it] 47%|████▋     | 185/393 [06:39<14:07,  4.07s/it] 47%|████▋     | 186/393 [06:43<13:58,  4.05s/it] 48%|████▊     | 187/393 [06:47<14:07,  4.11s/it] 48%|████▊     | 188/393 [06:51<13:48,  4.04s/it] 48%|████▊     | 189/393 [06:55<13:35,  4.00s/it] 48%|████▊     | 190/393 [06:59<13:29,  3.99s/it] 49%|████▊     | 191/393 [07:02<13:19,  3.96s/it] 49%|████▉     | 192/393 [07:05<11:24,  3.41s/it] 49%|████▉     | 193/393 [07:07<10:04,  3.02s/it] 49%|████▉     | 194/393 [07:09<09:15,  2.79s/it] 50%|████▉     | 195/393 [07:11<08:34,  2.60s/it] 50%|████▉     | 196/393 [07:13<08:10,  2.49s/it] 50%|█████     | 197/393 [07:15<07:45,  2.38s/it] 50%|█████     | 198/393 [07:18<07:28,  2.30s/it] 51%|█████     | 199/393 [07:20<07:16,  2.25s/it] 51%|█████     | 200/393 [07:22<07:09,  2.22s/it] 51%|█████     | 201/393 [07:24<07:01,  2.19s/it] 51%|█████▏    | 202/393 [07:28<08:26,  2.65s/it] 52%|█████▏    | 203/393 [07:32<09:34,  3.03s/it] 52%|█████▏    | 204/393 [07:35<10:17,  3.27s/it] 52%|█████▏    | 205/393 [07:39<10:53,  3.48s/it] 52%|█████▏    | 206/393 [07:43<11:04,  3.55s/it] 53%|█████▎    | 207/393 [07:47<11:09,  3.60s/it] 53%|█████▎    | 208/393 [07:51<11:11,  3.63s/it] 53%|█████▎    | 209/393 [07:54<11:12,  3.65s/it] 53%|█████▎    | 210/393 [07:58<11:15,  3.69s/it] 54%|█████▎    | 211/393 [08:02<11:13,  3.70s/it] 54%|█████▍    | 212/393 [08:06<11:12,  3.72s/it] 54%|█████▍    | 213/393 [08:09<11:09,  3.72s/it] 54%|█████▍    | 214/393 [08:13<11:06,  3.72s/it] 55%|█████▍    | 215/393 [08:17<11:07,  3.75s/it] 55%|█████▍    | 216/393 [08:21<11:02,  3.74s/it] 55%|█████▌    | 217/393 [08:24<10:59,  3.74s/it] 55%|█████▌    | 218/393 [08:28<10:57,  3.75s/it] 56%|█████▌    | 219/393 [08:32<10:53,  3.75s/it] 56%|█████▌    | 220/393 [08:36<10:51,  3.77s/it]Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+ 56%|█████▌    | 221/393 [08:40<10:56,  3.82s/it] 56%|█████▋    | 222/393 [08:43<10:50,  3.80s/it] 57%|█████▋    | 223/393 [08:47<10:45,  3.80s/it] 57%|█████▋    | 224/393 [08:51<10:44,  3.81s/it] 57%|█████▋    | 225/393 [08:55<10:37,  3.80s/it] 58%|█████▊    | 226/393 [08:58<10:31,  3.78s/it] 58%|█████▊    | 227/393 [09:02<10:30,  3.80s/it] 58%|█████▊    | 228/393 [09:06<10:28,  3.81s/it] 58%|█████▊    | 229/393 [09:10<10:41,  3.91s/it] 59%|█████▊    | 230/393 [09:14<10:30,  3.87s/it] 59%|█████▉    | 231/393 [09:18<10:22,  3.84s/it] 59%|█████▉    | 232/393 [09:22<10:15,  3.82s/it] 59%|█████▉    | 233/393 [09:26<10:29,  3.93s/it] 60%|█████▉    | 234/393 [09:30<10:16,  3.88s/it] 60%|█████▉    | 235/393 [09:34<10:27,  3.97s/it] 60%|██████    | 236/393 [09:38<10:16,  3.92s/it] 60%|██████    | 237/393 [09:42<10:25,  4.01s/it] 61%|██████    | 238/393 [09:44<09:01,  3.49s/it] 61%|██████    | 239/393 [09:46<08:01,  3.12s/it] 61%|██████    | 240/393 [09:49<07:17,  2.86s/it] 61%|██████▏   | 241/393 [09:51<06:42,  2.65s/it] 62%|██████▏   | 242/393 [09:53<06:18,  2.50s/it] 62%|██████▏   | 243/393 [09:55<05:59,  2.39s/it] 62%|██████▏   | 244/393 [09:57<05:45,  2.32s/it] 62%|██████▏   | 245/393 [09:59<05:36,  2.27s/it] 63%|██████▎   | 247/393 [10:01<04:11,  1.72s/it] 63%|██████▎   | 248/393 [10:04<04:27,  1.85s/it] 63%|██████▎   | 249/393 [10:06<04:39,  1.94s/it] 64%|██████▎   | 250/393 [10:08<04:51,  2.04s/it] 64%|██████▍   | 251/393 [10:10<04:58,  2.10s/it] 64%|██████▍   | 252/393 [10:13<05:02,  2.14s/it] 64%|██████▍   | 253/393 [10:15<05:06,  2.19s/it] 65%|██████▍   | 254/393 [10:17<05:09,  2.23s/it] 65%|██████▍   | 255/393 [10:20<05:06,  2.22s/it] 65%|██████▌   | 256/393 [10:22<05:02,  2.21s/it]cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/open-iris/src/iris/nodes/matcher/utils.py': No such file or directory
+ 65%|██████▌   | 256/393 [10:22<05:32,  2.43s/it]
+Traceback (most recent call last):
+  File "/WAVE/users2/unix/cawad/.conda/envs/coding-tutor/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/WAVE/users2/unix/cawad/.conda/envs/coding-tutor/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/traver/parser/pass_k.py", line 218, in <module>
+    main()
+  File "/WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/traver/parser/pass_k.py", line 210, in main
+    result = check_correctness(args, data)
+  File "/WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/traver/parser/pass_k.py", line 108, in check_correctness
+    SetUp_evaluation(args, data, completion)
+  File "/WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/traver/parser/pass_k.py", line 88, in SetUp_evaluation
+    with open(completion_path, 'r') as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/open-iris/src/iris/nodes/matcher/utils.py'
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+TODO Completions:  393
+  0%|          | 0/393 [00:00<?, ?it/s]  0%|          | 1/393 [00:01<06:39,  1.02s/it]  1%|          | 2/393 [00:01<05:42,  1.14it/s]  1%|          | 3/393 [00:02<05:03,  1.29it/s]  1%|          | 4/393 [00:03<04:38,  1.40it/s]  1%|▏         | 5/393 [00:03<04:55,  1.31it/s]  2%|▏         | 6/393 [00:04<04:38,  1.39it/s]  2%|▏         | 7/393 [00:05<04:40,  1.38it/s]  2%|▏         | 8/393 [00:06<04:53,  1.31it/s]  2%|▏         | 9/393 [00:06<04:48,  1.33it/s]  3%|▎         | 11/393 [00:07<03:37,  1.76it/s]  3%|▎         | 12/393 [00:08<04:04,  1.56it/s]  3%|▎         | 13/393 [00:09<04:26,  1.43it/s]  4%|▎         | 14/393 [00:09<04:14,  1.49it/s]  4%|▍         | 15/393 [00:10<04:10,  1.51it/s]  4%|▍         | 16/393 [00:11<04:10,  1.50it/s]  4%|▍         | 17/393 [00:11<04:19,  1.45it/s]  5%|▍         | 18/393 [00:15<09:15,  1.48s/it]  5%|▍         | 19/393 [00:18<12:11,  1.96s/it]  5%|▌         | 20/393 [00:21<13:30,  2.17s/it]  5%|▌         | 21/393 [00:23<14:35,  2.35s/it]  6%|▌         | 22/393 [00:26<15:20,  2.48s/it]  6%|▌         | 23/393 [00:29<15:43,  2.55s/it]  6%|▌         | 24/393 [00:32<16:01,  2.61s/it]  6%|▋         | 25/393 [00:34<16:08,  2.63s/it]  7%|▋         | 26/393 [00:37<16:32,  2.71s/it]  7%|▋         | 27/393 [00:40<16:40,  2.73s/it]  7%|▋         | 28/393 [00:43<16:26,  2.70s/it]  7%|▋         | 29/393 [00:45<16:29,  2.72s/it]  8%|▊         | 30/393 [00:48<16:28,  2.72s/it]  8%|▊         | 31/393 [00:51<16:29,  2.73s/it]  8%|▊         | 32/393 [00:54<16:25,  2.73s/it]  8%|▊         | 33/393 [00:57<16:45,  2.79s/it]  9%|▊         | 34/393 [00:59<16:51,  2.82s/it]  9%|▉         | 35/393 [01:02<16:50,  2.82s/it]  9%|▉         | 36/393 [01:05<16:38,  2.80s/it]  9%|▉         | 37/393 [01:08<16:21,  2.76s/it] 10%|▉         | 38/393 [01:10<16:17,  2.75s/it] 10%|▉         | 39/393 [01:13<16:08,  2.74s/it] 10%|█         | 40/393 [01:16<16:11,  2.75s/it] 10%|█         | 41/393 [01:19<16:10,  2.76s/it] 11%|█         | 42/393 [01:21<16:04,  2.75s/it] 11%|█         | 43/393 [01:24<16:00,  2.75s/it] 11%|█         | 44/393 [01:27<16:14,  2.79s/it] 11%|█▏        | 45/393 [01:30<16:33,  2.86s/it] 12%|█▏        | 46/393 [01:33<16:26,  2.84s/it] 12%|█▏        | 47/393 [01:36<16:24,  2.85s/it] 12%|█▏        | 48/393 [01:37<12:59,  2.26s/it] 12%|█▏        | 49/393 [01:38<10:46,  1.88s/it] 13%|█▎        | 50/393 [01:38<08:41,  1.52s/it] 13%|█▎        | 51/393 [01:39<07:20,  1.29s/it] 13%|█▎        | 52/393 [01:40<06:13,  1.10s/it] 13%|█▎        | 53/393 [01:41<05:52,  1.04s/it] 14%|█▎        | 54/393 [01:41<05:10,  1.09it/s] 14%|█▍        | 55/393 [01:42<04:38,  1.21it/s] 14%|█▍        | 56/393 [01:42<04:24,  1.27it/s] 15%|█▍        | 57/393 [01:43<04:25,  1.26it/s] 15%|█▍        | 58/393 [01:44<04:18,  1.30it/s] 15%|█▌        | 59/393 [01:45<04:24,  1.26it/s] 15%|█▌        | 60/393 [01:45<04:05,  1.36it/s] 16%|█▌        | 61/393 [01:46<03:54,  1.41it/s] 16%|█▌        | 62/393 [01:47<04:02,  1.36it/s] 16%|█▌        | 63/393 [01:48<04:05,  1.34it/s] 16%|█▋        | 64/393 [01:49<04:25,  1.24it/s] 17%|█▋        | 65/393 [01:49<04:29,  1.22it/s]Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+ 17%|█▋        | 66/393 [01:50<04:13,  1.29it/s] 17%|█▋        | 67/393 [01:51<04:11,  1.30it/s] 17%|█▋        | 68/393 [01:52<04:38,  1.16it/s] 18%|█▊        | 69/393 [01:53<04:31,  1.20it/s] 18%|█▊        | 70/393 [01:54<04:24,  1.22it/s] 18%|█▊        | 71/393 [01:54<04:27,  1.20it/s] 18%|█▊        | 72/393 [01:55<04:30,  1.19it/s] 19%|█▊        | 73/393 [01:56<04:20,  1.23it/s] 19%|█▉        | 74/393 [01:57<04:03,  1.31it/s] 19%|█▉        | 75/393 [01:57<04:03,  1.30it/s] 19%|█▉        | 76/393 [01:58<04:01,  1.31it/s] 20%|█▉        | 77/393 [01:59<03:51,  1.36it/s] 20%|█▉        | 78/393 [02:00<03:48,  1.38it/s] 20%|██        | 79/393 [02:01<04:15,  1.23it/s] 20%|██        | 80/393 [02:01<04:01,  1.30it/s] 21%|██        | 81/393 [02:02<03:51,  1.35it/s] 21%|██        | 82/393 [02:03<03:38,  1.42it/s] 21%|██        | 83/393 [02:03<03:38,  1.42it/s] 21%|██▏       | 84/393 [02:04<03:33,  1.45it/s] 22%|██▏       | 85/393 [02:05<03:25,  1.50it/s] 22%|██▏       | 86/393 [02:05<03:28,  1.48it/s] 22%|██▏       | 87/393 [02:06<03:45,  1.36it/s] 22%|██▏       | 88/393 [02:23<28:46,  5.66s/it] 23%|██▎       | 89/393 [02:26<24:33,  4.85s/it] 23%|██▎       | 90/393 [02:29<21:27,  4.25s/it] 23%|██▎       | 91/393 [02:32<19:35,  3.89s/it] 23%|██▎       | 92/393 [02:35<17:53,  3.57s/it] 24%|██▎       | 93/393 [02:38<16:33,  3.31s/it] 24%|██▍       | 94/393 [02:41<16:01,  3.22s/it] 24%|██▍       | 95/393 [02:43<15:28,  3.12s/it] 24%|██▍       | 96/393 [02:46<14:54,  3.01s/it] 25%|██▍       | 97/393 [02:49<14:36,  2.96s/it] 25%|██▍       | 98/393 [02:52<14:32,  2.96s/it] 25%|██▌       | 99/393 [02:55<14:32,  2.97s/it] 25%|██▌       | 100/393 [02:58<14:26,  2.96s/it] 26%|██▌       | 101/393 [03:01<14:23,  2.96s/it] 26%|██▌       | 102/393 [03:04<14:31,  2.99s/it] 26%|██▌       | 103/393 [03:07<14:37,  3.03s/it] 26%|██▋       | 104/393 [03:10<14:17,  2.97s/it] 27%|██▋       | 105/393 [03:13<14:15,  2.97s/it] 27%|██▋       | 106/393 [03:16<13:59,  2.92s/it] 27%|██▋       | 107/393 [03:19<13:57,  2.93s/it] 27%|██▋       | 108/393 [03:22<13:45,  2.90s/it] 28%|██▊       | 109/393 [03:24<13:26,  2.84s/it] 28%|██▊       | 110/393 [03:27<13:20,  2.83s/it] 28%|██▊       | 111/393 [03:30<13:11,  2.81s/it] 28%|██▊       | 112/393 [03:33<13:06,  2.80s/it] 29%|██▉       | 113/393 [03:35<13:16,  2.85s/it] 29%|██▉       | 114/393 [03:38<13:08,  2.83s/it] 29%|██▉       | 115/393 [03:41<13:09,  2.84s/it] 30%|██▉       | 116/393 [03:44<13:01,  2.82s/it] 30%|██▉       | 117/393 [03:47<13:17,  2.89s/it] 30%|███       | 118/393 [03:50<13:04,  2.85s/it] 30%|███       | 119/393 [03:53<13:41,  3.00s/it] 31%|███       | 120/393 [03:56<13:34,  2.98s/it] 31%|███       | 121/393 [03:59<13:14,  2.92s/it] 31%|███       | 122/393 [04:02<13:02,  2.89s/it] 31%|███▏      | 123/393 [04:04<12:59,  2.89s/it] 32%|███▏      | 124/393 [04:07<12:54,  2.88s/it] 32%|███▏      | 125/393 [04:10<12:57,  2.90s/it] 32%|███▏      | 126/393 [04:13<12:53,  2.90s/it] 32%|███▏      | 127/393 [04:16<12:38,  2.85s/it] 33%|███▎      | 128/393 [04:19<12:45,  2.89s/it] 33%|███▎      | 129/393 [04:22<12:31,  2.85s/it] 33%|███▎      | 130/393 [04:25<12:36,  2.87s/it] 33%|███▎      | 131/393 [04:28<12:53,  2.95s/it]Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/EasyVolcap 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microagents 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+ 34%|███▎      | 132/393 [04:31<12:39,  2.91s/it] 34%|███▍      | 133/393 [04:33<12:39,  2.92s/it] 34%|███▍      | 134/393 [04:36<12:37,  2.92s/it] 34%|███▍      | 135/393 [04:39<12:22,  2.88s/it] 35%|███▍      | 136/393 [04:42<12:07,  2.83s/it] 35%|███▍      | 137/393 [04:48<16:05,  3.77s/it] 35%|███▌      | 138/393 [04:53<17:30,  4.12s/it] 35%|███▌      | 139/393 [04:58<18:31,  4.37s/it] 36%|███▌      | 140/393 [05:03<18:54,  4.48s/it] 36%|███▌      | 141/393 [05:07<19:08,  4.56s/it] 36%|███▌      | 142/393 [05:12<19:04,  4.56s/it] 36%|███▋      | 143/393 [05:17<19:58,  4.80s/it] 37%|███▋      | 144/393 [05:22<20:14,  4.88s/it] 37%|███▋      | 145/393 [05:28<20:45,  5.02s/it] 37%|███▋      | 146/393 [05:32<20:27,  4.97s/it] 37%|███▋      | 147/393 [05:37<20:21,  4.97s/it] 38%|███▊      | 148/393 [05:42<20:05,  4.92s/it] 38%|███▊      | 149/393 [05:47<20:21,  5.01s/it] 38%|███▊      | 150/393 [05:52<20:10,  4.98s/it] 38%|███▊      | 151/393 [05:57<19:51,  4.92s/it] 39%|███▊      | 152/393 [06:02<20:05,  5.00s/it] 39%|███▉      | 153/393 [06:10<23:24,  5.85s/it] 39%|███▉      | 154/393 [06:18<25:14,  6.33s/it] 39%|███▉      | 155/393 [06:25<26:27,  6.67s/it] 40%|███▉      | 156/393 [06:32<27:13,  6.89s/it] 40%|███▉      | 157/393 [06:39<27:11,  6.91s/it] 40%|████      | 158/393 [06:45<25:14,  6.45s/it] 40%|████      | 159/393 [06:50<23:35,  6.05s/it] 41%|████      | 160/393 [06:56<23:03,  5.94s/it] 41%|████      | 161/393 [07:01<22:14,  5.75s/it] 41%|████      | 162/393 [07:07<22:00,  5.72s/it] 41%|████▏     | 163/393 [07:12<21:17,  5.55s/it] 42%|████▏     | 164/393 [07:17<20:29,  5.37s/it] 42%|████▏     | 165/393 [07:22<20:11,  5.32s/it] 42%|████▏     | 166/393 [07:28<20:35,  5.44s/it] 42%|████▏     | 167/393 [07:33<20:24,  5.42s/it] 43%|████▎     | 168/393 [07:36<17:37,  4.70s/it] 43%|████▎     | 169/393 [07:39<15:41,  4.20s/it] 43%|████▎     | 170/393 [07:42<14:00,  3.77s/it] 44%|████▎     | 171/393 [07:45<13:15,  3.58s/it] 44%|████▍     | 172/393 [07:48<12:25,  3.38s/it] 44%|████▍     | 173/393 [07:51<12:11,  3.33s/it] 44%|████▍     | 174/393 [07:54<11:30,  3.15s/it] 45%|████▍     | 175/393 [07:57<11:00,  3.03s/it] 45%|████▍     | 176/393 [07:59<10:49,  2.99s/it] 45%|████▌     | 177/393 [08:02<10:45,  2.99s/it] 45%|████▌     | 178/393 [08:08<13:36,  3.80s/it] 46%|████▌     | 179/393 [08:13<15:13,  4.27s/it] 46%|████▌     | 180/393 [08:19<16:00,  4.51s/it] 46%|████▌     | 181/393 [08:24<16:30,  4.67s/it] 46%|████▋     | 182/393 [08:29<17:16,  4.91s/it] 47%|████▋     | 183/393 [08:34<17:17,  4.94s/it] 47%|████▋     | 184/393 [08:39<17:40,  5.07s/it] 47%|████▋     | 185/393 [08:45<17:51,  5.15s/it] 47%|████▋     | 186/393 [08:50<17:56,  5.20s/it] 48%|████▊     | 187/393 [08:55<17:55,  5.22s/it] 48%|████▊     | 188/393 [09:00<17:22,  5.09s/it] 48%|████▊     | 189/393 [09:05<17:20,  5.10s/it] 48%|████▊     | 190/393 [09:11<17:26,  5.16s/it] 49%|████▊     | 191/393 [09:15<17:00,  5.05s/it] 49%|████▉     | 192/393 [09:18<14:41,  4.39s/it] 49%|████▉     | 193/393 [09:21<13:10,  3.95s/it] 49%|████▉     | 194/393 [09:24<12:09,  3.66s/it] 50%|████▉     | 195/393 [09:27<11:21,  3.44s/it] 50%|████▉     | 196/393 [09:30<10:43,  3.27s/it] 50%|█████     | 197/393 [09:33<10:15,  3.14s/it] 50%|█████     | 198/393 [09:36<10:21,  3.19s/it] 51%|█████     | 199/393 [09:39<10:24,  3.22s/it] 51%|█████     | 200/393 [09:42<10:11,  3.17s/it] 51%|█████     | 201/393 [09:45<09:47,  3.06s/it] 51%|█████▏    | 202/393 [09:50<11:26,  3.59s/it] 52%|█████▏    | 203/393 [09:55<12:41,  4.01s/it] 52%|█████▏    | 204/393 [10:00<13:28,  4.28s/it] 52%|█████▏    | 205/393 [10:05<13:58,  4.46s/it] 52%|█████▏    | 206/393 [10:10<14:07,  4.53s/it] 53%|█████▎    | 207/393 [10:15<14:33,  4.70s/it] 53%|█████▎    | 208/393 [10:19<14:21,  4.66s/it] 53%|█████▎    | 209/393 [10:24<14:21,  4.68s/it] 53%|█████▎    | 210/393 [10:28<14:09,  4.64s/it] 54%|█████▎    | 211/393 [10:34<14:28,  4.77s/it] 54%|█████▍    | 212/393 [10:39<14:41,  4.87s/it] 54%|█████▍    | 213/393 [10:44<14:56,  4.98s/it] 54%|█████▍    | 214/393 [10:48<14:27,  4.85s/it] 55%|█████▍    | 215/393 [10:53<14:11,  4.79s/it] 55%|█████▍    | 216/393 [10:58<14:04,  4.77s/it] 55%|█████▌    | 217/393 [11:02<13:48,  4.71s/it] 55%|█████▌    | 218/393 [11:07<14:05,  4.83s/it] 56%|█████▌    | 219/393 [11:13<14:31,  5.01s/it] 56%|█████▌    | 220/393 [11:19<15:03,  5.23s/it] 56%|█████▌    | 221/393 [11:24<15:21,  5.36s/it] 56%|█████▋    | 222/393 [11:30<15:12,  5.33s/it]Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+ 57%|█████▋    | 223/393 [11:35<14:47,  5.22s/it] 57%|█████▋    | 224/393 [11:40<15:00,  5.33s/it] 57%|█████▋    | 225/393 [11:45<14:55,  5.33s/it] 58%|█████▊    | 226/393 [11:50<14:31,  5.22s/it] 58%|█████▊    | 227/393 [11:56<14:34,  5.27s/it] 58%|█████▊    | 228/393 [12:01<14:16,  5.19s/it] 58%|█████▊    | 229/393 [12:06<14:26,  5.29s/it] 59%|█████▊    | 230/393 [12:11<14:00,  5.16s/it] 59%|█████▉    | 231/393 [12:16<13:51,  5.13s/it] 59%|█████▉    | 232/393 [12:22<14:13,  5.30s/it] 59%|█████▉    | 233/393 [12:27<14:00,  5.25s/it] 60%|█████▉    | 234/393 [12:32<13:46,  5.20s/it] 60%|█████▉    | 235/393 [12:37<13:44,  5.22s/it] 60%|██████    | 236/393 [12:42<13:23,  5.12s/it] 60%|██████    | 237/393 [12:47<13:10,  5.06s/it] 61%|██████    | 238/393 [12:50<11:23,  4.41s/it] 61%|██████    | 239/393 [12:53<10:05,  3.93s/it] 61%|██████    | 240/393 [12:56<09:11,  3.60s/it] 61%|██████▏   | 241/393 [12:59<08:35,  3.39s/it] 62%|██████▏   | 242/393 [13:02<08:19,  3.31s/it] 62%|██████▏   | 243/393 [13:05<07:55,  3.17s/it] 62%|██████▏   | 244/393 [13:07<07:32,  3.04s/it] 62%|██████▏   | 245/393 [13:10<07:28,  3.03s/it] 63%|██████▎   | 247/393 [13:13<05:37,  2.31s/it] 63%|██████▎   | 248/393 [13:16<05:50,  2.42s/it] 63%|██████▎   | 249/393 [13:19<06:04,  2.53s/it] 64%|██████▎   | 250/393 [13:22<06:14,  2.62s/it] 64%|██████▍   | 251/393 [13:24<06:17,  2.66s/it] 64%|██████▍   | 252/393 [13:27<06:16,  2.67s/it] 64%|██████▍   | 253/393 [13:30<06:28,  2.78s/it] 65%|██████▍   | 254/393 [13:33<06:26,  2.78s/it] 65%|██████▍   | 255/393 [13:36<06:27,  2.81s/it] 65%|██████▌   | 256/393 [13:39<06:33,  2.87s/it]cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/open-iris/src/iris/nodes/matcher/utils.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/open-iris/src/iris/nodes/matcher/utils.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/open-iris/src/iris/nodes/matcher/utils.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/open-iris/src/iris/nodes/matcher/utils.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/open-iris/src/iris/nodes/matcher/utils.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/open-iris/src/iris/nodes/matcher/utils.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/open-iris/src/iris/nodes/matcher/utils.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/open-iris/src/iris/nodes/matcher/utils.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/open-iris/src/iris/nodes/matcher/utils.py': No such file or directory
+ 68%|██████▊   | 266/393 [13:40<01:17,  1.64it/s] 68%|██████▊   | 267/393 [13:40<01:17,  1.63it/s] 68%|██████▊   | 268/393 [13:41<01:16,  1.63it/s] 68%|██████▊   | 269/393 [13:42<01:16,  1.62it/s] 69%|██████▊   | 270/393 [13:42<01:15,  1.62it/s] 69%|██████▉   | 271/393 [13:43<01:17,  1.57it/s] 69%|██████▉   | 272/393 [13:44<01:18,  1.54it/s]cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/Generalizable-BEV/mmdet3d/models/builder.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/Generalizable-BEV/mmdet3d/models/builder.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/Generalizable-BEV/mmdet3d/models/builder.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/Generalizable-BEV/mmdet3d/models/builder.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/Generalizable-BEV/mmdet3d/models/builder.py': No such file or directory
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 1: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/litdata 
+  Skipping iris.nodes.matcher.utils.hamming_distance (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/open-iris/src/iris/nodes/matcher/utils.py'
+  Skipping iris.nodes.matcher.utils.hamming_distance (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/open-iris/src/iris/nodes/matcher/utils.py'
+  Skipping iris.nodes.matcher.utils.hamming_distance (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/open-iris/src/iris/nodes/matcher/utils.py'
+  Skipping iris.nodes.matcher.utils.hamming_distance (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/open-iris/src/iris/nodes/matcher/utils.py'
+  Skipping iris.nodes.matcher.utils.hamming_distance (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/open-iris/src/iris/nodes/matcher/utils.py'
+  Skipping iris.nodes.matcher.utils.hamming_distance (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/open-iris/src/iris/nodes/matcher/utils.py'
+  Skipping iris.nodes.matcher.utils.hamming_distance (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/open-iris/src/iris/nodes/matcher/utils.py'
+  Skipping iris.nodes.matcher.utils.hamming_distance (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/open-iris/src/iris/nodes/matcher/utils.py'
+  Skipping iris.nodes.matcher.utils.hamming_distance (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/open-iris/src/iris/nodes/matcher/utils.py'
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microsearch 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microsearch 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microsearch 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microsearch 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microsearch 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microsearch 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/microsearch 
+  Skipping mmdet3d.models.builder.build_segmentor (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/Generalizable-BEV/mmdet3d/models/builder.py'
+  Skipping mmdet3d.models.builder.build_segmentor (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/Generalizable-BEV/mmdet3d/models/builder.py'
+  Skipping mmdet3d.models.builder.build_segmentor (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/Generalizable-BEV/mmdet3d/models/builder.py'
+  Skipping mmdet3d.models.builder.build_segmentor (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/Generalizable-BEV/mmdet3d/models/builder.py'
+ 71%|███████   | 278/393 [13:44<00:36,  3.18it/s] 71%|███████   | 279/393 [13:45<00:41,  2.71it/s] 71%|███████   | 280/393 [13:46<00:47,  2.39it/s] 72%|███████▏  | 281/393 [13:47<00:52,  2.13it/s] 72%|███████▏  | 282/393 [13:47<00:56,  1.96it/s] 72%|███████▏  | 283/393 [13:48<01:05,  1.67it/s] 72%|███████▏  | 284/393 [13:49<01:07,  1.61it/s] 73%|███████▎  | 285/393 [13:49<01:09,  1.55it/s] 73%|███████▎  | 286/393 [13:50<01:11,  1.49it/s] 73%|███████▎  | 288/393 [13:57<03:18,  1.89s/it] 74%|███████▎  | 289/393 [14:03<05:00,  2.89s/it] 74%|███████▍  | 290/393 [14:09<06:18,  3.68s/it] 74%|███████▍  | 291/393 [14:15<07:10,  4.22s/it] 75%|███████▍  | 293/393 [14:21<06:13,  3.73s/it] 75%|███████▍  | 294/393 [14:27<07:03,  4.28s/it] 75%|███████▌  | 295/393 [14:33<07:39,  4.69s/it] 75%|███████▌  | 296/393 [14:39<07:58,  4.93s/it] 76%|███████▌  | 297/393 [14:40<06:16,  3.92s/it] 76%|███████▌  | 298/393 [14:41<05:10,  3.26s/it] 76%|███████▌  | 299/393 [14:43<04:19,  2.76s/it] 76%|███████▋  | 300/393 [14:44<03:37,  2.34s/it] 77%|███████▋  | 301/393 [14:46<03:14,  2.11s/it] 77%|███████▋  | 302/393 [14:47<02:34,  1.70s/it] 77%|███████▋  | 304/393 [14:47<01:34,  1.07s/it] 78%|███████▊  | 305/393 [14:48<01:27,  1.01it/s] 78%|███████▊  | 306/393 [14:49<01:18,  1.11it/s] 78%|███████▊  | 307/393 [14:49<01:11,  1.20it/s] 78%|███████▊  | 308/393 [14:51<01:27,  1.03s/it] 79%|███████▊  | 309/393 [14:52<01:40,  1.19s/it] 79%|███████▉  | 310/393 [14:54<01:45,  1.27s/it] 79%|███████▉  | 311/393 [14:56<01:54,  1.40s/it] 79%|███████▉  | 312/393 [14:57<01:54,  1.42s/it] 80%|███████▉  | 313/393 [14:59<01:55,  1.44s/it] 80%|███████▉  | 314/393 [15:00<01:55,  1.47s/it] 80%|████████  | 315/393 [15:02<01:55,  1.48s/it] 80%|████████  | 316/393 [15:03<01:49,  1.43s/it] 81%|████████  | 317/393 [15:04<01:47,  1.42s/it] 81%|████████  | 318/393 [15:06<01:51,  1.48s/it] 81%|████████  | 319/393 [15:07<01:35,  1.29s/it] 81%|████████▏ | 320/393 [15:07<01:20,  1.10s/it] 82%|████████▏ | 321/393 [15:08<01:15,  1.05s/it] 82%|████████▏ | 322/393 [15:09<01:09,  1.02it/s] 82%|████████▏ | 323/393 [15:10<01:05,  1.06it/s] 82%|████████▏ | 324/393 [15:11<01:03,  1.09it/s] 83%|████████▎ | 325/393 [15:12<00:58,  1.17it/s] 83%|████████▎ | 326/393 [15:12<00:55,  1.21it/s] 83%|████████▎ | 327/393 [15:13<00:50,  1.30it/s] 83%|████████▎ | 328/393 [15:14<00:47,  1.36it/s] 84%|████████▎ | 329/393 [15:14<00:46,  1.39it/s] 84%|████████▍ | 330/393 [15:15<00:44,  1.41it/s] 84%|████████▍ | 331/393 [15:16<00:46,  1.35it/s] 84%|████████▍ | 332/393 [15:16<00:43,  1.40it/s] 85%|████████▍ | 333/393 [15:17<00:42,  1.41it/s] 85%|████████▍ | 334/393 [15:18<00:41,  1.42it/s] 85%|████████▌ | 335/393 [15:19<00:43,  1.34it/s] 85%|████████▌ | 336/393 [15:20<00:59,  1.04s/it] 86%|████████▌ | 337/393 [15:22<01:07,  1.20s/it]cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor/processors.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor/processors.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor/processors.py': No such file or directory
+  Skipping mmdet3d.models.builder.build_segmentor (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/Generalizable-BEV/mmdet3d/models/builder.py'
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/Python-Type-Challenges 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/Python-Type-Challenges 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/Python-Type-Challenges 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/Python-Type-Challenges 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/Python-Type-Challenges 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/Python-Type-Challenges 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/Python-Type-Challenges 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/Python-Type-Challenges 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/Python-Type-Challenges 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/AutoRAG 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/AutoRAG 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/AutoRAG 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/AutoRAG 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/AutoRAG 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/AutoRAG 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/AutoRAG 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/AutoRAG 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/camp_zipnerf 
+  Skipping nlm_ingestor.ingestor.processors.clean_lines (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor/processors.py'
+  Skipping nlm_ingestor.ingestor.processors.clean_lines (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor/processors.py'
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor/processors.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor/processors.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor/processors.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor/processors.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor/processors.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor/processors.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor/processors.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor_utils/utils.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor_utils/utils.py': No such file or directory
+cp: cannot stat '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor_utils/utils.py': No such file or directory
+ 89%|████████▉ | 351/393 [15:23<00:09,  4.60it/s] 90%|████████▉ | 352/393 [15:24<00:10,  3.79it/s] 90%|████████▉ | 353/393 [15:24<00:12,  3.17it/s] 90%|█████████ | 354/393 [15:26<00:17,  2.18it/s] 90%|█████████ | 355/393 [15:27<00:22,  1.67it/s] 91%|█████████ | 356/393 [15:28<00:26,  1.42it/s] 91%|█████████ | 357/393 [15:30<00:31,  1.15it/s] 91%|█████████ | 358/393 [15:31<00:32,  1.07it/s] 91%|█████████▏| 359/393 [15:33<00:37,  1.11s/it] 92%|█████████▏| 360/393 [15:34<00:38,  1.16s/it] 92%|█████████▏| 361/393 [15:35<00:39,  1.22s/it] 92%|█████████▏| 362/393 [15:37<00:38,  1.23s/it] 92%|█████████▏| 363/393 [15:38<00:36,  1.22s/it] 93%|█████████▎| 364/393 [15:39<00:33,  1.16s/it] 93%|█████████▎| 365/393 [15:39<00:27,  1.00it/s] 93%|█████████▎| 366/393 [15:41<00:27,  1.04s/it] 93%|█████████▎| 367/393 [15:42<00:28,  1.10s/it] 94%|█████████▎| 368/393 [15:43<00:31,  1.25s/it] 94%|█████████▍| 369/393 [15:45<00:29,  1.22s/it] 94%|█████████▍| 370/393 [15:46<00:30,  1.31s/it] 94%|█████████▍| 371/393 [15:48<00:30,  1.37s/it] 95%|█████████▍| 372/393 [15:49<00:29,  1.39s/it] 95%|█████████▍| 373/393 [15:50<00:27,  1.40s/it] 95%|█████████▌| 374/393 [15:52<00:26,  1.39s/it] 95%|█████████▌| 375/393 [15:53<00:23,  1.32s/it] 96%|█████████▌| 376/393 [15:54<00:19,  1.16s/it] 96%|█████████▌| 377/393 [15:55<00:17,  1.09s/it] 96%|█████████▌| 378/393 [15:56<00:15,  1.05s/it] 96%|█████████▋| 379/393 [15:57<00:14,  1.01s/it] 97%|█████████▋| 380/393 [15:57<00:12,  1.03it/s] 97%|█████████▋| 381/393 [15:58<00:11,  1.09it/s] 97%|█████████▋| 382/393 [15:59<00:09,  1.10it/s] 97%|█████████▋| 383/393 [16:00<00:09,  1.09it/s] 98%|█████████▊| 384/393 [16:01<00:08,  1.08it/s] 98%|█████████▊| 385/393 [16:02<00:07,  1.12it/s] 98%|█████████▊| 386/393 [16:03<00:06,  1.00it/s] 98%|█████████▊| 387/393 [16:05<00:06,  1.14s/it] 99%|█████████▊| 388/393 [16:06<00:05,  1.16s/it] 99%|█████████▉| 389/393 [16:07<00:05,  1.25s/it] 99%|█████████▉| 390/393 [16:08<00:03,  1.23s/it] 99%|█████████▉| 391/393 [16:10<00:02,  1.24s/it]100%|█████████▉| 392/393 [16:11<00:01,  1.32s/it]  Skipping nlm_ingestor.ingestor.processors.clean_lines (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor/processors.py'
+  Skipping nlm_ingestor.ingestor.processors.clean_lines (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor/processors.py'
+  Skipping nlm_ingestor.ingestor.processors.clean_lines (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor/processors.py'
+  Skipping nlm_ingestor.ingestor.processors.clean_lines (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor/processors.py'
+  Skipping nlm_ingestor.ingestor.processors.clean_lines (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor/processors.py'
+  Skipping nlm_ingestor.ingestor.processors.clean_lines (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor/processors.py'
+  Skipping nlm_ingestor.ingestor.processors.clean_lines (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor/processors.py'
+  Skipping nlm_ingestor.ingestor.processors.clean_lines (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor/processors.py'
+  Skipping nlm_ingestor.ingestor_utils.utils.sent_tokenize (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor_utils/utils.py'
+  Skipping nlm_ingestor.ingestor_utils.utils.sent_tokenize (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor_utils/utils.py'
+  Skipping nlm_ingestor.ingestor_utils.utils.sent_tokenize (missing source file): [Errno 2] No such file or directory: '/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/nlm-ingestor/nlm_ingestor/ingestor_utils/utils.py'
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+100%|██████████| 393/393 [16:13<00:00,  1.36s/it]100%|██████████| 393/393 [16:13<00:00,  2.48s/it]
+Execution Error with return code 4: /WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor/EvoCodeBench-2403/Source_Code/searcharray 
+Pass@1: 8.805970149253731%
+Pass@3: 8.955223880597014%
+Pass@5: 8.955223880597014%
+Pass@10: 8.955223880597014%
+TODO Completions:  0
+0it [00:00, ?it/s]0it [00:00, ?it/s]
+Pass@1: 8.805970149253731%
+Pass@3: 8.955223880597014%
+Pass@5: 8.955223880597014%
+Pass@10: 8.955223880597014%

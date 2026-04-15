@@ -1,0 +1,7 @@
+Traver Dialogue Results
+Started: Mon Apr 13 18:07:24 PDT 2026
+
+  low_level: 2659s
+  med_level: 2481s
+
+Completed: Mon Apr 13 19:33:04 PDT 2026
