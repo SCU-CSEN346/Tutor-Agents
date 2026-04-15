@@ -108,6 +108,7 @@ for level in "${student_levels[@]}"; do
             --output_dir "$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}" \
             --decoding "sampling" \
             --N $n \
+            --max_concurrent_tasks 5 \
             2>&1 | tee -a "$output_base_dir/codegen_${level}_round${rdx}.log"
 
         ELAPSED=$((SECONDS - START_SEC))

@@ -4,6 +4,7 @@ import json
 import os
 import argparse
 import tiktoken
+import torch
 from tqdm import tqdm
 from chatarena.agent import Player, Moderator
 from chatarena.agent_tutor import Tutor
@@ -271,6 +272,12 @@ def main(args):
             for idx, namespaces in enumerate(part_lists):
                 verifier_model_path = verifier_model_paths[idx]
                 print(f"Simulating part {idx} with verifier model: {verifier_model_path}")
+                
+                # Free previous verifier model from GPU before loading next one
+                if idx > 0:
+                    del verifier_model, verifer_tokenizer
+                    import gc; gc.collect()
+                    torch.cuda.empty_cache()
                 
                 # load verifier model
                 verifier_model, verifer_tokenizer = load_model(

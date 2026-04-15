@@ -3,22 +3,30 @@ API-based LM inference for HPC (no local model needed).
 Drop-in replacement for LM_inference.py that uses an OpenAI-compatible API
 (Groq, Together AI, HuggingFace, etc.) instead of loading the model locally.
 
+Uses asyncio for concurrent API calls:
+  - All N completions per task fire simultaneously
+  - Up to --max_concurrent_tasks tasks process in parallel
+  - Exponential backoff with jitter on rate-limit (429) errors
+
 Usage:
     python traver/utils/LM_inference_api.py \
         --prompt_file prompt.jsonl \
         --output_dir output/ \
         --model_name_or_path meta-llama/Llama-3.1-8B-Instruct \
         --api_base https://api.groq.com/openai/v1 \
-        --api_key gsk_xxx
+        --api_key gsk_xxx \
+        --max_concurrent_tasks 5
 """
 
+import asyncio
 import json
 import os
+import random
 import re
 import time
 from tqdm import tqdm
 from argparse import ArgumentParser
-from openai import OpenAI
+from openai import AsyncOpenAI
 
 
 def parse_args():
@@ -41,8 +49,12 @@ def parse_args():
                                                'https://api.groq.com/openai/v1'))
     parser.add_argument('--api_key', type=str,
                         default=os.environ.get('GROQ_API_KEY', ''))
-    parser.add_argument('--rate_limit_delay', type=float, default=0.5,
-                        help="Seconds to wait between API calls (rate limiting)")
+
+    # Async concurrency config
+    parser.add_argument('--max_concurrent_tasks', type=int, default=5,
+                        help="Max number of tasks to process in parallel")
+    parser.add_argument('--max_retries', type=int, default=8,
+                        help="Max retries per API call on rate-limit errors")
 
     return parser.parse_args()
 
@@ -57,27 +69,103 @@ def load_finished_data(output_file):
     return finished
 
 
-def api_generate(client, model, prompt, n, temperature, top_p, max_tokens):
-    """Generate n completions via OpenAI-compatible API."""
-    completions = []
-
-    # Most API providers don't support n>1, so we loop
-    for _ in range(n):
+async def async_single_completion(client, model, prompt, temperature, top_p,
+                                  max_tokens, max_retries):
+    """Make a single API call with exponential backoff on rate-limit errors."""
+    for attempt in range(max_retries):
         try:
-            response = client.chat.completions.create(
+            response = await client.chat.completions.create(
                 model=model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=temperature,
                 top_p=top_p,
                 max_tokens=max_tokens,
             )
-            completions.append(response.choices[0].message.content)
+            return response.choices[0].message.content
         except Exception as e:
-            print(f"  API error: {e}")
-            completions.append("")
-            time.sleep(2)  # Back off on error
+            error_str = str(e).lower()
+            if '429' in error_str or 'rate' in error_str:
+                # Exponential backoff with jitter
+                wait = min(2 ** attempt + random.uniform(0, 1), 60)
+                print(f"  Rate limited (attempt {attempt + 1}/{max_retries}), "
+                      f"waiting {wait:.1f}s...")
+                await asyncio.sleep(wait)
+            else:
+                print(f"  API error: {e}")
+                return ""
+    print(f"  Max retries ({max_retries}) exceeded, returning empty string")
+    return ""
 
-    return completions
+
+async def async_api_generate(client, model, prompt, n, temperature, top_p,
+                              max_tokens, max_retries):
+    """Generate n completions concurrently via asyncio.gather()."""
+    tasks = [
+        async_single_completion(client, model, prompt, temperature, top_p,
+                                max_tokens, max_retries)
+        for _ in range(n)
+    ]
+    return await asyncio.gather(*tasks)
+
+
+async def async_yes_or_no(client, model, prompt, temperature, top_p,
+                           max_tokens, max_retries):
+    """Handle yes/no classification with sequential retries."""
+    max_tries = 3
+    for attempt in range(max_tries):
+        result = await async_single_completion(
+            client, model, prompt, temperature, top_p, max_tokens, max_retries
+        )
+        text = result.strip().lower() if result else ""
+        if re.match(r"yes|y|yea|yeah|yep|yup|sure|ok|okay|alright",
+                    text, re.IGNORECASE):
+            return "yes"
+        elif re.match(r"no|n|nope|nah|nay", text, re.IGNORECASE):
+            return "no"
+    return "no"
+
+
+async def process_task(semaphore, client, args, js, f_out, pbar):
+    """Process a single task (all N completions) under the semaphore."""
+    async with semaphore:
+        prompt = js['prompt']
+        task_id = js['namespace']
+
+        if args.yes_or_no_required:
+            completions = await async_yes_or_no(
+                client, args.model_name_or_path, prompt,
+                args.T, args.top_p, args.max_tokens, args.max_retries
+            )
+        else:
+            results = await async_api_generate(
+                client, args.model_name_or_path, prompt,
+                args.N, args.T, args.top_p, args.max_tokens, args.max_retries
+            )
+            completions = list(results)
+
+        cases = {'namespace': task_id, 'completion': completions}
+        f_out.write(json.dumps(cases) + '\n')
+        f_out.flush()
+        pbar.update(1)
+
+
+async def async_main(args, todo_tasks):
+    """Main async entry point: process all tasks with bounded concurrency."""
+    client = AsyncOpenAI(
+        api_key=args.api_key,
+        base_url=args.api_base
+    )
+
+    semaphore = asyncio.Semaphore(args.max_concurrent_tasks)
+    output_file = os.path.join(args.output_dir, 'completion_lm.jsonl')
+
+    with open(output_file, 'a') as f_out:
+        with tqdm(total=len(todo_tasks), desc="Generating") as pbar:
+            tasks = [
+                process_task(semaphore, client, args, js, f_out, pbar)
+                for js in todo_tasks
+            ]
+            await asyncio.gather(*tasks)
 
 
 def main():
@@ -98,15 +186,13 @@ def main():
     print(f"API base: {args.api_base}")
     print(f"N:        {args.N}")
     print(f"Temp:     {args.T}")
+    print(f"Concurrency: {args.max_concurrent_tasks} tasks in parallel")
 
-    client = OpenAI(
-        api_key=args.api_key,
-        base_url=args.api_base
-    )
-
-    # Verify connectivity
+    # Verify connectivity (synchronous, one-off check)
+    from openai import OpenAI
+    sync_client = OpenAI(api_key=args.api_key, base_url=args.api_base)
     try:
-        models = client.models.list()
+        models = sync_client.models.list()
         available = [m.id for m in models.data]
         print(f"Available models: {available[:5]}...")
     except Exception as e:
@@ -123,53 +209,26 @@ def main():
         print(f"Prompt file not found: {args.prompt_file}")
         return
 
+    # Load all tasks and filter out finished ones
+    todo_tasks = []
     with open(args.prompt_file, 'r') as f_in:
-        lines = f_in.readlines()
-
-    with open(output_file, 'a') as f_out:
-        for line in tqdm(lines):
+        for line in f_in:
             js = json.loads(line)
-            prompt = js['prompt']
-            task_id = js['namespace']
+            if js['namespace'] not in finished_data:
+                todo_tasks.append(js)
 
-            if task_id in finished_data:
-                continue
+    print(f"TODO tasks: {len(todo_tasks)}")
 
-            if args.yes_or_no_required:
-                max_tries = 3
-                result = "no"
-                for attempt in range(max_tries):
-                    completions = api_generate(
-                        client, args.model_name_or_path, prompt,
-                        1, args.T, args.top_p, args.max_tokens
-                    )
-                    text = completions[0].strip().lower() if completions else ""
-                    if re.match(
-                        r"yes|y|yea|yeah|yep|yup|sure|ok|okay|alright",
-                        text, re.IGNORECASE
-                    ):
-                        result = "yes"
-                        break
-                    elif re.match(
-                        r"no|n|nope|nah|nay", text, re.IGNORECASE
-                    ):
-                        result = "no"
-                        break
-                completions = result
-            else:
-                completions = api_generate(
-                    client, args.model_name_or_path, prompt,
-                    args.N, args.T, args.top_p, args.max_tokens
-                )
+    if not todo_tasks:
+        print("All tasks already completed!")
+        return
 
-            cases = {'namespace': task_id, 'completion': completions}
-            f_out.write(json.dumps(cases) + '\n')
-            f_out.flush()
-
-            # Rate limiting
-            time.sleep(args.rate_limit_delay)
+    start = time.time()
+    asyncio.run(async_main(args, todo_tasks))
+    elapsed = time.time() - start
 
     print(f"Done. Output: {output_file}")
+    print(f"Wall time: {elapsed:.1f}s ({elapsed/60:.1f} min)")
 
 
 if __name__ == '__main__':

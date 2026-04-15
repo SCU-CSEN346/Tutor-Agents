@@ -1,8 +1,0 @@
-Please summarize the following reference code into key solution steps (no more than 10 steps).
-
-Reference code:
-```Python
-{reference_code}
-```
-
-Key solution steps:

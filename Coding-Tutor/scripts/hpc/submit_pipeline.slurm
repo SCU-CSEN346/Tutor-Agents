@@ -26,7 +26,7 @@
 
 set -eo pipefail
 
-PROJECT_DIR="/WAVE/projects/CSEN-346-Sp26/Group2/Coding-Tutor"
+PROJECT_DIR="/WAVE/projects/CSEN-346-Sp26/Group 2/Coding-Tutor"
 
 source /WAVE/apps/x86_64/packages/Anaconda3/2025.12-2/app/etc/profile.d/conda.sh
 conda activate coding-tutor
@@ -42,7 +42,7 @@ else
     bash scripts/hpc/run_dialogue_hpc.sh
 fi
 
-# 3. Run Code Generation (Takes ~2 - 3 hours for 100 tasks)
+# 3. Run Code Generation (Takes ~2 - 3 hours for 100 tasks for each round)
 echo ""
 echo "[3/4] Running Code Generation (100 tasks)..."
 if [ -f "output/student_posttest/codegen_results.txt" ]; then

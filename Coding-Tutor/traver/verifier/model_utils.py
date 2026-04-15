@@ -56,16 +56,14 @@ def load_model(
         else (torch.bfloat16 if bf16 else torch.float32)
     )    
 
+    # Load in fp16 without quantization. V100-32GB has enough VRAM for
+    # Llama-8B in fp16 (~16GB) for both training and inference.
+    # (4-bit quantization is disabled due to accelerate/bitsandbytes version
+    # incompatibility on this HPC that causes .to() errors with device_map)
     base_model = AutoModelForCausalLM.from_pretrained(
         base_model_name_or_path,
         device_map=device_map,
         torch_dtype=compute_dtype,
-        quantization_config=BitsAndBytesConfig(  
-            load_in_4bit=True,
-            bnb_4bit_use_double_quant=True,
-            bnb_4bit_quant_type="nf4",
-            bnb_4bit_compute_dtype=compute_dtype,
-        ),
         use_cache=False,
         low_cpu_mem_usage=True,
         trust_remote_code=True
@@ -79,8 +77,11 @@ def load_model(
         task_type="CAUSAL_LM",
     )
 
-    base_model = prepare_model_for_kbit_training(
-        base_model, use_gradient_checkpointing=gradient_checkpointing)
+    # Only prepare for training (casts to fp32 for stable gradients).
+    # Skip during inference to save VRAM — no backprop needed.
+    if trained_verifier_model_path is None:
+        base_model = prepare_model_for_kbit_training(
+            base_model, use_gradient_checkpointing=gradient_checkpointing)
     
     if not ddp and torch.cuda.device_count() > 1:
         # keeps Trainer from trying its own DataParallelism when more than 1 gpu is available
@@ -119,9 +120,11 @@ def load_model(
             if unexpected_keys:
                 print(f"Unexpected keys: {unexpected_keys}")
 
-        # Only support single GPU for inference
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        verify_model.to(device)
+        # Only call .to() if model is NOT quantized (4-bit models are already
+        # placed on the correct device by device_map="auto")
+        if not getattr(base_model, 'is_quantized', False):
+            device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+            verify_model.to(device)
         verify_model.eval()
 
     return verify_model, tokenizer

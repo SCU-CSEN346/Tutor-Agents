@@ -1,0 +1,11 @@
+Dialogue Simulation Results — Coding-Tutor (Groq API)
+Started: Wed Apr  8 14:48:46 PDT 2026
+Tutor: meta-llama/Llama-3.3-70B-Instruct
+Student: meta-llama/Meta-Llama-3-8B-Instruct
+Tasks: 100
+
+low_level: completed in 2509s
+med_level: completed in 2648s
+high_level: completed in 2640s
+
+Completed: Wed Apr  8 16:58:43 PDT 2026

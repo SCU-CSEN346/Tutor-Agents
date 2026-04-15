@@ -1,0 +1,30 @@
+Codegen Results — Coding-Tutor HPC (Groq API)
+Started: Wed Apr  8 16:58:43 PDT 2026
+Student model: meta-llama/Meta-Llama-3-8B-Instruct
+
+  codegen low_level round-1: 5830s
+  codegen low_level round-2: 5526s
+  codegen low_level round-3: 5599s
+  codegen low_level round-4: 5432s
+  codegen low_level round-5: 5149s
+  codegen low_level round-6: 4672s
+  codegen low_level round-7: 4042s
+  codegen low_level round-8: 3327s
+  codegen med_level round-1: 5529s
+  codegen med_level round-2: 5840s
+  codegen med_level round-3: 5458s
+  codegen med_level round-4: 5446s
+  codegen med_level round-5: 5106s
+  codegen med_level round-6: 4454s
+  codegen med_level round-7: 3626s
+  codegen med_level round-8: 2521s
+  codegen high_level round-1: 5598s
+  codegen high_level round-2: 5365s
+  codegen high_level round-3: 5234s
+  codegen high_level round-4: 5048s
+  codegen high_level round-5: 4888s
+  codegen high_level round-6: 5016s
+  codegen high_level round-7: 3205s
+  codegen high_level round-8: 2536s
+
+Completed: Fri Apr 10 00:46:19 PDT 2026
