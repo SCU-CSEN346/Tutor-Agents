@@ -65,7 +65,8 @@ DRIVE_ROOT="Coding-Tutor-Colab"
 
 # Models — must match what Colab used
 TUTOR_MODEL="${TUTOR_MODEL:-meta-llama/Llama-3.1-70B-Instruct}"
-STUDENT_MODEL="${STUDENT_MODEL:-mistralai/Mistral-7B-Instruct-v0.2}"
+STUDENT_MODEL_LOCAL="$GROUP_DIR/models/Mistral-7B-Instruct-v0.2"
+STUDENT_MODEL="${STUDENT_MODEL:-$STUDENT_MODEL_LOCAL}"
 TUTOR_MODEL_DIR="${TUTOR_MODEL_DIR:-Llama-3.1-70B-Instruct}"
 
 tutor_setting="traver"
@@ -153,6 +154,25 @@ if [ -d "$PAPER_DIR/output" ]; then
 fi
 rclone copy "gdrive:$DRIVE_ROOT/output/" "$PAPER_DIR/output/" --progress 2>&1 | tail -5
 echo "  ✓ Pulled output directory from Drive"
+
+# Unzip any zip archives that Colab uploaded to Drive
+for zipfile in $(find "$PAPER_DIR/output" -name '*.zip' 2>/dev/null); do
+    echo "  📦 Unzipping $(basename $zipfile)..."
+    unzip -o -q "$zipfile" -d "$(dirname $zipfile)"
+    rm -f "$zipfile"
+done
+
+# Download student model weights from Drive if not already cached
+if [ ! -f "$STUDENT_MODEL_LOCAL/config.json" ]; then
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "▶ Downloading Mistral-7B from Google Drive..."
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    mkdir -p "$STUDENT_MODEL_LOCAL"
+    rclone copy "gdrive:$DRIVE_ROOT/models/Mistral-7B-Instruct-v0.2/" "$STUDENT_MODEL_LOCAL/" --progress 2>&1 | tail -5
+    echo "  ✓ Mistral-7B downloaded to $STUDENT_MODEL_LOCAL"
+else
+    echo "  ✓ Mistral-7B already cached at $STUDENT_MODEL_LOCAL"
+fi
 
 # Initialize progress file
 cat > "$PROGRESS_FILE" <<EOF
@@ -251,8 +271,20 @@ for level in "${student_levels[@]}"; do
             continue
         fi
 
+        # If raw completions exist from Drive but haven't been processed yet, just process them
+        COMP_LM_CHECK="$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}/completion_lm.jsonl"
+        if [ -f "$COMP_LM_CHECK" ]; then
+            log "    🔄 round_$rdx — processing existing completion_lm.jsonl from Drive..."
+            PYTHONPATH="$PAPER_DIR/traver" python "$PAPER_DIR/traver/utils/process_completion.py" \
+                --completion_file "$COMP_LM_CHECK" \
+                --output_file "$COMP_OUT"
+            log "    ✓ round_$rdx — processed"
+            continue
+        fi
+
+        # No completions at all — need to generate (requires GPU + vLLM)
         NUM_PROMPTS=$(wc -l < "$PROMPT_FILE")
-        log "    🔄 round_$rdx — $NUM_PROMPTS tasks..."
+        log "    🔄 round_$rdx — $NUM_PROMPTS tasks (generating via vLLM)..."
         ROUND_START=$SECONDS
 
         PYTHONPATH="$PAPER_DIR/traver" python "$PAPER_DIR/traver/utils/LM_inference.py" \
