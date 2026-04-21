@@ -1,11 +1,12 @@
 #!/bin/bash
 #SBATCH --job-name="colab-eval"
 #SBATCH --partition=gpu
+#SBATCH --gres=gpu:1
 #SBATCH --time=24:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=32G
+#SBATCH --mem=64G
 #SBATCH --output="colab_eval_%j.out"
 #SBATCH --mail-user=cawad@scu.edu
 #SBATCH --mail-type=END
@@ -46,6 +47,12 @@ module load CUDA/12.6.2
 
 source /WAVE/apps/x86_64/packages/Anaconda3/2025.12-2/app/etc/profile.d/conda.sh
 conda activate coding-tutor
+
+echo "=== GPU Diagnostic ==="
+nvidia-smi
+echo "CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES"
+python -c "import torch; print(f'PyTorch CUDA: {torch.version.cuda}, available: {torch.cuda.is_available()}, devices: {torch.cuda.device_count()}')"
+echo "======================"
 
 # --- Helper functions ---
 log() {
@@ -125,6 +132,12 @@ fi
 if [ -f "$PROJECT_DIR/traver/utils/LM_inference_hf.py" ]; then
     cp "$PROJECT_DIR/traver/utils/LM_inference_hf.py" "$PAPER_DIR/traver/utils/"
     echo "  ✓ Copied custom LM_inference_hf.py"
+fi
+
+# Copy our modified LM_inference.py (adds --dtype support for V100)
+if [ -f "$PROJECT_DIR/traver/utils/LM_inference.py" ]; then
+    cp "$PROJECT_DIR/traver/utils/LM_inference.py" "$PAPER_DIR/traver/utils/"
+    echo "  ✓ Copied modified LM_inference.py (dtype support)"
 fi
 
 cd "$PAPER_DIR"
@@ -295,6 +308,7 @@ for level in "${student_levels[@]}"; do
             --output_dir "$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}" \
             --decoding "sampling" \
             --N $n \
+            --dtype half \
             --gpu_memory_utilization 0.90
 
         # Process raw completions into final format

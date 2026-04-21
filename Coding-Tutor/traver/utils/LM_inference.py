@@ -19,11 +19,13 @@ def parse_args():
     parser.add_argument('--N', type=int, default=10)
     parser.add_argument("--gpu_memory_utilization", type=float, default=0.95)
     parser.add_argument("--tensor_parallel_size", type=int, default=1)
+    parser.add_argument("--dtype", type=str, default="half",
+                        help="Model dtype: 'half' for fp16 (V100), 'bfloat16' for bf16 (A100+), 'auto'")
     parser.add_argument("--yes_or_no_required", action='store_true')
     
     return parser.parse_args()
 
-def load_model(model_name_or_path: str, context_window: int, gpu_memory_utilization: float = 0.95, tensor_parallel_size: int = 1):
+def load_model(model_name_or_path: str, context_window: int, gpu_memory_utilization: float = 0.95, tensor_parallel_size: int = 1, dtype: str = "half"):
     if os.path.exists(model_name_or_path):
         print(f"Loading model from {model_name_or_path}")
     else:
@@ -33,6 +35,7 @@ def load_model(model_name_or_path: str, context_window: int, gpu_memory_utilizat
                 max_model_len=context_window,
                 gpu_memory_utilization=gpu_memory_utilization,
                 tensor_parallel_size=tensor_parallel_size,
+                dtype=dtype,
                 trust_remote_code=True)
     return model
 
@@ -103,7 +106,7 @@ def main():
     print(args)
 
     model = load_model(args.model_name_or_path, args.context_window, 
-                        args.gpu_memory_utilization, args.tensor_parallel_size)
+                        args.gpu_memory_utilization, args.tensor_parallel_size, args.dtype)
 
     sampling_params = SamplingParams(temperature=args.T, top_p=args.top_p, 
                                      max_tokens=args.max_tokens, n=args.N)
