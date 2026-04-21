@@ -209,7 +209,7 @@ for level in "${student_levels[@]}"; do
     if [ -f "$PROMPT_DIR/prompt_round_1.jsonl" ]; then
         log "  ✓ Prompts already exist, skipping"
     else
-        PYTHONPATH="$PAPER_DIR/traver" python -m utils.make_prompt --student_posttest \
+        PYTHONPATH="$PAPER_DIR/traver:$PAPER_DIR/traver/utils" python -m utils.make_prompt --student_posttest \
             --prompt_element_file "$PAPER_DIR/prompt/prompt_elements_final.jsonl" \
             --simulated_file "$LOCAL_DIALOGUE_FILE" \
             --output_dir "$PROMPT_DIR" \
@@ -240,7 +240,7 @@ for level in "${student_levels[@]}"; do
         log "    🔄 round_$rdx — $NUM_PROMPTS tasks..."
         ROUND_START=$SECONDS
 
-        PYTHONPATH="$PAPER_DIR/traver" python -m utils.LM_inference_api \
+        PYTHONPATH="$PAPER_DIR/traver:$PAPER_DIR/traver/utils" python -m utils.LM_inference_api \
             --model_name_or_path "$STUDENT_MODEL" \
             --api_base "$HF_API_ENDPOINT" \
             --api_key "$HF_TOKEN" \
@@ -253,7 +253,7 @@ for level in "${student_levels[@]}"; do
         # Process raw completions into final format
         COMP_LM="$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}/completion_lm.jsonl"
         if [ -f "$COMP_LM" ]; then
-            PYTHONPATH="$PAPER_DIR/traver" python -m utils.process_completion \
+            PYTHONPATH="$PAPER_DIR/traver:$PAPER_DIR/traver/utils" python -m utils.process_completion \
                 --completion_file "$COMP_LM" \
                 --output_file "$COMP_OUT"
         fi
@@ -275,7 +275,7 @@ for level in "${student_levels[@]}"; do
         EVAL_START=$SECONDS
 
         # pass@k
-        PYTHONPATH="$PAPER_DIR/traver" python -m parser.pass_k \
+        PYTHONPATH="$PAPER_DIR/traver:$PAPER_DIR/traver/utils" python -m parser.pass_k \
             --output_file "$COMP_FILE" \
             --log_file "$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}/test_results.jsonl" \
             --data_file "$metadata_file" \
@@ -285,7 +285,7 @@ for level in "${student_levels[@]}"; do
 
         # recall@k
         if [ -d "$Dependency_Root" ]; then
-            PYTHONPATH="$PAPER_DIR/traver:$PAPER_DIR/traver/parser" python -m parser.recall_k \
+            PYTHONPATH="$PAPER_DIR/traver:$PAPER_DIR/traver/utils:$PAPER_DIR/traver/parser" python -m parser.recall_k \
                 --output_file "$COMP_FILE" \
                 --log_file "$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}/dependency_results.jsonl" \
                 --data_file "$metadata_file" \
