@@ -181,7 +181,7 @@ for level in "${student_levels[@]}"; do
         log "  ✓ Prompts already exist, skipping"
     else
         PYTHONPATH="$PROJECT_DIR/traver" python -m utils.make_prompt --student_posttest \
-            --prompt_element_file "prompt/prompt_elements_final.jsonl" \
+            --prompt_element_file "$PROJECT_DIR/prompt/prompt_elements_final.jsonl" \
             --simulated_file "$LOCAL_DIALOGUE_FILE" \
             --output_dir "$PROMPT_DIR" \
             --student_level "$level" \
