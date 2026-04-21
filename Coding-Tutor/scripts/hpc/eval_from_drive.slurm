@@ -78,10 +78,9 @@ ECB_ROOT="$PROJECT_DIR/EvoCodeBench-2403"
 Source_Code_Root="$ECB_ROOT/Source_Code"
 Dependency_Root="$ECB_ROOT/Dependency_Data"
 
-if [ -f "$PROJECT_DIR/benchmark/EvoCodeBench-2403/metadata.jsonl" ]; then
-    metadata_file="$PROJECT_DIR/benchmark/EvoCodeBench-2403/metadata.jsonl"
-elif [ -f "$ECB_ROOT/metadata.jsonl" ]; then
-    metadata_file="$ECB_ROOT/metadata.jsonl"
+if [ -f "$PROJECT_DIR/prompt/prompt_elements_final.jsonl" ]; then
+    # Force the metadata to be the exact paper dataset (avoids KeyError for internal repos like easyvolcap)
+    metadata_file="$PROJECT_DIR/prompt/prompt_elements_final.jsonl"
 else
     metadata_file="$ECB_ROOT/data.jsonl"
 fi
@@ -140,10 +139,20 @@ if ! command -v rclone &> /dev/null; then
 fi
 
 if ! rclone lsd "gdrive:$DRIVE_ROOT" &>/dev/null; then
-    echo "❌ Cannot access Drive folder: $DRIVE_ROOT"
+    echo "❌ Cannot access Google Drive path: gdrive:$DRIVE_ROOT"
     echo "   Run: rclone config"
     exit 1
 fi
+
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "▶ Synchronizing Outputs from Google Drive..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+# Wipe the local HPC output specifically to ensure we only evaluate the exact completions in Drive
+if [ -d "$PAPER_DIR/output" ]; then
+    rm -rf "$PAPER_DIR/output"
+fi
+rclone copy "gdrive:$DRIVE_ROOT/output/" "$PAPER_DIR/output/" --progress 2>&1 | tail -5
+echo "  ✓ Pulled output directory from Drive"
 
 # Initialize progress file
 cat > "$PROGRESS_FILE" <<EOF
