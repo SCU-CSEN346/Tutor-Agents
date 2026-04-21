@@ -42,6 +42,8 @@ PAPER_DIR="$GROUP_DIR/Coding-Tutor-Original"
 PROJECT_DIR="$GROUP_DIR/Coding-Tutor"
 PROGRESS_FILE="$PROJECT_DIR/output/colab_eval_progress.txt"
 
+module load CUDA/12.6.2
+
 source /WAVE/apps/x86_64/packages/Anaconda3/2025.12-2/app/etc/profile.d/conda.sh
 conda activate coding-tutor
 
