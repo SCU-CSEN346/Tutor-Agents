@@ -120,9 +120,9 @@ if [ ! -d "$PAPER_DIR/EvoCodeBench-2403" ]; then
 fi
 
 # Copy our custom HuggingFace inference script since original repo only has local vLLM
-if [ -f "$PROJECT_DIR/traver/utils/LM_inference_api.py" ]; then
-    cp "$PROJECT_DIR/traver/utils/LM_inference_api.py" "$PAPER_DIR/traver/utils/"
-    echo "  ✓ Copied custom LM_inference_api.py"
+if [ -f "$PROJECT_DIR/traver/utils/LM_inference_hf.py" ]; then
+    cp "$PROJECT_DIR/traver/utils/LM_inference_hf.py" "$PAPER_DIR/traver/utils/"
+    echo "  ✓ Copied custom LM_inference_hf.py"
 fi
 
 cd "$PAPER_DIR"
@@ -246,7 +246,7 @@ for level in "${student_levels[@]}"; do
         log "    🔄 round_$rdx — $NUM_PROMPTS tasks..."
         ROUND_START=$SECONDS
 
-        PYTHONPATH="$PAPER_DIR/traver" python "$PAPER_DIR/traver/utils/LM_inference_api.py" \
+        PYTHONPATH="$PAPER_DIR/traver" python "$PAPER_DIR/traver/utils/LM_inference_hf.py" \
             --model_name_or_path "$STUDENT_MODEL" \
             --api_base "$HF_API_ENDPOINT" \
             --api_key "$HF_TOKEN" \

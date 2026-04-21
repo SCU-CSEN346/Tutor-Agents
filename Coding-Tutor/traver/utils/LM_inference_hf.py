@@ -9,7 +9,7 @@ Uses asyncio for concurrent API calls:
   - Exponential backoff with jitter on rate-limit (429) errors
 
 Usage:
-    python traver/utils/LM_inference_api.py \
+    python traver/utils/LM_inference_hf.py \
         --prompt_file prompt.jsonl \
         --output_dir output/ \
         --model_name_or_path meta-llama/Llama-3.1-8B-Instruct \
