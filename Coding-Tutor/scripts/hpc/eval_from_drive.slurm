@@ -12,20 +12,19 @@
 #SBATCH --mail-type=END
 
 # =================================================================
-# Coding-Tutor HPC: Evaluate Colab Dialogues (Original Paper Code)
+# Coding-Tutor HPC: Evaluate Colab Dialogues
 # =================================================================
-# Uses a FRESH clone of the original paper repo for clean evaluation.
-# Streams one student level at a time from Google Drive:
-#   1. Clone original Coding-Tutor repo (if needed)
-#   2. Download that level's dialogue JSONL from Drive
-#   3. Generate posttest prompts
-#   4. Run code generation (HF API)
-#   5. Run pass@k + recall@k
-#   6. Delete the downloaded dialogue file to free disk space
+# Runs directly from the git repo. Steps per student level:
+#   1. Download dialogue JSONL from Google Drive
+#   2. Generate posttest prompts
+#   3. Run code generation (local vLLM on GPU)
+#   4. Run pass@k + recall@k
+#   5. Clean up downloaded dialogue to free disk
 #
 # Prerequisites:
 #   - rclone configured with a remote named "gdrive"
-#   - EvoCodeBench set up on HPC (Source_Code + Dependency_Data)
+#   - EvoCodeBench set up (Source_Code + Dependency_Data)
+#   - Mistral-7B model cached locally
 #   - HF_TOKEN set
 #
 # Usage:
@@ -35,13 +34,13 @@
 
 set -eo pipefail
 
-# Our group project dir (for EvoCodeBench, models, output, etc.)
+# Our group project dir
 GROUP_DIR="/WAVE/projects/CSEN-346-Sp26/Group2"
-# Fresh clone of the ORIGINAL paper code (untouched)
-PAPER_DIR="$GROUP_DIR/Coding-Tutor-Original"
-# Our existing project dir (for EvoCodeBench + existing outputs)
-PROJECT_DIR="$GROUP_DIR/Coding-Tutor"
-PROGRESS_FILE="$PROJECT_DIR/output/colab_eval_progress.txt"
+# Git repo root
+REPO_DIR="$GROUP_DIR/Coding-Tutor"
+# Working directory (paper code lives here)
+WORK_DIR="$REPO_DIR/Coding-Tutor"
+PROGRESS_FILE="$WORK_DIR/output/colab_eval_progress.txt"
 
 module load CUDA/12.6.2
 
@@ -74,8 +73,7 @@ DRIVE_ROOT="Coding-Tutor-Colab"
 
 # Models — must match what Colab used
 TUTOR_MODEL="${TUTOR_MODEL:-meta-llama/Llama-3.1-70B-Instruct}"
-STUDENT_MODEL_LOCAL="$GROUP_DIR/models/Mistral-7B-Instruct-v0.2"
-STUDENT_MODEL="${STUDENT_MODEL:-$STUDENT_MODEL_LOCAL}"
+STUDENT_MODEL="$GROUP_DIR/models/Mistral-7B-Instruct-v0.2"
 TUTOR_MODEL_DIR="${TUTOR_MODEL_DIR:-Llama-3.1-70B-Instruct}"
 
 tutor_setting="traver"
@@ -83,64 +81,23 @@ student_levels=(low_level med_level high_level)
 rounds=(1 2 3 4 5 6 7 8)
 n=10
 
-# EvoCodeBench paths (from our existing project dir)
-ECB_ROOT="$PROJECT_DIR/EvoCodeBench-2403"
+# EvoCodeBench paths
+ECB_ROOT="$REPO_DIR/EvoCodeBench-2403"
 Source_Code_Root="$ECB_ROOT/Source_Code"
 Dependency_Root="$ECB_ROOT/Dependency_Data"
 
-if [ -f "$PROJECT_DIR/prompt/prompt_elements_final.jsonl" ]; then
-    # Force the metadata to be the exact paper dataset (avoids KeyError for internal repos like easyvolcap)
-    metadata_file="$PROJECT_DIR/prompt/prompt_elements_final.jsonl"
-else
+# Benchmark metadata (completion_path, tests, body_position, indent)
+metadata_file="$ECB_ROOT/metadata.jsonl"
+if [ ! -f "$metadata_file" ]; then
     metadata_file="$ECB_ROOT/data.jsonl"
 fi
 
-# Output goes into the original paper dir so paths are clean
-prompt_base_dir="$PAPER_DIR/prompt/student_posttest"
-output_base_dir="$PAPER_DIR/output/student_posttest"
+prompt_base_dir="$WORK_DIR/prompt/student_posttest"
+output_base_dir="$WORK_DIR/output/student_posttest"
 
-mkdir -p "$PROJECT_DIR/output"
+mkdir -p "$WORK_DIR/output"
 
-# =================================================================
-# STEP 0: Clone the ORIGINAL paper repo (clean codebase)
-# =================================================================
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "▶ STEP 0: Setting up original paper codebase..."
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-
-if [ -d "$PAPER_DIR/traver" ]; then
-    echo "  ✓ Original Coding-Tutor repo already cloned"
-else
-    echo "  Cloning original paper repo..."
-    git clone https://github.com/iwangjian/Coding-Tutor.git "$PAPER_DIR"
-    echo "  ✓ Cloned to $PAPER_DIR"
-fi
-
-# Copy prompt data from our project into the original repo layout
-if [ ! -f "$PAPER_DIR/prompt/prompt_elements_final.jsonl" ]; then
-    cp -r "$PROJECT_DIR/prompt" "$PAPER_DIR/"
-    echo "  ✓ Copied prompt data"
-fi
-
-# Symlink EvoCodeBench into the paper dir so pass_k.py can find Source_Code
-if [ ! -d "$PAPER_DIR/EvoCodeBench-2403" ]; then
-    ln -s "$ECB_ROOT" "$PAPER_DIR/EvoCodeBench-2403"
-    echo "  ✓ Linked EvoCodeBench"
-fi
-
-# Copy our custom HuggingFace inference script since original repo only has local vLLM
-if [ -f "$PROJECT_DIR/traver/utils/LM_inference_hf.py" ]; then
-    cp "$PROJECT_DIR/traver/utils/LM_inference_hf.py" "$PAPER_DIR/traver/utils/"
-    echo "  ✓ Copied custom LM_inference_hf.py"
-fi
-
-# Copy our modified LM_inference.py (adds --dtype support for V100)
-if [ -f "$PROJECT_DIR/traver/utils/LM_inference.py" ]; then
-    cp "$PROJECT_DIR/traver/utils/LM_inference.py" "$PAPER_DIR/traver/utils/"
-    echo "  ✓ Copied modified LM_inference.py (dtype support)"
-fi
-
-cd "$PAPER_DIR"
+cd "$WORK_DIR"
 
 # --- Pre-flight checks ---
 if [ ! -d "$Source_Code_Root" ]; then
@@ -163,53 +120,47 @@ fi
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "▶ Synchronizing Outputs from Google Drive..."
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-# Wipe the local HPC output specifically to ensure we only evaluate the exact completions in Drive
-if [ -d "$PAPER_DIR/output" ]; then
-    rm -rf "$PAPER_DIR/output"
-fi
-rclone copy "gdrive:$DRIVE_ROOT/output/" "$PAPER_DIR/output/" --progress 2>&1 | tail -5
+rclone copy "gdrive:$DRIVE_ROOT/output/" "$WORK_DIR/output/" --progress 2>&1 | tail -5
 echo "  ✓ Pulled output directory from Drive"
 
 # Unzip any zip archives that Colab uploaded to Drive
-for zipfile in $(find "$PAPER_DIR/output" -name '*.zip' 2>/dev/null); do
+for zipfile in $(find "$WORK_DIR/output" -name '*.zip' 2>/dev/null); do
     echo "  📦 Unzipping $(basename $zipfile)..."
     unzip -o -q "$zipfile" -d "$(dirname $zipfile)"
     rm -f "$zipfile"
 done
 
 # Download student model weights from Drive if not already cached
-if [ ! -f "$STUDENT_MODEL_LOCAL/config.json" ]; then
+if [ ! -f "$STUDENT_MODEL/config.json" ]; then
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo "▶ Downloading Mistral-7B from Google Drive..."
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    mkdir -p "$STUDENT_MODEL_LOCAL"
-    rclone copy "gdrive:$DRIVE_ROOT/models/Mistral-7B-Instruct-v0.2/" "$STUDENT_MODEL_LOCAL/" --progress 2>&1 | tail -5
-    echo "  ✓ Mistral-7B downloaded to $STUDENT_MODEL_LOCAL"
+    mkdir -p "$STUDENT_MODEL"
+    rclone copy "gdrive:$DRIVE_ROOT/models/Mistral-7B-Instruct-v0.2/" "$STUDENT_MODEL/" --progress 2>&1 | tail -5
+    echo "  ✓ Mistral-7B downloaded to $STUDENT_MODEL"
 else
-    echo "  ✓ Mistral-7B already cached at $STUDENT_MODEL_LOCAL"
+    echo "  ✓ Mistral-7B already cached at $STUDENT_MODEL"
 fi
 
 # Initialize progress file
 cat > "$PROGRESS_FILE" <<EOF
 ================================================================
-  COLAB → HPC EVALUATION (Original Paper Code)
+  Coding-Tutor HPC Evaluation
   Started: $(date)
 ================================================================
   Tutor:       $TUTOR_MODEL
   Student:     $STUDENT_MODEL
-  Drive path:  $DRIVE_ROOT
-  Paper code:  $PAPER_DIR
-  Source_Code:  $(ls "$Source_Code_Root" | wc -l) projects
+  Work dir:    $WORK_DIR
+  Source_Code: $(ls "$Source_Code_Root" | wc -l) projects
 ================================================================
 EOF
 
 echo "================================================================="
-echo "  Colab → HPC Evaluation (Original Paper Code)"
+echo "  Coding-Tutor HPC Evaluation"
 echo "================================================================="
 echo "  Tutor model:    $TUTOR_MODEL"
 echo "  Student model:  $STUDENT_MODEL"
-echo "  Paper code:     $PAPER_DIR"
-echo "  Drive path:     gdrive:$DRIVE_ROOT"
+echo "  Work dir:       $WORK_DIR"
 echo "  Source_Code:    $(ls "$Source_Code_Root" | wc -l) projects"
 echo "  Start:          $(date)"
 echo "================================================================="

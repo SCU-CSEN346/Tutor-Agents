@@ -190,6 +190,9 @@ def main():
     for namespace, outputs in output_data.items():
         assert len(outputs) == max_k, print(len(outputs))
         for output in outputs:   # only consider max_k completions
+            if namespace not in benchmark_data:
+                print(f"  ⚠️ namespace '{namespace}' NOT in benchmark_data ({len(benchmark_data)} entries). Skipping.")
+                continue
             data = benchmark_data[namespace]
             if not is_standalone(data):
                 completion = output['completion']

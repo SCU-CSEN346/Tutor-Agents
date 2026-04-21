@@ -4,7 +4,17 @@ from tqdm import tqdm
 from argparse import ArgumentParser
 import os
 import re
-from utils.utils import load_finished_data
+
+
+def load_finished_data(output_file):
+    """Load already-completed task IDs from output file."""
+    finished = set()
+    if os.path.exists(output_file):
+        with open(output_file, 'r') as f:
+            for line in f:
+                js = json.loads(line)
+                finished.add(js['namespace'])
+    return finished
 
 def parse_args():
     parser = ArgumentParser()
