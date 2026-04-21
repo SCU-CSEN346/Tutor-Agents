@@ -121,6 +121,10 @@ fi
 
 cd "$PAPER_DIR"
 
+# Make original repo modules act as packages so python -m works
+touch "traver/utils/__init__.py"
+touch "traver/parser/__init__.py"
+
 # --- Pre-flight checks ---
 if [ ! -d "$Source_Code_Root" ]; then
     echo "❌ Source_Code not found: $Source_Code_Root"
