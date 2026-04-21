@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name="colab-eval"
-#SBATCH --partition=cpu
+#SBATCH --partition=gpu
 #SBATCH --time=24:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
