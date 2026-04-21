@@ -246,15 +246,13 @@ for level in "${student_levels[@]}"; do
         log "    🔄 round_$rdx — $NUM_PROMPTS tasks..."
         ROUND_START=$SECONDS
 
-        PYTHONPATH="$PAPER_DIR/traver" python "$PAPER_DIR/traver/utils/LM_inference_hf.py" \
+        PYTHONPATH="$PAPER_DIR/traver" python "$PAPER_DIR/traver/utils/LM_inference.py" \
             --model_name_or_path "$STUDENT_MODEL" \
-            --api_base "$HF_API_ENDPOINT" \
-            --api_key "$HF_TOKEN" \
             --prompt_file "$PROMPT_FILE" \
             --output_dir "$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}" \
             --decoding "sampling" \
             --N $n \
-            --max_concurrent_tasks 5
+            --gpu_memory_utilization 0.90
 
         # Process raw completions into final format
         COMP_LM="$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}/completion_lm.jsonl"
