@@ -119,11 +119,13 @@ if [ ! -d "$PAPER_DIR/EvoCodeBench-2403" ]; then
     echo "  ✓ Linked EvoCodeBench"
 fi
 
-cd "$PAPER_DIR"
+# Copy our custom HuggingFace inference script since original repo only has local vLLM
+if [ -f "$PROJECT_DIR/traver/utils/LM_inference_api.py" ]; then
+    cp "$PROJECT_DIR/traver/utils/LM_inference_api.py" "$PAPER_DIR/traver/utils/"
+    echo "  ✓ Copied custom LM_inference_api.py"
+fi
 
-# Make original repo modules act as packages so python -m works
-touch "traver/utils/__init__.py"
-touch "traver/parser/__init__.py"
+cd "$PAPER_DIR"
 
 # --- Pre-flight checks ---
 if [ ! -d "$Source_Code_Root" ]; then
@@ -213,7 +215,7 @@ for level in "${student_levels[@]}"; do
     if [ -f "$PROMPT_DIR/prompt_round_1.jsonl" ]; then
         log "  ✓ Prompts already exist, skipping"
     else
-        PYTHONPATH="$PAPER_DIR/traver" python -m utils.make_prompt --student_posttest \
+        PYTHONPATH="$PAPER_DIR/traver" python "$PAPER_DIR/traver/utils/make_prompt.py" --student_posttest \
             --prompt_element_file "$PAPER_DIR/prompt/prompt_elements_final.jsonl" \
             --simulated_file "$LOCAL_DIALOGUE_FILE" \
             --output_dir "$PROMPT_DIR" \
@@ -244,7 +246,7 @@ for level in "${student_levels[@]}"; do
         log "    🔄 round_$rdx — $NUM_PROMPTS tasks..."
         ROUND_START=$SECONDS
 
-        PYTHONPATH="$PAPER_DIR/traver" python -m utils.LM_inference_api \
+        PYTHONPATH="$PAPER_DIR/traver" python "$PAPER_DIR/traver/utils/LM_inference_api.py" \
             --model_name_or_path "$STUDENT_MODEL" \
             --api_base "$HF_API_ENDPOINT" \
             --api_key "$HF_TOKEN" \
@@ -257,7 +259,7 @@ for level in "${student_levels[@]}"; do
         # Process raw completions into final format
         COMP_LM="$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}/completion_lm.jsonl"
         if [ -f "$COMP_LM" ]; then
-            PYTHONPATH="$PAPER_DIR/traver" python -m utils.process_completion \
+            PYTHONPATH="$PAPER_DIR/traver" python "$PAPER_DIR/traver/utils/process_completion.py" \
                 --completion_file "$COMP_LM" \
                 --output_file "$COMP_OUT"
         fi
@@ -279,7 +281,7 @@ for level in "${student_levels[@]}"; do
         EVAL_START=$SECONDS
 
         # pass@k
-        PYTHONPATH="$PAPER_DIR:$PAPER_DIR/traver" python -m parser.pass_k \
+        PYTHONPATH="$PAPER_DIR:$PAPER_DIR/traver" python "$PAPER_DIR/traver/parser/pass_k.py" \
             --output_file "$COMP_FILE" \
             --log_file "$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}/test_results.jsonl" \
             --data_file "$metadata_file" \
@@ -289,7 +291,7 @@ for level in "${student_levels[@]}"; do
 
         # recall@k
         if [ -d "$Dependency_Root" ]; then
-            PYTHONPATH="$PAPER_DIR:$PAPER_DIR/traver" python -m parser.recall_k \
+            PYTHONPATH="$PAPER_DIR:$PAPER_DIR/traver" python "$PAPER_DIR/traver/parser/recall_k.py" \
                 --output_file "$COMP_FILE" \
                 --log_file "$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}/dependency_results.jsonl" \
                 --data_file "$metadata_file" \
