@@ -1,7 +1,14 @@
 import json
 import os
 import re
-from utils.utils import load_json_data
+# Inlined from utils.utils to avoid import shadowing when running from within utils/
+def load_json_data(input_file: str):
+    data = []
+    with open(input_file, 'r') as f:
+        for line in f:
+            js = json.loads(line)
+            data.append(js)
+    return data
 from tqdm import tqdm
 from argparse import ArgumentParser
 import tiktoken

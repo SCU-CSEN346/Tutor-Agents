@@ -2,7 +2,7 @@
 #SBATCH --job-name="colab-eval"
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:1
-#SBATCH --time=24:00:00
+#SBATCH --time=48:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=4
@@ -12,13 +12,13 @@
 #SBATCH --mail-type=END
 
 # =================================================================
-# Coding-Tutor HPC: Evaluate Colab Dialogues
+# Coding-Tutor HPC: Generate Completions from Colab Dialogues
 # =================================================================
-# Runs directly from the git repo. Steps per student level:
+# Steps per student level:
 #   1. Download dialogue JSONL from Google Drive
-#   2. Generate posttest prompts
-#   3. Run code generation (local vLLM on GPU)
-#   4. Run pass@k + recall@k
+#   2. Generate posttest prompts (make_prompt.py)
+#   3. Run code generation (local Mistral-7B via vLLM)
+#   4. Process completions
 #   5. Clean up downloaded dialogue to free disk
 #
 # Prerequisites:
@@ -36,10 +36,8 @@ set -eo pipefail
 
 # Our group project dir
 GROUP_DIR="/WAVE/projects/CSEN-346-Sp26/Group2"
-# Git repo root
 REPO_DIR="$GROUP_DIR/Coding-Tutor"
-# Working directory (paper code lives here)
-WORK_DIR="$REPO_DIR/Coding-Tutor"
+WORK_DIR="$REPO_DIR"
 PROGRESS_FILE="$WORK_DIR/output/colab_eval_progress.txt"
 
 module load CUDA/12.6.2
@@ -55,7 +53,7 @@ echo "======================"
 
 # --- Helper functions ---
 log() {
-    echo "$1"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" >> "$PROGRESS_FILE"
 }
 
@@ -71,7 +69,7 @@ HF_API_ENDPOINT="https://router.huggingface.co/v1"
 # Google Drive path (relative to your Drive root)
 DRIVE_ROOT="Coding-Tutor-Colab"
 
-# Models — must match what Colab used
+# Models
 TUTOR_MODEL="${TUTOR_MODEL:-meta-llama/Llama-3.1-70B-Instruct}"
 STUDENT_MODEL="$GROUP_DIR/models/Mistral-7B-Instruct-v0.2"
 TUTOR_MODEL_DIR="${TUTOR_MODEL_DIR:-Llama-3.1-70B-Instruct}"
@@ -85,90 +83,130 @@ n=10
 ECB_ROOT="$REPO_DIR/EvoCodeBench-2403"
 Source_Code_Root="$ECB_ROOT/Source_Code"
 Dependency_Root="$ECB_ROOT/Dependency_Data"
-
-# Benchmark metadata (completion_path, tests, body_position, indent)
-metadata_file="$ECB_ROOT/metadata.jsonl"
-if [ ! -f "$metadata_file" ]; then
-    metadata_file="$ECB_ROOT/data.jsonl"
-fi
+metadata_file="$ECB_ROOT/data.jsonl"
 
 prompt_base_dir="$WORK_DIR/prompt/student_posttest"
 output_base_dir="$WORK_DIR/output/student_posttest"
 
 mkdir -p "$WORK_DIR/output"
-
 cd "$WORK_DIR"
 
+# =================================================================
+# NOTE: To start fresh, manually delete old data on HPC first:
+#   rm -rf output/student_posttest/traver/Llama-3.1-70B-Instruct/*/
+#   rm -rf prompt/student_posttest/traver/Llama-3.1-70B-Instruct/*/
+# The script will skip rounds that already have completion.jsonl.
+# =================================================================
+
 # --- Pre-flight checks ---
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "▶ Pre-flight checks..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
 if [ ! -d "$Source_Code_Root" ]; then
-    echo "❌ Source_Code not found: $Source_Code_Root"
-    echo "   Run: bash scripts/hpc/setup_evocodebench.sh"
+    echo "  ❌ Source_Code not found: $Source_Code_Root"
     exit 1
 fi
+echo "  ✓ Source_Code: $(ls "$Source_Code_Root" | wc -l) projects"
 
 if ! command -v rclone &> /dev/null; then
-    echo "❌ rclone not found. Install: conda install -c conda-forge rclone"
+    echo "  ❌ rclone not found"
     exit 1
 fi
+echo "  ✓ rclone available"
 
 if ! rclone lsd "gdrive:$DRIVE_ROOT" &>/dev/null; then
-    echo "❌ Cannot access Google Drive path: gdrive:$DRIVE_ROOT"
-    echo "   Run: rclone config"
+    echo "  ❌ Cannot access gdrive:$DRIVE_ROOT"
     exit 1
 fi
+echo "  ✓ Google Drive accessible"
 
+if [ ! -f "$STUDENT_MODEL/config.json" ]; then
+    echo "  ⚠️  Student model not cached, will download from Drive"
+else
+    echo "  ✓ Student model: $STUDENT_MODEL"
+fi
+
+if [ ! -f "$metadata_file" ]; then
+    echo "  ❌ Metadata file not found: $metadata_file"
+    exit 1
+fi
+echo "  ✓ Metadata: $(wc -l < "$metadata_file") tasks in $metadata_file"
+echo "  ✓ Prompt elements: $WORK_DIR/prompt/prompt_elements_final.jsonl"
+echo ""
+
+# --- Check what dialogues exist on Drive ---
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "▶ Synchronizing Outputs from Google Drive..."
+echo "▶ Checking dialogue files on Drive..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+for level in "${student_levels[@]}"; do
+    DRIVE_PATH="gdrive:$DRIVE_ROOT/output/dialogue/$tutor_setting/$TUTOR_MODEL_DIR/$level/"
+    if rclone ls "$DRIVE_PATH" &>/dev/null; then
+        SIZE=$(rclone size "$DRIVE_PATH" 2>/dev/null | head -1 || echo "unknown")
+        echo "  ✓ $level: $SIZE"
+    else
+        echo "  ❌ $level: NOT FOUND on Drive"
+    fi
+done
+echo ""
+
+# Sync output directory from Drive (gets dialogue files)
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "▶ Synchronizing dialogue files from Google Drive..."
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 rclone copy "gdrive:$DRIVE_ROOT/output/" "$WORK_DIR/output/" --progress 2>&1 | tail -5
 echo "  ✓ Pulled output directory from Drive"
 
-# Unzip any zip archives that Colab uploaded to Drive
+# Unzip any zip archives
 for zipfile in $(find "$WORK_DIR/output" -name '*.zip' 2>/dev/null); do
     echo "  📦 Unzipping $(basename $zipfile)..."
     unzip -o -q "$zipfile" -d "$(dirname $zipfile)"
     rm -f "$zipfile"
 done
 
-# Download student model weights from Drive if not already cached
+# Download student model if needed
 if [ ! -f "$STUDENT_MODEL/config.json" ]; then
+    echo ""
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo "▶ Downloading Mistral-7B from Google Drive..."
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     mkdir -p "$STUDENT_MODEL"
     rclone copy "gdrive:$DRIVE_ROOT/models/Mistral-7B-Instruct-v0.2/" "$STUDENT_MODEL/" --progress 2>&1 | tail -5
-    echo "  ✓ Mistral-7B downloaded to $STUDENT_MODEL"
+    echo "  ✓ Mistral-7B downloaded"
 else
-    echo "  ✓ Mistral-7B already cached at $STUDENT_MODEL"
+    echo "  ✓ Mistral-7B already cached"
 fi
 
 # Initialize progress file
 cat > "$PROGRESS_FILE" <<EOF
 ================================================================
-  Coding-Tutor HPC Evaluation
+  Coding-Tutor HPC: Completion Generation (Clean Start)
   Started: $(date)
 ================================================================
   Tutor:       $TUTOR_MODEL
   Student:     $STUDENT_MODEL
-  Work dir:    $WORK_DIR
-  Source_Code: $(ls "$Source_Code_Root" | wc -l) projects
+  Levels:      ${student_levels[*]}
+  Rounds:      ${rounds[*]}
+  N:           $n completions per task
 ================================================================
 EOF
 
+echo ""
 echo "================================================================="
-echo "  Coding-Tutor HPC Evaluation"
+echo "  Coding-Tutor HPC: Completion Generation"
 echo "================================================================="
 echo "  Tutor model:    $TUTOR_MODEL"
 echo "  Student model:  $STUDENT_MODEL"
-echo "  Work dir:       $WORK_DIR"
-echo "  Source_Code:    $(ls "$Source_Code_Root" | wc -l) projects"
+echo "  Levels:         ${student_levels[*]}"
+echo "  Rounds:         ${rounds[*]}"
+echo "  N:              $n completions per task"
 echo "  Start:          $(date)"
 echo "================================================================="
 
 PIPELINE_START=$SECONDS
 
 # =================================================================
-# MAIN LOOP: Process one level at a time (stream from Drive)
+# MAIN LOOP: Process one level at a time
 # =================================================================
 LEVEL_NUM=1
 for level in "${student_levels[@]}"; do
@@ -180,22 +218,23 @@ for level in "${student_levels[@]}"; do
 
     # --- Path setup ---
     DRIVE_DIALOGUE_PATH="$DRIVE_ROOT/output/dialogue/$tutor_setting/$TUTOR_MODEL_DIR/$level/simulated_dialogs.jsonl"
-    LOCAL_DIALOGUE_DIR="$PAPER_DIR/output/dialogue/$tutor_setting/$TUTOR_MODEL_DIR/$level"
+    LOCAL_DIALOGUE_DIR="$WORK_DIR/output/dialogue/$tutor_setting/$TUTOR_MODEL_DIR/$level"
     LOCAL_DIALOGUE_FILE="$LOCAL_DIALOGUE_DIR/simulated_dialogs.jsonl"
 
-    # ── Step A: Download this level's dialogue from Drive ──
-    log "  📥 Downloading $level dialogue from Drive..."
+    # ── Step A: Check/Download dialogue ──
+    log "  📥 Step A: Getting $level dialogue..."
     mkdir -p "$LOCAL_DIALOGUE_DIR"
 
     if [ -f "$LOCAL_DIALOGUE_FILE" ]; then
         NUM_EXISTING=$(wc -l < "$LOCAL_DIALOGUE_FILE")
-        log "  ✓ Already exists locally ($NUM_EXISTING dialogues), skipping download"
+        log "  ✓ Already exists locally ($NUM_EXISTING dialogues)"
     else
+        log "  Downloading from gdrive:$DRIVE_DIALOGUE_PATH"
         rclone copy "gdrive:$DRIVE_DIALOGUE_PATH" "$LOCAL_DIALOGUE_DIR/" --progress 2>&1 | tail -5
 
         if [ ! -f "$LOCAL_DIALOGUE_FILE" ]; then
-            log "  ⚠  Download failed or file not found on Drive. Skipping $level."
-            log "  Tried: gdrive:$DRIVE_DIALOGUE_PATH"
+            log "  ❌ Download failed! File not found on Drive. Skipping $level."
+            log "     Tried: gdrive:$DRIVE_DIALOGUE_PATH"
             LEVEL_NUM=$((LEVEL_NUM + 1))
             continue
         fi
@@ -203,130 +242,114 @@ for level in "${student_levels[@]}"; do
         log "  ✓ Downloaded $NUM_DIALS dialogues"
     fi
 
+    # Debug: Dialogue turn distribution
+    log "  📊 Dialogue analysis:"
+    python3 -c "
+import json
+from collections import Counter
+turns = {}
+with open('$LOCAL_DIALOGUE_FILE') as f:
+    for line in f:
+        js = json.loads(line)
+        turns[js['namespace']] = len(js.get('conversation', [])) // 2
+dist = Counter(sorted(turns.values()))
+total = len(turns)
+print(f'     Total tasks: {total}')
+for t, count in sorted(dist.items()):
+    print(f'     {t} rounds: {count} tasks ({count/total*100:.0f}%)')
+"
+
     # ── Step B: Generate posttest prompts ──
-    log "  📝 Generating posttest prompts..."
+    log "  📝 Step B: Generating posttest prompts..."
     PROMPT_DIR="$prompt_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level"
 
-    if [ -f "$PROMPT_DIR/prompt_round_1.jsonl" ]; then
-        log "  ✓ Prompts already exist, skipping"
-    else
-        PYTHONPATH="$PAPER_DIR/traver" python "$PAPER_DIR/traver/utils/make_prompt.py" --student_posttest \
-            --prompt_element_file "$PAPER_DIR/prompt/prompt_elements_final.jsonl" \
-            --simulated_file "$LOCAL_DIALOGUE_FILE" \
-            --output_dir "$PROMPT_DIR" \
-            --student_level "$level" \
-            --max_interaction_round 8 \
-            --max_cognitive_load 60
+    PYTHONPATH="$WORK_DIR/traver" python "$WORK_DIR/traver/utils/make_prompt.py" --student_posttest \
+        --prompt_element_file "$WORK_DIR/prompt/prompt_elements_final.jsonl" \
+        --simulated_file "$LOCAL_DIALOGUE_FILE" \
+        --output_dir "$PROMPT_DIR" \
+        --student_level "$level" \
+        --max_interaction_round 8 \
+        --max_cognitive_load 60
 
-        NUM_ROUNDS=$(ls "$PROMPT_DIR"/prompt_round_*.jsonl 2>/dev/null | wc -l)
-        log "  ✓ $NUM_ROUNDS prompt rounds created"
-    fi
+    # Debug: Show prompt files created
+    log "  📊 Prompt files created:"
+    for rdx in "${rounds[@]}"; do
+        PFILE="$PROMPT_DIR/prompt_round_${rdx}.jsonl"
+        if [ -f "$PFILE" ]; then
+            PLINES=$(wc -l < "$PFILE")
+            log "     round_$rdx: $PLINES prompts"
+        else
+            log "     round_$rdx: NOT CREATED (no tasks with $rdx+ rounds)"
+        fi
+    done
 
     # ── Step C: Code generation (per round) ──
-    log "  🔧 Running code generation..."
+    log "  🔧 Step C: Running code generation..."
     for rdx in "${rounds[@]}"; do
         PROMPT_FILE="$PROMPT_DIR/prompt_round_${rdx}.jsonl"
-        COMP_OUT="$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}/completion.jsonl"
+        COMP_DIR="$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}"
+        COMP_OUT="$COMP_DIR/completion.jsonl"
 
         if [ ! -f "$PROMPT_FILE" ]; then
-            continue
+            log "    ⏭️  round_$rdx: no prompt file, skipping remaining rounds"
+            break
         fi
 
-        if [ -f "$COMP_OUT" ]; then
-            log "    ✓ round_$rdx — completions exist, skipping"
-            continue
-        fi
+        NUM_PROMPTS=$(wc -l < "$PROMPT_FILE")
+        mkdir -p "$COMP_DIR"
 
-        # If raw completions exist from Drive but haven't been processed yet, just process them
-        COMP_LM_CHECK="$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}/completion_lm.jsonl"
+        # If raw completions exist from Drive but haven't been processed
+        COMP_LM_CHECK="$COMP_DIR/completion_lm.jsonl"
         if [ -f "$COMP_LM_CHECK" ]; then
-            log "    🔄 round_$rdx — processing existing completion_lm.jsonl from Drive..."
-            PYTHONPATH="$PAPER_DIR/traver" python "$PAPER_DIR/traver/utils/process_completion.py" \
+            log "    🔄 round_$rdx: processing existing completion_lm.jsonl..."
+            PYTHONPATH="$WORK_DIR/traver" python "$WORK_DIR/traver/utils/process_completion.py" \
                 --completion_file "$COMP_LM_CHECK" \
                 --output_file "$COMP_OUT"
-            log "    ✓ round_$rdx — processed"
+            NUM_COMP=$(wc -l < "$COMP_OUT" 2>/dev/null || echo 0)
+            log "    ✓ round_$rdx: $NUM_COMP completions (from existing LM output)"
             continue
         fi
 
-        # No completions at all — need to generate (requires GPU + vLLM)
-        NUM_PROMPTS=$(wc -l < "$PROMPT_FILE")
-        log "    🔄 round_$rdx — $NUM_PROMPTS tasks (generating via vLLM)..."
+        # Generate from scratch via vLLM
+        log "    🔄 round_$rdx: generating $NUM_PROMPTS × $n = $((NUM_PROMPTS * n)) completions via vLLM..."
         ROUND_START=$SECONDS
 
-        PYTHONPATH="$PAPER_DIR/traver" python "$PAPER_DIR/traver/utils/LM_inference.py" \
+        PYTHONPATH="$WORK_DIR/traver" python "$WORK_DIR/traver/utils/LM_inference.py" \
             --model_name_or_path "$STUDENT_MODEL" \
             --prompt_file "$PROMPT_FILE" \
-            --output_dir "$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}" \
+            --output_dir "$COMP_DIR" \
             --decoding "sampling" \
             --N $n \
             --dtype half \
             --gpu_memory_utilization 0.90
 
-        # Process raw completions into final format
-        COMP_LM="$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}/completion_lm.jsonl"
+        # Process raw completions
+        COMP_LM="$COMP_DIR/completion_lm.jsonl"
         if [ -f "$COMP_LM" ]; then
-            PYTHONPATH="$PAPER_DIR/traver" python "$PAPER_DIR/traver/utils/process_completion.py" \
+            COMP_LM_LINES=$(wc -l < "$COMP_LM")
+            log "    📄 completion_lm.jsonl: $COMP_LM_LINES lines"
+            PYTHONPATH="$WORK_DIR/traver" python "$WORK_DIR/traver/utils/process_completion.py" \
                 --completion_file "$COMP_LM" \
                 --output_file "$COMP_OUT"
+        else
+            log "    ❌ round_$rdx: completion_lm.jsonl NOT created!"
         fi
 
         ROUND_ELAPSED=$((SECONDS - ROUND_START))
-        NUM_COMP=$(wc -l < "$COMP_OUT" 2>/dev/null || echo 0)
-        log "    ✓ round_$rdx — $NUM_COMP completions ($(fmt_time $ROUND_ELAPSED))"
-    done
-
-    # ── Step D: Evaluation (pass@k + recall@k per round) ──
-    log "  📊 Running evaluation..."
-    for rdx in "${rounds[@]}"; do
-        COMP_FILE="$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}/completion.jsonl"
-        if [ ! -f "$COMP_FILE" ]; then
-            continue
-        fi
-
-        log "    🔄 Evaluating round_$rdx..."
-        EVAL_START=$SECONDS
-
-        # pass@k
-        PYTHONPATH="$PAPER_DIR:$PAPER_DIR/traver" python "$PAPER_DIR/traver/parser/pass_k.py" \
-            --output_file "$COMP_FILE" \
-            --log_file "$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}/test_results.jsonl" \
-            --data_file "$metadata_file" \
-            --source_code_root "$Source_Code_Root" \
-            --k "1,3,5,10" --n $n \
-            2>&1 | tee -a "$output_base_dir/pass_colab_traver_${level}_round${rdx}.log"
-
-        # recall@k
-        if [ -d "$Dependency_Root" ]; then
-            PYTHONPATH="$PAPER_DIR:$PAPER_DIR/traver" python "$PAPER_DIR/traver/parser/recall_k.py" \
-                --output_file "$COMP_FILE" \
-                --log_file "$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}/dependency_results.jsonl" \
-                --data_file "$metadata_file" \
-                --source_code_root "$Source_Code_Root" \
-                --dependency_data_root "$Dependency_Root" \
-                --k "1,3,5,10" \
-                2>&1 | tee -a "$output_base_dir/recall_colab_traver_${level}_round${rdx}.log"
-        fi
-
-        EVAL_ELAPSED=$((SECONDS - EVAL_START))
-
-        TEST_FILE="$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}/test_results.jsonl"
-        if [ -f "$TEST_FILE" ]; then
-            PASS_FAIL=$(python3 -c "
-import json
-results = [json.loads(l) for l in open('$TEST_FILE')]
-passed = sum(1 for r in results if r.get('Result') == 'Pass')
-total = len(results)
-rate = (passed/total*100) if total > 0 else 0
-print(f'{passed}/{total} pass ({rate:.1f}%)')
-" 2>/dev/null || echo 'N/A')
-            log "    ✓ round_$rdx — $PASS_FAIL ($(fmt_time $EVAL_ELAPSED))"
+        if [ -f "$COMP_OUT" ]; then
+            NUM_COMP=$(wc -l < "$COMP_OUT")
+            log "    ✓ round_$rdx: $NUM_COMP completions ($(fmt_time $ROUND_ELAPSED))"
+        else
+            log "    ❌ round_$rdx: completion.jsonl NOT created! ($(fmt_time $ROUND_ELAPSED))"
         fi
     done
 
-    # ── Step E: Cleanup — delete downloaded dialogue to free disk ──
-    log "  🗑️  Cleaning up downloaded dialogue file..."
+    # ── Step D: Cleanup ──
+    log "  🗑️  Step D: Cleaning up dialogue file..."
     rm -f "$LOCAL_DIALOGUE_FILE"
-    log "  ✓ $level COMPLETE ($(fmt_time $((SECONDS - LEVEL_START))))"
+
+    LEVEL_ELAPSED=$((SECONDS - LEVEL_START))
+    log "  ✅ $level COMPLETE ($(fmt_time $LEVEL_ELAPSED))"
 
     LEVEL_NUM=$((LEVEL_NUM + 1))
 done
@@ -337,73 +360,27 @@ done
 TOTAL_ELAPSED=$((SECONDS - PIPELINE_START))
 echo ""
 echo "================================================================="
-log "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-log "  🎉 COLAB → HPC EVALUATION COMPLETE"
+log "  🎉 COMPLETION GENERATION COMPLETE"
 log "  Total time: $(fmt_time $TOTAL_ELAPSED)"
 log "  End: $(date)"
-log "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-
-# Print results summary table
-log ""
-log "  📊 COLAB-TRAVER RESULTS (pass rate per round)"
-log "  ─────────────────────────────────────────────────"
-log "  Round   low_level     med_level     high_level"
-for rdx in "${rounds[@]}"; do
-    ROW="  R$rdx    "
-    for level in "${student_levels[@]}"; do
-        TEST_FILE="$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}/test_results.jsonl"
-        if [ -f "$TEST_FILE" ]; then
-            RATE=$(python3 -c "
-import json
-results = [json.loads(l) for l in open('$TEST_FILE')]
-passed = sum(1 for r in results if r.get('Result') == 'Pass')
-total = len(results)
-rate = (passed/total*100) if total > 0 else 0
-print(f'{rate:>6.1f}%')
-" 2>/dev/null || echo '   N/A ')
-        else
-            RATE="   N/A "
-        fi
-        ROW="${ROW}${RATE}       "
-    done
-    log "$ROW"
-done
-log "  ─────────────────────────────────────────────────"
-
-# Compare with vanilla baseline if available
-VANILLA_DIR="$PROJECT_DIR/output/student_posttest/vanilla/Llama-3.3-70B-Instruct"
-if [ -d "$VANILLA_DIR" ]; then
-    log ""
-    log "  📊 VANILLA BASELINE (for comparison)"
-    log "  ─────────────────────────────────────────────────"
-    log "  Round   low_level     med_level     high_level"
-    for rdx in "${rounds[@]}"; do
-        ROW="  R$rdx    "
-        for level in "${student_levels[@]}"; do
-            TEST_FILE="$VANILLA_DIR/$level/round_${rdx}/test_results.jsonl"
-            if [ -f "$TEST_FILE" ]; then
-                RATE=$(python3 -c "
-import json
-results = [json.loads(l) for l in open('$TEST_FILE')]
-passed = sum(1 for r in results if r.get('Result') == 'Pass')
-total = len(results)
-rate = (passed/total*100) if total > 0 else 0
-print(f'{rate:>6.1f}%')
-" 2>/dev/null || echo '   N/A ')
-            else
-                RATE="   N/A "
-            fi
-            ROW="${ROW}${RATE}       "
-        done
-        log "$ROW"
-    done
-    log "  ─────────────────────────────────────────────────"
-fi
-
 echo "================================================================="
 echo ""
-echo "  Progress log:  $PROGRESS_FILE"
-echo "  Paper code:    $PAPER_DIR"
-echo "  Results:       $output_base_dir"
+echo "  📊 Completion file inventory:"
+echo "  ─────────────────────────────────────────────────"
+for level in "${student_levels[@]}"; do
+    echo "  === $level ==="
+    for rdx in "${rounds[@]}"; do
+        COMP="$output_base_dir/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}/completion.jsonl"
+        if [ -f "$COMP" ]; then
+            echo "    round_$rdx: $(wc -l < "$COMP") completions ✓"
+        else
+            echo "    round_$rdx: MISSING"
+        fi
+    done
+    echo ""
+done
+echo "  ─────────────────────────────────────────────────"
 echo ""
-echo "  To view results: cat $PROGRESS_FILE"
+echo "  Next step: run eval_by_project.slurm for evaluation"
+echo "    sbatch scripts/hpc/eval_by_project.slurm"
+echo ""

@@ -4,7 +4,7 @@ from tqdm import tqdm
 import os
 from argparse import ArgumentParser
 import textwrap
-from .add_func_call import process
+from parser.add_func_call import process
 
 
 def get_parser():
@@ -59,7 +59,7 @@ def report_results(args, k_list, output_data, benchmark_data):
     for namespace, outputs in output_data.items():
         for output in outputs:
             completion = output['completion']
-            if namespace in parse_results:
+            if namespace in parse_results and namespace in benchmark_data:
                 generated_dependency = parse_results[namespace][completion]
                 data = benchmark_data[namespace]
                 reference_dependency = data['dependency']
@@ -67,6 +67,11 @@ def report_results(args, k_list, output_data, benchmark_data):
                 if namespace not in results:
                     results[namespace] = []
                 results[namespace].append(recall)
+
+    if not results:
+        for k in k_list:
+            print(f"Recall@{k}: N/A (no non-standalone tasks)")
+        return
 
     for k in k_list:
         recall = 0
@@ -185,13 +190,14 @@ def main():
             namespace = js['namespace']
             benchmark_data[namespace] = js
     
-    # Skip the finished data, deuplicate completions, and standalone completions
+    # Skip the finished data, deduplicate completions, and standalone completions
     todo_output_data = []
+    skipped_namespaces = set()
     for namespace, outputs in output_data.items():
         assert len(outputs) == max_k, print(len(outputs))
         for output in outputs:   # only consider max_k completions
             if namespace not in benchmark_data:
-                print(f"  ⚠️ namespace '{namespace}' NOT in benchmark_data ({len(benchmark_data)} entries). Skipping.")
+                skipped_namespaces.add(namespace)
                 continue
             data = benchmark_data[namespace]
             if not is_standalone(data):
@@ -203,6 +209,8 @@ def main():
                 elif completion not in finished_data[namespace]:
                     todo_output_data.append(output)
                     finished_data[namespace].add(completion)
+    if skipped_namespaces:
+        print(f"  Skipped {len(skipped_namespaces)} namespaces not in benchmark_data")
     print(f"TODO Completions: {len(todo_output_data)}\n")
 
     # release memory

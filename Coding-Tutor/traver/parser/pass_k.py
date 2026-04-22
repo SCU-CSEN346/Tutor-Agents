@@ -149,7 +149,23 @@ def report_results(args, benchmark_data):
                     results[namespace] = 0
                 if namespace in passed_completion and completion in passed_completion[namespace]:
                     results[namespace] += 1
-            
+    # Debug: show tasks that scored 0 passes (all completions failed)
+    zero_tasks = [(ns, benchmark_data[ns]['completion_path'].split('/')[0]) 
+                  for ns, passes in results.items() if passes == 0]
+    nonzero_tasks = [(ns, passes) for ns, passes in results.items() if passes > 0]
+    
+    print(f"\n  📊 Evaluation Summary:")
+    print(f"     Total tasks evaluated: {len(results)}")
+    print(f"     Tasks with ≥1 pass:   {len(nonzero_tasks)}")
+    print(f"     Tasks with 0 passes:  {len(zero_tasks)}")
+    
+    if zero_tasks:
+        print(f"\n  ⚠️  0% tasks (all {args.n} completions failed):")
+        from collections import Counter
+        zero_by_project = Counter(proj for _, proj in zero_tasks)
+        for proj, count in sorted(zero_by_project.items(), key=lambda x: -x[1]):
+            print(f"     {proj}: {count} tasks")
+
     # Compute Pass@k
     k_list = [int(k) for k in args.k.split(',')]
     for k in k_list:
