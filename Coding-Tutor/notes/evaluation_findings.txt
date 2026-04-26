@@ -1,0 +1,471 @@
+================================================================
+  TRAVER Evaluation Findings — Notes for Report
+  Date: 2026-04-21
+================================================================
+
+## Dialogue Turn Distribution (low_level)
+
+Turn distribution: Counter({8: 69, 1: 31})
+
+- 31 tasks (31%): Converged in 1 turn — student solved it immediately
+- 69 tasks (69%): Never converged — went through all 8 rounds of tutoring
+- NO tasks converged at turns 2-7 (bimodal distribution)
+
+### Interpretation
+The Traver tutoring is most effective at the FIRST interaction. If the 
+low-level student doesn't solve it after round 1, additional rounds of 
+tutoring (2-8) don't help. This suggests:
+  - The verifier correctly identifies easy tasks early
+  - Harder tasks remain unsolved regardless of tutoring rounds
+  - Possible that student model (Mistral-7B) has a capability ceiling
+    that tutoring alone can't overcome
+
+### ⚠️ Verifier Premature Stopping (Important Finding)
+
+The verifier sometimes terminates conversations after 1 round even when
+the student hasn't produced code. Example from McMiner-TRAVER low_level:
+
+  ========= Arena Start! ==========
+  [Tutor->all]: Hello, how's your Python knowledge, especially with PyTorch?
+  [student->all]: Hi there! I'm a college student learning Python, but I
+    don't have much experience with PyTorch yet. I've written some basic
+    Python scripts, though. Could you please explain what the inner_outer
+    function is supposed to do and how it's related to PyTorch?
+  ========= Arena Ended! ==========
+
+The student asked a question (no code submitted), yet the verifier scored
+the response above the threshold, triggering early stop. This is a false
+positive — the verifier is not well-calibrated for non-code responses.
+
+This explains the bimodal distribution:
+  - 1-round tasks: verifier prematurely says "student gets it"
+  - 8-round tasks: verifier never gets satisfied
+  - No tasks at rounds 2-7: once it doesn't stop at round 1, it never stops
+
+REPORT IMPLICATION: The verifier's early-stop accuracy is a weakness of
+the TRAVER framework. The lack of intermediate convergence (rounds 2-7)
+suggests the verifier is binary — either it triggers immediately or not at all.
+
+## Dialogue Turn Distribution (med_level)
+
+Turn distribution: Counter({8: 61, 1: 38, 3: 1})
+
+- 38 tasks (38%): Converged in 1 turn (more than low_level's 31%)
+- 1 task (1%): Converged at round 3 — ONLY non-bimodal case!
+- 61 tasks (61%): Never converged — all 8 rounds
+
+### Comparison: low_level vs med_level
+  low_level:  31% early stop, 69% all 8 rounds
+  med_level:  38% early stop, 61% all 8 rounds, 1% at round 3
+
+The med_level student is slightly better — more tasks converge early.
+The single round-3 convergence is notable: it's the only evidence that
+multi-round tutoring CAN help, but it's extremely rare (1%).
+
+### TODO: Compare with med_level and high_level
+- Do higher-level students show a different convergence pattern?
+- Do more tasks converge in intermediate rounds (2-7)?
+- This would indicate tutoring effectiveness varies by student skill
+
+## Completion File Line Counts (low_level)
+
+  round_1: 1000 lines  (100 tasks × 10 completions)
+  round_2: 690 lines   (69 tasks × 10 completions)
+  round_3: 690 lines   (69 tasks × 10 completions)
+  round_4: 690 lines
+  round_5: 690 lines
+  round_6: 690 lines
+  round_7: 690 lines
+  round_8: 690 lines
+
+  med_level: ALL MISSING — not yet generated on HPC
+  high_level: ALL MISSING — not yet generated on HPC
+
+## Partial Evaluation Results (low_level, per-project)
+
+### stable-diffusion-webui-forge (3 tasks)
+  low_level/round_1:
+    Pass@1:  93.3%
+    Pass@3:  100%
+    Pass@5:  100%
+    Pass@10: 100%
+  → Strong performance, nearly all completions pass
+
+### Python-Type-Challenges (1 task)
+  All rounds: Pass@k = 0%
+  Reason: Requires Python 3.11+ (StrEnum), HPC has 3.10
+  → Not a model failure, environment incompatibility
+
+### microsearch (2 tasks)
+  low_level/round_1: Pass@k = 0% (all tasks, test collection error)
+  Recall@k: all 0% (both tasks are standalone, no deps to check)
+
+## Known Issues Fixed
+1. recall_k.py KeyError — added `namespace in benchmark_data` guard
+2. recall_k.py ZeroDivisionError — added guard for empty results
+3. recall_k.py warning spam — replaced per-namespace prints with counter
+4. eval_by_project.slurm — added early exit when conversation rounds end
+
+## Pipeline Status
+- eval_from_drive.slurm: Modified to only generate completions (no eval)
+- eval_by_project.slurm: Handles evaluation with isolated venvs per project
+- Need to run eval_from_drive.slurm first to generate med/high completions
+
+
+## Why does the tutor end the conversation on a student's question?
+
+student->all]: I see. After writing all the chunks, the 'done' method generates
+an index file for the written chunks using the 'write_chunks_index' method. This
+method is likely responsible for writing the index file with the paths of all 
+the written chunks. Is that correct?
+[Tutor->all]: Yes, that's correct. The 'write_chunks_index' method writes the 
+index file. Finally, the '_is_done' attribute is set to True, and the 
+'filepaths' list is returned, indicating completion of the writing process.
+[student->all]: I understand that once the index file is generated, the 
+'_is_done' attribute is set to True to mark the completion of the writing 
+process. The 'done' method then returns the 'filepaths' list, which contains the
+paths of all the written chunks. This list can be used to keep track of the 
+location of the written data for future reference.
+
+Is it common practice to return the list of file paths when completing a writing
+process, or is this specific to this particular 'BinaryWriter' class?
+
+
+## Next Week: Framework Improvements (after baseline complete)
+
+### Why Premature Stopping Happens (Root Cause)
+
+Turn order is hardcoded: Tutor always goes first (round-robin in 
+chatarena/environments/conversation.py line 43-47).
+
+The Moderator checks is_terminal() after EVERY turn (moderator_period="turn"),
+not just after full rounds. The verifier evaluates the student's TEXT response,
+not actual code execution. So when the student says something that sounds
+knowledgeable, the verifier triggers a false positive.
+
+Key code locations:
+  - Turn order: chatarena/environments/conversation.py:43-47
+  - Terminal check: chatarena/environments/conversation.py:130-144
+  - Verifier scoring: chatarena/agent_tutor.py:101
+  - Verifier model: traver/verifier/model.py:59-77
+
+### Fix 1: Minimum Rounds Before Early Stop (Easy, No Retraining)
+
+In conversation.py line 144, add a minimum round threshold:
+  terminal = self._current_turn >= MIN_ROUNDS and (
+      self.moderator.is_terminal(moderator_history) or self.is_terminal()
+  )
+This ensures at least N rounds of tutoring before allowing termination.
+
+### Fix 2: Require Code in Student Response (Easy, No Retraining)
+
+Only check the verifier if the student actually submitted code:
+  if "def " in action or "import " in action or "```" in action:
+      terminal = self.moderator.is_terminal(...)
+  else:
+      terminal = False  # student is still asking questions, keep going
+
+### Fix 3: Raise Verifier Threshold (Easy, No Retraining)
+
+The verifier score threshold can be tuned without retraining. Find where
+the moderator calls is_terminal() and increase the score cutoff.
+
+### Fix 4: Retrain the Verifier (Possible on HPC)
+
+Resources needed:
+  - HPC V100-32GB: Can train 7B with LoRA in fp16 (~18GB) or QLoRA (~10GB)
+  - Colab T4: QLoRA only (~10GB), but 12hr session limits
+  - Training code already exists: VerifierTrainer in model_utils.py
+  - Bottleneck: Need labeled student interaction data with ground-truth scores
+
+### Priority Order
+  1. Fix 2 (require code) — immediate impact, simplest change
+  2. Fix 1 (minimum rounds) — prevents all 1-round terminations
+  3. Fix 3 (threshold tuning) — requires experimentation
+  4. Fix 4 (retrain) — most impactful but most expensive
+
+
+================================================================
+  Arena Initialization & First Message Flow — Verify This Is Correct
+  Date: 2026-04-22
+================================================================
+
+### Question: Does every arena map to a specific task in the dataset?
+
+YES — 1:1 mapping. In run_traver.py:106-170, the main loop iterates over
+prompt_data (derived from prompt_elements_final.jsonl). For EACH element it:
+  1. Builds role prompts (tutor_desc, student_desc, moderator_desc) from that
+     element's fields (namespace, function_name, input_code, dependency_all,
+     reference_steps, etc.)
+  2. Creates one Tutor, one Player (student), one Moderator
+  3. Creates one TutoringConversation environment
+  4. Creates one TutoringArena and runs it to completion
+  5. Writes the resulting dialogue to simulated_dialogs.jsonl keyed by namespace
+
+Each row in prompt_elements_final.jsonl (identified by "namespace") becomes
+exactly one arena session.
+
+### How does the tutor generate the first message?
+
+Step-by-step flow:
+
+  1. TutoringArena.__init__() calls environment.reset()
+     → arena_tutoring.py:28
+     → Returns empty timestep: no messages in pool, turn=0, _next_player_idx=0
+
+  2. launch_cli() calls self.arena.reset() again
+     → cli.py:51
+     → Re-confirms clean state, prints "Arena Start!"
+
+  3. Main loop calls arena.step()
+     → cli.py:116
+     Inside step():
+       a. get_next_player() returns player_names[0] = "Tutor"
+          (players are passed as [tutor, student] at run_traver.py:138)
+       b. get_observation("Tutor") returns EMPTY LIST (message pool is empty)
+       c. Tutor agent's act() is called with empty observation
+
+  4. Inside Tutor.act() (agent_tutor.py:59-119):
+       a. all_messages = [] (empty)
+       b. KT (Knowledge Tracing) is SKIPPED on first turn because:
+            if self.use_KT and len(all_messages) > 0:  # line 68 — fails!
+       c. The raw role_desc is used as-is (no KT augmentation)
+       d. The backend generates a response using just the role_desc
+
+  5. The tutor base template (prompt/template/tutor_base.txt line 32) says:
+       "Start with a friendly greeting."
+     So the LLM generates a greeting + initial pedagogical action.
+
+### What counts as "Arena Start"?
+
+"========= Arena Start! ==========" is ONLY a CLI display label printed by
+cli.py:75 right before the first step() call. It's not a semantic event.
+It just marks that reset() completed and the step loop is about to begin.
+
+### Summary Flow Diagram
+
+  prompt_elements_final.jsonl
+    └─ one row per "namespace" (task)
+         └─ prompt templates fill in function_name, input_code, deps, etc.
+              └─ TutoringArena created (1 per task)
+                   └─ reset() → empty message pool, turn 0
+                        └─ step() → Tutor goes first (player_names[0])
+                             └─ Tutor sees empty history → no KT
+                                  └─ LLM generates greeting per template
+
+### Key Source Files (verify against these)
+
+  - Arena init:      traver/chatarena/arena_tutoring.py:22-29
+  - CLI launch:      traver/chatarena/ui/cli.py:41-75
+  - Step logic:      traver/chatarena/arena_tutoring.py:50-86
+  - Tutor act():     traver/chatarena/agent_tutor.py:59-119
+  - Environment:     traver/chatarena/environments/conversation_tutoring.py:37-46
+  - Turn order:      traver/chatarena/environments/conversation.py:43-47
+  - Tutor prompt:    prompt/template/tutor_base.txt
+  - KT prompt:       prompt/template/tutor_KT.txt
+  - RG prompt:       prompt/template/tutor_RG.txt
+  - Task loop:       traver/run_traver.py:106-170
+
+
+================================================================
+  Local Evaluation: Platform-Incompatible Projects
+  Date: 2026-04-22
+================================================================
+
+When running eval_by_project_local.sh on macOS (Python 3.11),
+the following projects cannot be evaluated due to hard Linux/GPU
+dependencies in their test suites. They are EXCLUDED from all
+Pass@k and Recall@k averages.
+
+## Excluded Projects (always 0% locally — not a model failure)
+
+### microsearch (2 tasks)
+  Reason: Test collection fails (missing platform-specific deps)
+  Symptom: "Interrupted: 1 error during collection"
+  Fix possible: No (requires Linux package)
+
+### EasyVolcap (20 tasks)
+  Reason: Requires CUDA/GPU extensions (OpenGL, CUDA build tools)
+  Symptom: Test collection fails with 20 errors
+  Fix possible: No (GPU-only)
+
+### camp_zipnerf (54 tasks)
+  Reason: Requires tensorflow==2.15.0.post1 — Linux-only build
+  Symptom: "No matching distribution found for tensorflow==2.15.0.post1"
+  Fix possible: No (Linux-only pip package variant)
+
+### stable-diffusion-webui-forge (3 tasks)
+  Reason: Requires CUDA/GPU (torch+xformers with CUDA backend)
+  Symptom: Test collection fails (CUDA extensions not available)
+  Fix possible: No (GPU-only)
+
+## Evaluation Scope After Exclusions
+
+  Total projects in benchmark:      10
+  Platform-incompatible (excluded):  4  (79 tasks)
+  Evaluated locally:                 6  (21 tasks)
+    - Python-Type-Challenges  (1 task)   <- Python 3.11 fixes StrEnum
+    - UHGEval                 (3 tasks)
+    - searcharray             (6 tasks)
+    - AutoRAG                 (13 tasks)
+    - microagents             (18 tasks) <- pinned openai==1.12.0
+    - litdata                 (59 tasks)
+
+## REPORT IMPLICATION
+
+Pass@k and Recall@k reported from local evaluation reflect only
+the 6 platform-compatible projects. For a complete picture, HPC
+results should cover the 4 excluded projects. Note that
+Python-Type-Challenges also shows 0% on HPC (Python 3.10 missing
+StrEnum) — this is also NOT a model failure, it is an environment
+incompatibility.
+
+
+================================================================
+  camp_zipnerf: Missing Simulated Dialogs (All Levels)
+  Date: 2026-04-23
+================================================================
+
+camp_zipnerf has ZERO entries in simulated_dialogs.jsonl across
+ALL three student levels:
+
+  low_level/simulated_dialogs.jsonl:  0 camp_zipnerf entries (of 100 total)
+  med_level/simulated_dialogs.jsonl:  0 camp_zipnerf entries (of 100 total)
+  high_level/simulated_dialogs.jsonl: 0 camp_zipnerf entries (of 100 total)
+
+This means the tutoring dialog simulation never produced output
+for any camp_zipnerf task. The failure is UPSTREAM of evaluation —
+no completions were generated, so pass@k is trivially 0%.
+
+### Possible Causes
+  1. camp_zipnerf tasks were excluded from the dialog simulation run
+     (not present in prompt_elements_final.jsonl for the run config)
+  2. The dialog simulation crashed/errored on camp_zipnerf tasks
+     and produced no output
+  3. camp_zipnerf tasks were filtered out during data preparation
+
+### Impact
+  - camp_zipnerf has 12 tasks in the paper's evaluation
+  - Paper reports 7.5-15% Pass@1 for camp_zipnerf across levels
+  - Our 0% is NOT from model failure — no dialogs exist to evaluate
+  - This accounts for ~1.5% of the overall Pass@1 gap vs the paper
+
+### REPORT IMPLICATION
+camp_zipnerf's 0% pass rate is a data pipeline issue, not a model
+performance issue. The dialog generation step must be re-run with
+camp_zipnerf tasks included to produce a fair comparison.
+
+
+================================================================
+  Colab Notebook Verification & Tutor First Message Analysis
+  Date: 2026-04-23
+================================================================
+
+### Colab CWD & Prompt Path: CORRECT
+
+Verified that the Colab notebook (colab_traver_mcminer.ipynb) is
+properly configured:
+
+  WORK_DIR = "/content/Coding-Tutor"
+  subprocess.Popen(..., cwd=WORK_DIR, ...)
+  --prompt_element_file  {WORK_DIR}/prompt/prompt_elements_final.jsonl
+  --namespace_file       {WORK_DIR}/prompt/namespaces.json
+
+The prompt_elements_final.jsonl has 100 entries, each with:
+  namespace, function_name, class_name, input_code,
+  dependency_all, dependency_sampled, contexts_above,
+  contexts_below, reference_steps, reference_code
+
+The tutor template (prompt/template/tutor_base.txt) receives ALL
+task-specific data: function_name, input_code, contexts_above,
+dependency paths, and reference solution steps.
+
+### Tutor First Message: Generic By Design
+
+The tutor_base.txt template instructs:
+  - "Start with a friendly greeting."
+  - "Limit each response to one action"
+  - "Keep your response concise (do not exceed 60 words)"
+
+This causes the LLM to open with a short greeting rather than
+diving into task specifics. The tutor HAS the full task context
+in its system prompt but is instructed to greet first.
+
+First message classification (low_level, 86 non-error tasks):
+  Task-specific (mentions function/topic): 66 (77%)
+  Generic ("Hello, how's your Python going?"): 20 (23%)
+
+Most common generic greetings:
+  13x  "Hello, how's your Python going?"
+   7x  "Hello, how's your Python programming going so far?"
+   4x  "Hello, how's your Python programming going?"
+
+Examples of task-specific first messages:
+  - "Hello, how's your Python knowledge, especially with AWS S3?"
+  - "Hello, how's your understanding of PyTorch and tensors?"
+  - "Hello, how's your Python programming going, especially with
+    the parse_min_should_match function?"
+
+### REPORT IMPLICATION
+The generic first messages are NOT caused by missing prompt data.
+The tutor receives full task context but the template's 60-word
+greeting constraint causes many tasks to get generic openers.
+This is a TRAVER framework design choice, not a bug.
+
+
+================================================================
+  API Error Analysis (Colab Output)
+  Date: 2026-04-23
+================================================================
+
+The simulated_dialogs files contain "[API Error]" as message
+content when the HuggingFace Inference API failed during
+dialog generation.
+
+### Per-Level API Error Count
+
+  low_level:   14 tasks with ALL turns = "[API Error]"
+  med_level:    0
+  high_level:   0
+
+The API errors are low_level-only, indicating a transient API
+outage during the low_level generation run. Med and high levels
+ran cleanly afterward.
+
+### Affected Namespaces (14 total)
+
+  easyvolcap (4 errors):
+    - easyvolcap.utils.loss_utils.inner_outer
+    - easyvolcap.utils.loss_utils.lossfun_outer
+    - easyvolcap.utils.loss_utils.lossfun_distortion
+    - easyvolcap.utils.prop_utils.anneal_weights
+
+  litdata (8 errors):
+    - litdata.streaming.client.S3Client.client
+    - litdata.streaming.dataset.StreamingDataset.state_dict
+    - litdata.streaming.serializers.TensorSerializer.deserialize
+    - litdata.streaming.resolver._resolve_dir
+    - litdata.streaming.resolver._assert_dir_is_empty
+    - litdata.streaming.reader.PrepareChunksThread.delete
+    - litdata.streaming.reader.PrepareChunksThread.download
+    - litdata.processing.utilities.optimize_dns_context
+
+  microagent_manager (1 error):
+    - microagent_manager.MicroAgentManager.get_agents
+
+  agent_lifecycle (1 error):
+    - agent_lifecycle.AgentLifecycle._generate_llm_prompt
+
+### Revised Conversation Counts
+
+  Level       | Full | Early-Stop | API Error | Total
+  ------------|------|------------|-----------|------
+  low_level   |   55 |         31 |        14 |   100
+  med_level   |   62 |         38 |         0 |   100
+  high_level  |   65 |         35 |         0 |   100
+
+### REPORT IMPLICATION
+14% of low_level conversations have no usable dialog data.
+These produce [API Error] completions that will trivially fail
+pass@k evaluation. They should be excluded from low_level
+metrics or re-generated with a stable API connection.

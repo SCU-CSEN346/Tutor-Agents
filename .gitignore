@@ -19,10 +19,37 @@ Coding-Tutor/EvoCodeBench-main/
 
 # Model outputs (regenerable)
 Coding-Tutor/output/
+output/
+output*.zip
 
 # HPC scratch
 Coding-Tutor/hpc/
 Coding-Tutor/hpc_subset/
+hpc_subset/
 
 # ignore the dataset of McMiner
 mcminer/dataset
+
+# Vanilla baseline outputs (regenerable)
+Coding-Tutor/vanilla_output/
+
+# Benchmark data & builds (large, fetch separately)
+EvoCodeBench-main/
+benchmark/
+benchmark_data/
+build/
+
+# Virtual environments
+.eval_venv_test/
+.venv_pdf/
+
+# Test / scratch files
+test_hf.py
+test_data.jsonl
+prompt_test.json
+get_colab_model.py
+update_notebook.py
+models.json
+func_call.log
+1
+2502.13311v3.pdf

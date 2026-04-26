@@ -1,30 +1,34 @@
 #!/bin/bash
-#SBATCH --job-name="eval-by-proj"
+#SBATCH --job-name="eval-linux-proj"
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:1
-#SBATCH --time=24:00:00
+#SBATCH --time=12:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=64G
-#SBATCH --output="eval_by_project_%j.out"
+#SBATCH --output="eval_linux_projects_%j.out"
 #SBATCH --mail-user=cawad@scu.edu
 #SBATCH --mail-type=END
 
 # =================================================================
-# Evaluation-by-Project: Isolated venv per project
+# Evaluation: Linux/GPU-Only Projects
 # =================================================================
-# Evaluates all completions (already generated) project by project.
-# For each project:
-#   1. Create a temporary venv
-#   2. Install the project's requirements.txt + eval deps
-#   3. Run pass@k and recall@k for ALL levels × rounds
-#   4. Delete the venv to reclaim space
+# Evaluates only the 4 projects that are platform-incompatible on
+# macOS due to CUDA/GPU or Linux-only pip builds:
+#   - microsearch              (missing platform deps)
+#   - EasyVolcap               (CUDA/GPU extensions)
+#   - camp_zipnerf             (tensorflow Linux-only)
+#   - stable-diffusion-webui-forge (CUDA/GPU)
 #
-# After all projects, print aggregate results.
+# These are excluded from the local Mac evaluation. Their results
+# are combined with the Mac results for the final report.
 #
 # Usage:
-#   sbatch scripts/hpc/eval_by_project.slurm
+#   sbatch scripts/hpc/eval_linux_only_projects.slurm
+#
+# Before running, ensure old results are cleared:
+#   bash scripts/hpc/clean_eval_results.sh
 # =================================================================
 
 set -o pipefail
@@ -36,8 +40,8 @@ WORK_DIR="$REPO_DIR"
 ECB_ROOT="$REPO_DIR/EvoCodeBench-2403"
 Source_Code_Root="$ECB_ROOT/Source_Code"
 Dependency_Root="$ECB_ROOT/Dependency_Data"
-VENV_DIR="$REPO_DIR/.eval_venv"
-RESULTS_DIR="$REPO_DIR/eval_results"
+VENV_DIR="$REPO_DIR/.eval_venv_linux"
+metadata_file="$ECB_ROOT/data.jsonl"
 
 # --- Config ---
 TUTOR_MODEL_DIR="Llama-3.1-70B-Instruct"
@@ -45,24 +49,18 @@ tutor_setting="traver"
 student_levels=(low_level med_level high_level)
 rounds=(1 2 3 4 5 6 7 8)
 n=10
-metadata_file="$ECB_ROOT/data.jsonl"
 
-# Projects ordered by task count (smallest first for fast early results)
+# Only the 4 projects that require Linux/GPU
 PROJECTS=(
-    Python-Type-Challenges   # 1 task
-    microsearch              # 2 tasks
-    stable-diffusion-webui-forge  # 3 tasks
-    UHGEval                  # 3 tasks
-    searcharray              # 6 tasks
-    AutoRAG                  # 13 tasks
-    microagents              # 18 tasks
-    EasyVolcap               # 20 tasks
-    camp_zipnerf             # 54 tasks
-    litdata                  # 59 tasks
+    microsearch                   # 2 tasks  — platform-specific deps
+    stable-diffusion-webui-forge  # 3 tasks  — CUDA/GPU (torch+xformers)
+    EasyVolcap                    # 20 tasks — CUDA/GPU (OpenGL extensions)
+    camp_zipnerf                  # 54 tasks — tensorflow Linux-only build
 )
 
 # Packages needed by pass_k.py / recall_k.py
-EVAL_DEPS="numpy tqdm psutil func_timeout tree_sitter pytest pytest-runner dill"
+# jinja2 is required by pyan_zyf_v2 (used in recall_k.py)
+EVAL_DEPS="numpy tqdm psutil func_timeout tree_sitter pytest pytest-runner dill jinja2"
 
 # --- Setup ---
 module load CUDA/12.6.2
@@ -70,13 +68,12 @@ source /WAVE/apps/x86_64/packages/Anaconda3/2025.12-2/app/etc/profile.d/conda.sh
 conda activate coding-tutor
 
 cd "$WORK_DIR"
-mkdir -p "$RESULTS_DIR"
 
 # --- Helper ---
 log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"; }
 
 echo "================================================================="
-echo "  Evaluation-by-Project (Isolated Environments)"
+echo "  Evaluation: Linux/GPU-Only Projects"
 echo "================================================================="
 echo "  Projects:    ${#PROJECTS[@]}"
 echo "  Levels:      ${student_levels[*]}"
@@ -106,14 +103,13 @@ for project in "${PROJECTS[@]}"; do
         continue
     fi
 
-    # ── Step 1: Create venv ──
+    # ── Step 1: Create isolated venv ──
     log "  🔧 Creating isolated venv..."
     rm -rf "$VENV_DIR"
     python -m venv "$VENV_DIR"
     source "$VENV_DIR/bin/activate"
     pip install --quiet --upgrade pip 2>&1 | tail -1
 
-    # Install eval script dependencies
     log "  📦 Installing eval dependencies..."
     pip install --quiet $EVAL_DEPS 2>&1 | tail -1 || true
 
@@ -128,11 +124,14 @@ for project in "${PROJECTS[@]}"; do
     if [ -f "$SETUP" ]; then
         log "  📦 Installing $project via setup.py..."
         pip install --quiet -e "$PROJ_SOURCE" 2>&1 | tail -1 || true
+    elif [ -f "$PYPROJECT" ]; then
+        log "  📦 Installing $project via pyproject.toml..."
+        pip install --quiet -e "$PROJ_SOURCE" 2>&1 | tail -1 || true
     fi
 
     # Quick test collection check
     log "  🧪 Checking test collection..."
-    COLLECT_RESULT=$(cd "$PROJ_SOURCE" && pytest --collect-only 2>&1 | tail -1 || true)
+    COLLECT_RESULT=$(cd "$PROJ_SOURCE" && pytest --collect-only -q 2>&1 | tail -2 || true)
     log "     $COLLECT_RESULT"
 
     # ── Step 2: Create filtered data file for this project ──
@@ -149,6 +148,15 @@ with open('$metadata_file') as f, open('$FILTERED_DATA', 'w') as out:
 print(f'  📋 {count} tasks for $project')
 "
 
+    TASK_COUNT=$(wc -l < "$FILTERED_DATA" | tr -d ' ')
+    if [ "$TASK_COUNT" -eq 0 ]; then
+        log "  ⏭️  No tasks in metadata for $project, skipping"
+        deactivate
+        rm -rf "$VENV_DIR"
+        PROJECTS_FAIL=$((PROJECTS_FAIL + 1))
+        continue
+    fi
+
     # ── Step 3: Run pass@k + recall@k for all levels × rounds ──
     for level in "${student_levels[@]}"; do
         for rdx in "${rounds[@]}"; do
@@ -156,15 +164,28 @@ print(f'  📋 {count} tasks for $project')
             LOG_DIR="$WORK_DIR/output/student_posttest/$tutor_setting/$TUTOR_MODEL_DIR/$level/round_${rdx}"
 
             if [ ! -f "$COMP_FILE" ]; then
-                log "  ⏭️  $level/round_${rdx}: no completion file, skipping to next level"
-                break  # no more rounds for this level
+                log "  ⏭️  $level/round_${rdx}: no completion file, skipping level"
+                break
             fi
 
-            # Check if this completion file has any tasks for this project
-            PROJ_LINES=$(grep "\"$project/" "$COMP_FILE" 2>/dev/null | wc -l | tr -d ' \r\n')
+            # Count tasks for this project by matching namespaces (NOT path grep)
+            PROJ_LINES=$(python -c "
+import json
+namespaces = set()
+with open('$FILTERED_DATA') as f:
+    for line in f:
+        namespaces.add(json.loads(line)['namespace'])
+count = 0
+with open('$COMP_FILE') as f:
+    for line in f:
+        if json.loads(line).get('namespace') in namespaces:
+            count += 1
+print(count)
+" 2>/dev/null || echo 0)
+
             if [ "$PROJ_LINES" -eq 0 ]; then
-                log "  ⏭️  $level/round_${rdx}: 0 tasks for $project, skipping to next level"
-                break  # conversation ended for this level
+                log "  ⏭️  $level/round_${rdx}: 0 tasks for $project, skipping level"
+                break
             fi
 
             log "  📝 $level/round_${rdx} ($PROJ_LINES completions)"
@@ -201,14 +222,13 @@ print(f'  📋 {count} tasks for $project')
 done
 
 # =================================================================
-# FINAL: Aggregate results across all projects
+# FINAL: Aggregate results for these 4 projects
 # =================================================================
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "▶ AGGREGATE RESULTS (all projects combined)"
+echo "▶ AGGREGATE RESULTS (Linux/GPU projects only)"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-# Re-activate base env for final reporting
 conda activate coding-tutor
 
 python3 -c "
@@ -228,13 +248,20 @@ rounds_list = [1,2,3,4,5,6,7,8]
 n = $n
 k_list = [1,3,5,10]
 
-# Load full benchmark data
+# Only report on these 4 projects
+target_projects = ['microsearch', 'stable-diffusion-webui-forge', 'EasyVolcap', 'camp_zipnerf']
+
 benchmark_data = {}
+target_namespaces = set()
 with open('$metadata_file') as f:
     for line in f:
         js = json.loads(line)
         benchmark_data[js['namespace']] = js
+        proj = js.get('completion_path', '').split('/')[0]
+        if proj in target_projects:
+            target_namespaces.add(js['namespace'])
 
+print(f'  Reporting on {len(target_namespaces)} namespaces across {len(target_projects)} projects')
 print()
 for level in levels:
     print(f'  === {level} ===')
@@ -244,7 +271,6 @@ for level in levels:
         if not os.path.exists(log_file) or not os.path.exists(comp_file):
             continue
 
-        # Collect passed completions
         passed = defaultdict(set)
         with open(log_file) as f:
             for line in f:
@@ -252,13 +278,12 @@ for level in levels:
                 if js.get('Result') == 'Pass':
                     passed[js['namespace']].add(js['completion'])
 
-        # Count passes per namespace
         results = {}
         with open(comp_file) as f:
             for line in f:
                 js = json.loads(line)
                 ns = js['namespace']
-                if ns in benchmark_data:
+                if ns in benchmark_data and ns in target_namespaces:
                     if ns not in results:
                         results[ns] = 0
                     if ns in passed and js['completion'] in passed[ns]:
@@ -277,9 +302,7 @@ for level in levels:
             metrics.append(f'P@{k}={pak*100:.1f}%')
         print(f'    round_{rdx}: {\" | \".join(metrics)}  ({nonzero}/{tested} tasks passed)')
     print()
-
-print(f'  Projects evaluated: {len([r for r in results.values() if True])} tasks total')
-" 2>&1 || echo "  (aggregate report failed, check individual round outputs)"
+" 2>&1 || echo "  (aggregate report failed)"
 
 TOTAL_ELAPSED=$((SECONDS - TOTAL_START))
 echo ""
