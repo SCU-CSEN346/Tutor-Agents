@@ -469,3 +469,86 @@ ran cleanly afterward.
 These produce [API Error] completions that will trivially fail
 pass@k evaluation. They should be excluded from low_level
 metrics or re-generated with a stable API connection.
+
+
+================================================================
+  Code Generation Truncation — max_tokens Limit
+  Date: 2026-04-29
+================================================================
+
+### Problem
+
+The HF API code generation uses max_tokens=500, which truncates longer
+completions mid-statement. This causes SyntaxErrors that automatically
+fail the test:
+
+  Examples observed (searcharray, low_level):
+    - bit_count64: "s1 = np" (line cut mid-expression)
+    - index: "search_array.term_dict" (line cut mid-access)
+    - positions: "return [positions]" (rest of logic cut off)
+
+When a truncated completion is injected into a source file that shares
+an import path with other test targets (e.g., solr.py contains both
+edismax and parse_min_should_match), the SyntaxError prevents the ENTIRE
+module from importing. This means a bad edismax completion also breaks
+the parse_min_should_match test, even if that function was correct.
+
+### Scope of Impact
+
+  - searcharray: 4/6 tasks produce completions >500 tokens
+  - EasyVolcap: Expected similar — many functions have complex logic
+  - UHGEval: Less affected — simpler functions (xinhua.statistics = 4 lines)
+  - sd-forge: Moderate — some postprocessing functions are long
+
+### Possible Solutions
+
+  Fix 1: Increase max_tokens (Simple)
+  ─────────────────────────────────
+  Change max_tokens from 500 → 1024 or 1500. This gives the model room
+  to complete longer functions. Trade-off: slower generation, higher API
+  cost, but prevents most truncation.
+
+  Current setting in LM_inference_hf.py / Colab pipeline:
+    --max_tokens 500
+
+  Recommended:
+    --max_tokens 1024
+
+  Fix 2: Post-process truncated completions (Moderate)
+  ─────────────────────────────────────────────────────
+  After code generation, detect and discard completions that end with
+  incomplete syntax:
+    - Unbalanced parentheses/brackets
+    - Lines ending with operators (=, +, -, etc.)
+    - Missing return statements for non-void functions
+
+  Replace truncated completions with "pass" so they fail cleanly without
+  poisoning the module's import.
+
+  Fix 3: Adaptive token budget (Complex)
+  ──────────────────────────────────────
+  Set max_tokens proportional to the reference code length:
+    max_tokens = max(500, len(reference_code_tokens) * 2)
+
+  This requires passing reference_code length through the prompt pipeline.
+
+  Fix 4: Isolate test execution (Best for accuracy)
+  ────────────────────────────────────────────────────
+  Modify pass_k.py to validate the injected file compiles before running
+  pytest. If `compile(source, filename, 'exec')` raises SyntaxError,
+  immediately mark as Fail and restore — without breaking tests for other
+  functions in the same file.
+
+  This doesn't fix the truncation itself, but prevents cross-contamination
+  where a bad completion for function A breaks the test for function B.
+
+### Priority Order
+  1. Fix 1 (increase max_tokens) — immediate, no code change beyond config
+  2. Fix 4 (syntax check before test) — prevents poisoning
+  3. Fix 2 (discard truncated) — cleaner failure mode
+  4. Fix 3 (adaptive budget) — optimal but requires pipeline changes
+
+### Action Items
+  □ Bump max_tokens to 1024 in Colab notebook (cell 26) and HPC script
+  □ Re-generate completions for searcharray with new token limit
+  □ Consider adding compile() check to pass_k.py before SetUp_evaluation
