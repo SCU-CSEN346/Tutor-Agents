@@ -1,0 +1,764 @@
+{
+  "filter_name": "mcminer_s_repeated_or_suspicious",
+  "filter_reason": "Use McMiner-S as a cheap first pass, then run McMiner-M only on groups where single-code predictions repeat or look suspicious.",
+  "single_predictions_file": "mcminer/results/mcminer_60_completion_lm_mistral/predictions.json",
+  "source_input_dir": "mcminer/dataset/mcminer_60_completion_lm_student_codes",
+  "output_dir": "mcminer/dataset/mcminer_60_completion_lm_student_codes_s_filtered",
+  "min_repeat_count": 2,
+  "total_single_groups": 220,
+  "selected_groups": 20,
+  "selected_source_files": 480,
+  "missing_source_files": [],
+  "selected_group_details": {
+    "completion_lm:easyvolcap.utils.data_utils.add_batch:7": {
+      "reasons": [
+        "suspicious_single_prediction"
+      ],
+      "total_single_predictions": 24,
+      "repeated_descriptions": {},
+      "suspicious_predictions": [
+        {
+          "prediction_id": "completion_lm_file_0037_record_00009_completion_007.json_0",
+          "source_file": "completion_lm_file_0037_record_00009_completion_007.json",
+          "parse_success": false,
+          "no_predicted_misconceptions": true,
+          "description": "NONE"
+        }
+      ],
+      "source_files": [
+        "completion_lm_file_0038_record_00008_completion_007.json",
+        "completion_lm_file_0036_record_00011_completion_007.json",
+        "completion_lm_file_0037_record_00009_completion_007.json",
+        "completion_lm_file_0049_record_00009_completion_007.json",
+        "completion_lm_file_0048_record_00009_completion_007.json",
+        "completion_lm_file_0047_record_00008_completion_007.json",
+        "completion_lm_file_0046_record_00009_completion_007.json",
+        "completion_lm_file_0045_record_00008_completion_007.json",
+        "completion_lm_file_0044_record_00011_completion_007.json",
+        "completion_lm_file_0043_record_00009_completion_007.json",
+        "completion_lm_file_0042_record_00008_completion_007.json",
+        "completion_lm_file_0041_record_00009_completion_007.json",
+        "completion_lm_file_0039_record_00009_completion_007.json",
+        "completion_lm_file_0040_record_00009_completion_007.json",
+        "completion_lm_file_0050_record_00009_completion_007.json",
+        "completion_lm_file_0051_record_00009_completion_007.json",
+        "completion_lm_file_0052_record_00011_completion_007.json",
+        "completion_lm_file_0053_record_00009_completion_007.json",
+        "completion_lm_file_0054_record_00007_completion_007.json",
+        "completion_lm_file_0055_record_00009_completion_007.json",
+        "completion_lm_file_0056_record_00009_completion_007.json",
+        "completion_lm_file_0057_record_00009_completion_007.json",
+        "completion_lm_file_0058_record_00009_completion_007.json",
+        "completion_lm_file_0059_record_00007_completion_007.json"
+      ]
+    },
+    "completion_lm:easyvolcap.utils.fcds_utils.get_pulsar_camera_params:7": {
+      "reasons": [
+        "repeated_single_prediction"
+      ],
+      "total_single_predictions": 24,
+      "repeated_descriptions": {
+        "The student believes that checking the shape of a tensor with a single check for all dimensions is sufficient.": 2
+      },
+      "suspicious_predictions": [],
+      "source_files": [
+        "completion_lm_file_0038_record_00009_completion_007.json",
+        "completion_lm_file_0036_record_00010_completion_007.json",
+        "completion_lm_file_0037_record_00008_completion_007.json",
+        "completion_lm_file_0049_record_00008_completion_007.json",
+        "completion_lm_file_0048_record_00008_completion_007.json",
+        "completion_lm_file_0047_record_00009_completion_007.json",
+        "completion_lm_file_0039_record_00008_completion_007.json",
+        "completion_lm_file_0046_record_00008_completion_007.json",
+        "completion_lm_file_0045_record_00007_completion_007.json",
+        "completion_lm_file_0044_record_00010_completion_007.json",
+        "completion_lm_file_0043_record_00008_completion_007.json",
+        "completion_lm_file_0042_record_00009_completion_007.json",
+        "completion_lm_file_0041_record_00008_completion_007.json",
+        "completion_lm_file_0040_record_00008_completion_007.json",
+        "completion_lm_file_0050_record_00008_completion_007.json",
+        "completion_lm_file_0051_record_00008_completion_007.json",
+        "completion_lm_file_0052_record_00010_completion_007.json",
+        "completion_lm_file_0053_record_00007_completion_007.json",
+        "completion_lm_file_0054_record_00009_completion_007.json",
+        "completion_lm_file_0055_record_00008_completion_007.json",
+        "completion_lm_file_0056_record_00008_completion_007.json",
+        "completion_lm_file_0057_record_00008_completion_007.json",
+        "completion_lm_file_0058_record_00007_completion_007.json",
+        "completion_lm_file_0059_record_00008_completion_007.json"
+      ]
+    },
+    "completion_lm:easyvolcap.utils.fcds_utils.get_pulsar_camera_params:8": {
+      "reasons": [
+        "suspicious_single_prediction"
+      ],
+      "total_single_predictions": 24,
+      "repeated_descriptions": {},
+      "suspicious_predictions": [
+        {
+          "prediction_id": "completion_lm_file_0038_record_00009_completion_008.json_0",
+          "source_file": "completion_lm_file_0038_record_00009_completion_008.json",
+          "parse_success": false,
+          "no_predicted_misconceptions": true,
+          "description": "NONE"
+        }
+      ],
+      "source_files": [
+        "completion_lm_file_0038_record_00009_completion_008.json",
+        "completion_lm_file_0036_record_00010_completion_008.json",
+        "completion_lm_file_0037_record_00008_completion_008.json",
+        "completion_lm_file_0049_record_00008_completion_008.json",
+        "completion_lm_file_0048_record_00008_completion_008.json",
+        "completion_lm_file_0047_record_00009_completion_008.json",
+        "completion_lm_file_0046_record_00008_completion_008.json",
+        "completion_lm_file_0039_record_00008_completion_008.json",
+        "completion_lm_file_0045_record_00007_completion_008.json",
+        "completion_lm_file_0044_record_00010_completion_008.json",
+        "completion_lm_file_0043_record_00008_completion_008.json",
+        "completion_lm_file_0042_record_00009_completion_008.json",
+        "completion_lm_file_0041_record_00008_completion_008.json",
+        "completion_lm_file_0040_record_00008_completion_008.json",
+        "completion_lm_file_0050_record_00008_completion_008.json",
+        "completion_lm_file_0051_record_00008_completion_008.json",
+        "completion_lm_file_0052_record_00010_completion_008.json",
+        "completion_lm_file_0053_record_00007_completion_008.json",
+        "completion_lm_file_0054_record_00009_completion_008.json",
+        "completion_lm_file_0055_record_00008_completion_008.json",
+        "completion_lm_file_0056_record_00008_completion_008.json",
+        "completion_lm_file_0057_record_00008_completion_008.json",
+        "completion_lm_file_0058_record_00007_completion_008.json",
+        "completion_lm_file_0059_record_00008_completion_008.json"
+      ]
+    },
+    "completion_lm:easyvolcap.utils.fcds_utils.get_pytorch3d_camera_params:3": {
+      "reasons": [
+        "suspicious_single_prediction"
+      ],
+      "total_single_predictions": 24,
+      "repeated_descriptions": {},
+      "suspicious_predictions": [
+        {
+          "prediction_id": "completion_lm_file_0055_record_00002_completion_003.json_0",
+          "source_file": "completion_lm_file_0055_record_00002_completion_003.json",
+          "parse_success": false,
+          "no_predicted_misconceptions": true,
+          "description": "NONE"
+        }
+      ],
+      "source_files": [
+        "completion_lm_file_0036_record_00004_completion_003.json",
+        "completion_lm_file_0037_record_00000_completion_003.json",
+        "completion_lm_file_0038_record_00002_completion_003.json",
+        "completion_lm_file_0039_record_00002_completion_003.json",
+        "completion_lm_file_0049_record_00002_completion_003.json",
+        "completion_lm_file_0048_record_00001_completion_003.json",
+        "completion_lm_file_0047_record_00002_completion_003.json",
+        "completion_lm_file_0046_record_00001_completion_003.json",
+        "completion_lm_file_0045_record_00001_completion_003.json",
+        "completion_lm_file_0044_record_00004_completion_003.json",
+        "completion_lm_file_0043_record_00002_completion_003.json",
+        "completion_lm_file_0042_record_00002_completion_003.json",
+        "completion_lm_file_0041_record_00003_completion_003.json",
+        "completion_lm_file_0040_record_00002_completion_003.json",
+        "completion_lm_file_0050_record_00001_completion_003.json",
+        "completion_lm_file_0051_record_00003_completion_003.json",
+        "completion_lm_file_0052_record_00003_completion_003.json",
+        "completion_lm_file_0053_record_00002_completion_003.json",
+        "completion_lm_file_0054_record_00001_completion_003.json",
+        "completion_lm_file_0055_record_00002_completion_003.json",
+        "completion_lm_file_0056_record_00002_completion_003.json",
+        "completion_lm_file_0057_record_00002_completion_003.json",
+        "completion_lm_file_0058_record_00001_completion_003.json",
+        "completion_lm_file_0059_record_00000_completion_003.json"
+      ]
+    },
+    "completion_lm:easyvolcap.utils.loss_utils.lossfun_distortion:6": {
+      "reasons": [
+        "repeated_single_prediction"
+      ],
+      "total_single_predictions": 24,
+      "repeated_descriptions": {
+        "The student believes that the last dimension of the target tensor 't' should be one more than that of the weights tensor 'w' for the distortion loss calculation.": 2
+      },
+      "suspicious_predictions": [],
+      "source_files": [
+        "completion_lm_file_0036_record_00002_completion_006.json",
+        "completion_lm_file_0037_record_00002_completion_006.json",
+        "completion_lm_file_0038_record_00001_completion_006.json",
+        "completion_lm_file_0039_record_00001_completion_006.json",
+        "completion_lm_file_0049_record_00001_completion_006.json",
+        "completion_lm_file_0048_record_00002_completion_006.json",
+        "completion_lm_file_0047_record_00001_completion_006.json",
+        "completion_lm_file_0046_record_00002_completion_006.json",
+        "completion_lm_file_0045_record_00002_completion_006.json",
+        "completion_lm_file_0044_record_00001_completion_006.json",
+        "completion_lm_file_0043_record_00001_completion_006.json",
+        "completion_lm_file_0042_record_00001_completion_006.json",
+        "completion_lm_file_0041_record_00002_completion_006.json",
+        "completion_lm_file_0040_record_00000_completion_006.json",
+        "completion_lm_file_0050_record_00002_completion_006.json",
+        "completion_lm_file_0051_record_00002_completion_006.json",
+        "completion_lm_file_0052_record_00000_completion_006.json",
+        "completion_lm_file_0053_record_00001_completion_006.json",
+        "completion_lm_file_0054_record_00000_completion_006.json",
+        "completion_lm_file_0055_record_00001_completion_006.json",
+        "completion_lm_file_0056_record_00001_completion_006.json",
+        "completion_lm_file_0057_record_00001_completion_006.json",
+        "completion_lm_file_0058_record_00002_completion_006.json",
+        "completion_lm_file_0059_record_00001_completion_006.json"
+      ]
+    },
+    "completion_lm:easyvolcap.utils.prop_utils.anneal_weights:4": {
+      "reasons": [
+        "repeated_single_prediction"
+      ],
+      "total_single_predictions": 24,
+      "repeated_descriptions": {
+        "The student believes that handling cases where adjacent intervals have zero distance by setting their weight to zero is necessary when using the Schlick's bias function for annealing weights.": 2
+      },
+      "suspicious_predictions": [],
+      "source_files": [
+        "completion_lm_file_0036_record_00003_completion_004.json",
+        "completion_lm_file_0037_record_00001_completion_004.json",
+        "completion_lm_file_0038_record_00000_completion_004.json",
+        "completion_lm_file_0039_record_00000_completion_004.json",
+        "completion_lm_file_0049_record_00000_completion_004.json",
+        "completion_lm_file_0048_record_00000_completion_004.json",
+        "completion_lm_file_0047_record_00000_completion_004.json",
+        "completion_lm_file_0046_record_00000_completion_004.json",
+        "completion_lm_file_0045_record_00000_completion_004.json",
+        "completion_lm_file_0044_record_00003_completion_004.json",
+        "completion_lm_file_0043_record_00000_completion_004.json",
+        "completion_lm_file_0042_record_00000_completion_004.json",
+        "completion_lm_file_0041_record_00000_completion_004.json",
+        "completion_lm_file_0040_record_00001_completion_004.json",
+        "completion_lm_file_0050_record_00000_completion_004.json",
+        "completion_lm_file_0051_record_00000_completion_004.json",
+        "completion_lm_file_0052_record_00008_completion_004.json",
+        "completion_lm_file_0053_record_00000_completion_004.json",
+        "completion_lm_file_0054_record_00002_completion_004.json",
+        "completion_lm_file_0055_record_00000_completion_004.json",
+        "completion_lm_file_0056_record_00000_completion_004.json",
+        "completion_lm_file_0057_record_00000_completion_004.json",
+        "completion_lm_file_0058_record_00000_completion_004.json",
+        "completion_lm_file_0059_record_00009_completion_004.json"
+      ]
+    },
+    "completion_lm:easyvolcap.utils.prop_utils.anneal_weights:6": {
+      "reasons": [
+        "repeated_single_prediction"
+      ],
+      "total_single_predictions": 24,
+      "repeated_descriptions": {
+        "The student believes that the annealing factor can be negative.": 2
+      },
+      "suspicious_predictions": [],
+      "source_files": [
+        "completion_lm_file_0036_record_00003_completion_006.json",
+        "completion_lm_file_0037_record_00001_completion_006.json",
+        "completion_lm_file_0038_record_00000_completion_006.json",
+        "completion_lm_file_0039_record_00000_completion_006.json",
+        "completion_lm_file_0049_record_00000_completion_006.json",
+        "completion_lm_file_0048_record_00000_completion_006.json",
+        "completion_lm_file_0047_record_00000_completion_006.json",
+        "completion_lm_file_0046_record_00000_completion_006.json",
+        "completion_lm_file_0045_record_00000_completion_006.json",
+        "completion_lm_file_0044_record_00003_completion_006.json",
+        "completion_lm_file_0043_record_00000_completion_006.json",
+        "completion_lm_file_0042_record_00000_completion_006.json",
+        "completion_lm_file_0041_record_00000_completion_006.json",
+        "completion_lm_file_0040_record_00001_completion_006.json",
+        "completion_lm_file_0050_record_00000_completion_006.json",
+        "completion_lm_file_0051_record_00000_completion_006.json",
+        "completion_lm_file_0052_record_00008_completion_006.json",
+        "completion_lm_file_0053_record_00000_completion_006.json",
+        "completion_lm_file_0054_record_00002_completion_006.json",
+        "completion_lm_file_0055_record_00000_completion_006.json",
+        "completion_lm_file_0056_record_00000_completion_006.json",
+        "completion_lm_file_0057_record_00000_completion_006.json",
+        "completion_lm_file_0058_record_00000_completion_006.json",
+        "completion_lm_file_0059_record_00009_completion_006.json"
+      ]
+    },
+    "completion_lm:easyvolcap.utils.prop_utils.anneal_weights:9": {
+      "reasons": [
+        "repeated_single_prediction"
+      ],
+      "total_single_predictions": 24,
+      "repeated_descriptions": {
+        "The student believes that the annealing factor can be negative.": 2
+      },
+      "suspicious_predictions": [],
+      "source_files": [
+        "completion_lm_file_0036_record_00003_completion_009.json",
+        "completion_lm_file_0037_record_00001_completion_009.json",
+        "completion_lm_file_0038_record_00000_completion_009.json",
+        "completion_lm_file_0039_record_00000_completion_009.json",
+        "completion_lm_file_0049_record_00000_completion_009.json",
+        "completion_lm_file_0048_record_00000_completion_009.json",
+        "completion_lm_file_0047_record_00000_completion_009.json",
+        "completion_lm_file_0046_record_00000_completion_009.json",
+        "completion_lm_file_0045_record_00000_completion_009.json",
+        "completion_lm_file_0044_record_00003_completion_009.json",
+        "completion_lm_file_0043_record_00000_completion_009.json",
+        "completion_lm_file_0042_record_00000_completion_009.json",
+        "completion_lm_file_0041_record_00000_completion_009.json",
+        "completion_lm_file_0040_record_00001_completion_009.json",
+        "completion_lm_file_0050_record_00000_completion_009.json",
+        "completion_lm_file_0051_record_00000_completion_009.json",
+        "completion_lm_file_0052_record_00008_completion_009.json",
+        "completion_lm_file_0053_record_00000_completion_009.json",
+        "completion_lm_file_0054_record_00002_completion_009.json",
+        "completion_lm_file_0055_record_00000_completion_009.json",
+        "completion_lm_file_0056_record_00000_completion_009.json",
+        "completion_lm_file_0057_record_00000_completion_009.json",
+        "completion_lm_file_0058_record_00000_completion_009.json",
+        "completion_lm_file_0059_record_00009_completion_009.json"
+      ]
+    },
+    "completion_lm:easyvolcap.utils.prop_utils.max_dilate:2": {
+      "reasons": [
+        "repeated_single_prediction"
+      ],
+      "total_single_predictions": 24,
+      "repeated_descriptions": {
+        "The student believes that concatenating and sorting tensors is an efficient way to perform dilation in Python.": 2
+      },
+      "suspicious_predictions": [],
+      "source_files": [
+        "completion_lm_file_0036_record_00008_completion_002.json",
+        "completion_lm_file_0037_record_00005_completion_002.json",
+        "completion_lm_file_0038_record_00006_completion_002.json",
+        "completion_lm_file_0039_record_00005_completion_002.json",
+        "completion_lm_file_0049_record_00006_completion_002.json",
+        "completion_lm_file_0048_record_00006_completion_002.json",
+        "completion_lm_file_0047_record_00005_completion_002.json",
+        "completion_lm_file_0046_record_00007_completion_002.json",
+        "completion_lm_file_0045_record_00005_completion_002.json",
+        "completion_lm_file_0044_record_00007_completion_002.json",
+        "completion_lm_file_0043_record_00006_completion_002.json",
+        "completion_lm_file_0042_record_00006_completion_002.json",
+        "completion_lm_file_0041_record_00007_completion_002.json",
+        "completion_lm_file_0040_record_00007_completion_002.json",
+        "completion_lm_file_0050_record_00006_completion_002.json",
+        "completion_lm_file_0051_record_00006_completion_002.json",
+        "completion_lm_file_0052_record_00007_completion_002.json",
+        "completion_lm_file_0053_record_00008_completion_002.json",
+        "completion_lm_file_0054_record_00006_completion_002.json",
+        "completion_lm_file_0055_record_00006_completion_002.json",
+        "completion_lm_file_0056_record_00006_completion_002.json",
+        "completion_lm_file_0057_record_00006_completion_002.json",
+        "completion_lm_file_0058_record_00008_completion_002.json",
+        "completion_lm_file_0059_record_00005_completion_002.json"
+      ]
+    },
+    "completion_lm:easyvolcap.utils.prop_utils.max_dilate:7": {
+      "reasons": [
+        "repeated_single_prediction"
+      ],
+      "total_single_predictions": 24,
+      "repeated_descriptions": {
+        "The student believes that concatenating and sorting tensors is an efficient way to perform dilation in Python.": 3
+      },
+      "suspicious_predictions": [],
+      "source_files": [
+        "completion_lm_file_0036_record_00008_completion_007.json",
+        "completion_lm_file_0037_record_00005_completion_007.json",
+        "completion_lm_file_0038_record_00006_completion_007.json",
+        "completion_lm_file_0039_record_00005_completion_007.json",
+        "completion_lm_file_0049_record_00006_completion_007.json",
+        "completion_lm_file_0048_record_00006_completion_007.json",
+        "completion_lm_file_0047_record_00005_completion_007.json",
+        "completion_lm_file_0046_record_00007_completion_007.json",
+        "completion_lm_file_0045_record_00005_completion_007.json",
+        "completion_lm_file_0044_record_00007_completion_007.json",
+        "completion_lm_file_0043_record_00006_completion_007.json",
+        "completion_lm_file_0042_record_00006_completion_007.json",
+        "completion_lm_file_0041_record_00007_completion_007.json",
+        "completion_lm_file_0040_record_00007_completion_007.json",
+        "completion_lm_file_0050_record_00006_completion_007.json",
+        "completion_lm_file_0051_record_00006_completion_007.json",
+        "completion_lm_file_0052_record_00007_completion_007.json",
+        "completion_lm_file_0053_record_00008_completion_007.json",
+        "completion_lm_file_0054_record_00006_completion_007.json",
+        "completion_lm_file_0055_record_00006_completion_007.json",
+        "completion_lm_file_0056_record_00006_completion_007.json",
+        "completion_lm_file_0057_record_00006_completion_007.json",
+        "completion_lm_file_0058_record_00008_completion_007.json",
+        "completion_lm_file_0059_record_00005_completion_007.json"
+      ]
+    },
+    "completion_lm:easyvolcap.utils.prop_utils.max_dilate:9": {
+      "reasons": [
+        "repeated_single_prediction"
+      ],
+      "total_single_predictions": 24,
+      "repeated_descriptions": {
+        "The student believes that the dilation of time steps can be achieved by simply multiplying the original time steps with the dilation factor.": 2
+      },
+      "suspicious_predictions": [],
+      "source_files": [
+        "completion_lm_file_0036_record_00008_completion_009.json",
+        "completion_lm_file_0037_record_00005_completion_009.json",
+        "completion_lm_file_0038_record_00006_completion_009.json",
+        "completion_lm_file_0039_record_00005_completion_009.json",
+        "completion_lm_file_0049_record_00006_completion_009.json",
+        "completion_lm_file_0048_record_00006_completion_009.json",
+        "completion_lm_file_0047_record_00005_completion_009.json",
+        "completion_lm_file_0046_record_00007_completion_009.json",
+        "completion_lm_file_0045_record_00005_completion_009.json",
+        "completion_lm_file_0044_record_00007_completion_009.json",
+        "completion_lm_file_0043_record_00006_completion_009.json",
+        "completion_lm_file_0042_record_00006_completion_009.json",
+        "completion_lm_file_0041_record_00007_completion_009.json",
+        "completion_lm_file_0040_record_00007_completion_009.json",
+        "completion_lm_file_0050_record_00006_completion_009.json",
+        "completion_lm_file_0051_record_00006_completion_009.json",
+        "completion_lm_file_0052_record_00007_completion_009.json",
+        "completion_lm_file_0053_record_00008_completion_009.json",
+        "completion_lm_file_0054_record_00006_completion_009.json",
+        "completion_lm_file_0055_record_00006_completion_009.json",
+        "completion_lm_file_0056_record_00006_completion_009.json",
+        "completion_lm_file_0057_record_00006_completion_009.json",
+        "completion_lm_file_0058_record_00008_completion_009.json",
+        "completion_lm_file_0059_record_00005_completion_009.json"
+      ]
+    },
+    "completion_lm:easyvolcap.utils.prop_utils.query:9": {
+      "reasons": [
+        "repeated_single_prediction"
+      ],
+      "total_single_predictions": 24,
+      "repeated_descriptions": {
+        "The student believes that linear interpolation is the only method to interpolate values in a step function.": 2
+      },
+      "suspicious_predictions": [],
+      "source_files": [
+        "completion_lm_file_0036_record_00005_completion_009.json",
+        "completion_lm_file_0037_record_00004_completion_009.json",
+        "completion_lm_file_0038_record_00003_completion_009.json",
+        "completion_lm_file_0039_record_00003_completion_009.json",
+        "completion_lm_file_0049_record_00003_completion_009.json",
+        "completion_lm_file_0048_record_00003_completion_009.json",
+        "completion_lm_file_0047_record_00003_completion_009.json",
+        "completion_lm_file_0046_record_00003_completion_009.json",
+        "completion_lm_file_0045_record_00003_completion_009.json",
+        "completion_lm_file_0044_record_00005_completion_009.json",
+        "completion_lm_file_0043_record_00003_completion_009.json",
+        "completion_lm_file_0042_record_00003_completion_009.json",
+        "completion_lm_file_0041_record_00001_completion_009.json",
+        "completion_lm_file_0040_record_00004_completion_009.json",
+        "completion_lm_file_0050_record_00003_completion_009.json",
+        "completion_lm_file_0051_record_00001_completion_009.json",
+        "completion_lm_file_0052_record_00004_completion_009.json",
+        "completion_lm_file_0053_record_00003_completion_009.json",
+        "completion_lm_file_0054_record_00003_completion_009.json",
+        "completion_lm_file_0055_record_00003_completion_009.json",
+        "completion_lm_file_0056_record_00003_completion_009.json",
+        "completion_lm_file_0057_record_00003_completion_009.json",
+        "completion_lm_file_0058_record_00003_completion_009.json",
+        "completion_lm_file_0059_record_00002_completion_009.json"
+      ]
+    },
+    "completion_lm:easyvolcap.utils.viewer_utils.Camera.to_batch:5": {
+      "reasons": [
+        "repeated_single_prediction"
+      ],
+      "total_single_predictions": 24,
+      "repeated_descriptions": {
+        "The student believes that NumPy arrays cannot be directly converted to PyTorch tensors without using the 'as_tensor' function.": 2
+      },
+      "suspicious_predictions": [],
+      "source_files": [
+        "completion_lm_file_0036_record_00007_completion_005.json",
+        "completion_lm_file_0037_record_00003_completion_005.json",
+        "completion_lm_file_0038_record_00004_completion_005.json",
+        "completion_lm_file_0039_record_00006_completion_005.json",
+        "completion_lm_file_0059_record_00003_completion_005.json",
+        "completion_lm_file_0049_record_00004_completion_005.json",
+        "completion_lm_file_0048_record_00004_completion_005.json",
+        "completion_lm_file_0047_record_00004_completion_005.json",
+        "completion_lm_file_0046_record_00004_completion_005.json",
+        "completion_lm_file_0045_record_00009_completion_005.json",
+        "completion_lm_file_0044_record_00006_completion_005.json",
+        "completion_lm_file_0043_record_00004_completion_005.json",
+        "completion_lm_file_0042_record_00004_completion_005.json",
+        "completion_lm_file_0041_record_00004_completion_005.json",
+        "completion_lm_file_0040_record_00003_completion_005.json",
+        "completion_lm_file_0050_record_00004_completion_005.json",
+        "completion_lm_file_0051_record_00004_completion_005.json",
+        "completion_lm_file_0052_record_00005_completion_005.json",
+        "completion_lm_file_0053_record_00004_completion_005.json",
+        "completion_lm_file_0054_record_00005_completion_005.json",
+        "completion_lm_file_0055_record_00005_completion_005.json",
+        "completion_lm_file_0056_record_00004_completion_005.json",
+        "completion_lm_file_0057_record_00004_completion_005.json",
+        "completion_lm_file_0058_record_00004_completion_005.json"
+      ]
+    },
+    "completion_lm:searcharray.postings.SearchArray.index:2": {
+      "reasons": [
+        "repeated_single_prediction"
+      ],
+      "total_single_predictions": 24,
+      "repeated_descriptions": {
+        "The student believes that they need to manually instantiate and return a new instance of the SearchArray class within the index method.": 2
+      },
+      "suspicious_predictions": [],
+      "source_files": [
+        "completion_lm_file_0008_record_00002_completion_002.json",
+        "completion_lm_file_0009_record_00000_completion_002.json",
+        "completion_lm_file_0010_record_00000_completion_002.json",
+        "completion_lm_file_0011_record_00002_completion_002.json",
+        "completion_lm_file_0012_record_00002_completion_002.json",
+        "completion_lm_file_0013_record_00000_completion_002.json",
+        "completion_lm_file_0014_record_00002_completion_002.json",
+        "completion_lm_file_0015_record_00002_completion_002.json",
+        "completion_lm_file_0016_record_00000_completion_002.json",
+        "completion_lm_file_0017_record_00000_completion_002.json",
+        "completion_lm_file_0018_record_00000_completion_002.json",
+        "completion_lm_file_0031_record_00001_completion_002.json",
+        "completion_lm_file_0030_record_00001_completion_002.json",
+        "completion_lm_file_0029_record_00001_completion_002.json",
+        "completion_lm_file_0027_record_00000_completion_002.json",
+        "completion_lm_file_0028_record_00000_completion_002.json",
+        "completion_lm_file_0026_record_00000_completion_002.json",
+        "completion_lm_file_0025_record_00001_completion_002.json",
+        "completion_lm_file_0023_record_00002_completion_002.json",
+        "completion_lm_file_0024_record_00000_completion_002.json",
+        "completion_lm_file_0022_record_00001_completion_002.json",
+        "completion_lm_file_0021_record_00001_completion_002.json",
+        "completion_lm_file_0019_record_00001_completion_002.json",
+        "completion_lm_file_0020_record_00001_completion_002.json"
+      ]
+    },
+    "completion_lm:searcharray.postings.SearchArray.index:4": {
+      "reasons": [
+        "suspicious_single_prediction"
+      ],
+      "total_single_predictions": 24,
+      "repeated_descriptions": {},
+      "suspicious_predictions": [
+        {
+          "prediction_id": "completion_lm_file_0012_record_00002_completion_004.json_0",
+          "source_file": "completion_lm_file_0012_record_00002_completion_004.json",
+          "parse_success": false,
+          "no_predicted_misconceptions": true,
+          "description": "NONE"
+        }
+      ],
+      "source_files": [
+        "completion_lm_file_0008_record_00002_completion_004.json",
+        "completion_lm_file_0009_record_00000_completion_004.json",
+        "completion_lm_file_0010_record_00000_completion_004.json",
+        "completion_lm_file_0011_record_00002_completion_004.json",
+        "completion_lm_file_0012_record_00002_completion_004.json",
+        "completion_lm_file_0013_record_00000_completion_004.json",
+        "completion_lm_file_0014_record_00002_completion_004.json",
+        "completion_lm_file_0015_record_00002_completion_004.json",
+        "completion_lm_file_0016_record_00000_completion_004.json",
+        "completion_lm_file_0017_record_00000_completion_004.json",
+        "completion_lm_file_0018_record_00000_completion_004.json",
+        "completion_lm_file_0031_record_00001_completion_004.json",
+        "completion_lm_file_0030_record_00001_completion_004.json",
+        "completion_lm_file_0029_record_00001_completion_004.json",
+        "completion_lm_file_0027_record_00000_completion_004.json",
+        "completion_lm_file_0028_record_00000_completion_004.json",
+        "completion_lm_file_0026_record_00000_completion_004.json",
+        "completion_lm_file_0025_record_00001_completion_004.json",
+        "completion_lm_file_0023_record_00002_completion_004.json",
+        "completion_lm_file_0024_record_00000_completion_004.json",
+        "completion_lm_file_0022_record_00001_completion_004.json",
+        "completion_lm_file_0021_record_00001_completion_004.json",
+        "completion_lm_file_0019_record_00001_completion_004.json",
+        "completion_lm_file_0020_record_00001_completion_004.json"
+      ]
+    },
+    "completion_lm:searcharray.postings.SearchArray.index:5": {
+      "reasons": [
+        "repeated_single_prediction"
+      ],
+      "total_single_predictions": 24,
+      "repeated_descriptions": {
+        "The student believes that creating a new instance of a class inside a method and returning it is the standard way to implement method chaining in Python.": 2
+      },
+      "suspicious_predictions": [],
+      "source_files": [
+        "completion_lm_file_0008_record_00002_completion_005.json",
+        "completion_lm_file_0009_record_00000_completion_005.json",
+        "completion_lm_file_0010_record_00000_completion_005.json",
+        "completion_lm_file_0011_record_00002_completion_005.json",
+        "completion_lm_file_0012_record_00002_completion_005.json",
+        "completion_lm_file_0013_record_00000_completion_005.json",
+        "completion_lm_file_0014_record_00002_completion_005.json",
+        "completion_lm_file_0015_record_00002_completion_005.json",
+        "completion_lm_file_0016_record_00000_completion_005.json",
+        "completion_lm_file_0017_record_00000_completion_005.json",
+        "completion_lm_file_0018_record_00000_completion_005.json",
+        "completion_lm_file_0031_record_00001_completion_005.json",
+        "completion_lm_file_0030_record_00001_completion_005.json",
+        "completion_lm_file_0029_record_00001_completion_005.json",
+        "completion_lm_file_0027_record_00000_completion_005.json",
+        "completion_lm_file_0028_record_00000_completion_005.json",
+        "completion_lm_file_0026_record_00000_completion_005.json",
+        "completion_lm_file_0025_record_00001_completion_005.json",
+        "completion_lm_file_0023_record_00002_completion_005.json",
+        "completion_lm_file_0024_record_00000_completion_005.json",
+        "completion_lm_file_0022_record_00001_completion_005.json",
+        "completion_lm_file_0021_record_00001_completion_005.json",
+        "completion_lm_file_0019_record_00001_completion_005.json",
+        "completion_lm_file_0020_record_00001_completion_005.json"
+      ]
+    },
+    "completion_lm:searcharray.postings.SearchArray.phrase_freq:5": {
+      "reasons": [
+        "repeated_single_prediction"
+      ],
+      "total_single_predictions": 24,
+      "repeated_descriptions": {
+        "The student believes that the calculation of phrase frequencies can only be done directly when slop is 1 and all tokens are unique.": 2
+      },
+      "suspicious_predictions": [],
+      "source_files": [
+        "completion_lm_file_0008_record_00005_completion_005.json",
+        "completion_lm_file_0009_record_00003_completion_005.json",
+        "completion_lm_file_0010_record_00003_completion_005.json",
+        "completion_lm_file_0011_record_00001_completion_005.json",
+        "completion_lm_file_0012_record_00001_completion_005.json",
+        "completion_lm_file_0013_record_00002_completion_005.json",
+        "completion_lm_file_0014_record_00001_completion_005.json",
+        "completion_lm_file_0015_record_00001_completion_005.json",
+        "completion_lm_file_0016_record_00004_completion_005.json",
+        "completion_lm_file_0017_record_00003_completion_005.json",
+        "completion_lm_file_0018_record_00003_completion_005.json",
+        "completion_lm_file_0031_record_00002_completion_005.json",
+        "completion_lm_file_0030_record_00000_completion_005.json",
+        "completion_lm_file_0028_record_00002_completion_005.json",
+        "completion_lm_file_0029_record_00002_completion_005.json",
+        "completion_lm_file_0027_record_00002_completion_005.json",
+        "completion_lm_file_0025_record_00002_completion_005.json",
+        "completion_lm_file_0026_record_00002_completion_005.json",
+        "completion_lm_file_0024_record_00004_completion_005.json",
+        "completion_lm_file_0023_record_00001_completion_005.json",
+        "completion_lm_file_0022_record_00002_completion_005.json",
+        "completion_lm_file_0020_record_00002_completion_005.json",
+        "completion_lm_file_0021_record_00002_completion_005.json",
+        "completion_lm_file_0019_record_00002_completion_005.json"
+      ]
+    },
+    "completion_lm:searcharray.postings.SearchArray.positions:4": {
+      "reasons": [
+        "suspicious_single_prediction"
+      ],
+      "total_single_predictions": 24,
+      "repeated_descriptions": {},
+      "suspicious_predictions": [
+        {
+          "prediction_id": "completion_lm_file_0022_record_00000_completion_004.json_0",
+          "source_file": "completion_lm_file_0022_record_00000_completion_004.json",
+          "parse_success": false,
+          "no_predicted_misconceptions": true,
+          "description": "NONE"
+        }
+      ],
+      "source_files": [
+        "completion_lm_file_0008_record_00001_completion_004.json",
+        "completion_lm_file_0009_record_00001_completion_004.json",
+        "completion_lm_file_0010_record_00001_completion_004.json",
+        "completion_lm_file_0011_record_00000_completion_004.json",
+        "completion_lm_file_0012_record_00000_completion_004.json",
+        "completion_lm_file_0013_record_00001_completion_004.json",
+        "completion_lm_file_0014_record_00000_completion_004.json",
+        "completion_lm_file_0015_record_00000_completion_004.json",
+        "completion_lm_file_0016_record_00001_completion_004.json",
+        "completion_lm_file_0017_record_00001_completion_004.json",
+        "completion_lm_file_0018_record_00001_completion_004.json",
+        "completion_lm_file_0030_record_00003_completion_004.json",
+        "completion_lm_file_0031_record_00000_completion_004.json",
+        "completion_lm_file_0029_record_00000_completion_004.json",
+        "completion_lm_file_0027_record_00001_completion_004.json",
+        "completion_lm_file_0028_record_00001_completion_004.json",
+        "completion_lm_file_0019_record_00000_completion_004.json",
+        "completion_lm_file_0026_record_00001_completion_004.json",
+        "completion_lm_file_0024_record_00003_completion_004.json",
+        "completion_lm_file_0025_record_00000_completion_004.json",
+        "completion_lm_file_0022_record_00000_completion_004.json",
+        "completion_lm_file_0023_record_00000_completion_004.json",
+        "completion_lm_file_0021_record_00000_completion_004.json",
+        "completion_lm_file_0020_record_00000_completion_004.json"
+      ]
+    },
+    "completion_lm:searcharray.postings.SearchArray.positions:7": {
+      "reasons": [
+        "repeated_single_prediction"
+      ],
+      "total_single_predictions": 24,
+      "repeated_descriptions": {
+        "The student believes that a list of one numpy array can be represented as a list of numpy arrays.": 2
+      },
+      "suspicious_predictions": [],
+      "source_files": [
+        "completion_lm_file_0008_record_00001_completion_007.json",
+        "completion_lm_file_0009_record_00001_completion_007.json",
+        "completion_lm_file_0010_record_00001_completion_007.json",
+        "completion_lm_file_0011_record_00000_completion_007.json",
+        "completion_lm_file_0012_record_00000_completion_007.json",
+        "completion_lm_file_0013_record_00001_completion_007.json",
+        "completion_lm_file_0014_record_00000_completion_007.json",
+        "completion_lm_file_0015_record_00000_completion_007.json",
+        "completion_lm_file_0016_record_00001_completion_007.json",
+        "completion_lm_file_0017_record_00001_completion_007.json",
+        "completion_lm_file_0018_record_00001_completion_007.json",
+        "completion_lm_file_0031_record_00000_completion_007.json",
+        "completion_lm_file_0030_record_00003_completion_007.json",
+        "completion_lm_file_0028_record_00001_completion_007.json",
+        "completion_lm_file_0029_record_00000_completion_007.json",
+        "completion_lm_file_0027_record_00001_completion_007.json",
+        "completion_lm_file_0026_record_00001_completion_007.json",
+        "completion_lm_file_0024_record_00003_completion_007.json",
+        "completion_lm_file_0025_record_00000_completion_007.json",
+        "completion_lm_file_0019_record_00000_completion_007.json",
+        "completion_lm_file_0022_record_00000_completion_007.json",
+        "completion_lm_file_0023_record_00000_completion_007.json",
+        "completion_lm_file_0021_record_00000_completion_007.json",
+        "completion_lm_file_0020_record_00000_completion_007.json"
+      ]
+    },
+    "completion_lm:searcharray.solr.edismax:6": {
+      "reasons": [
+        "repeated_single_prediction"
+      ],
+      "total_single_predictions": 24,
+      "repeated_descriptions": {
+        "The student believes that the default operator for the query is \"AND\" instead of \"OR\"": 3
+      },
+      "suspicious_predictions": [],
+      "source_files": [
+        "completion_lm_file_0008_record_00004_completion_006.json",
+        "completion_lm_file_0009_record_00004_completion_006.json",
+        "completion_lm_file_0010_record_00004_completion_006.json",
+        "completion_lm_file_0011_record_00003_completion_006.json",
+        "completion_lm_file_0012_record_00003_completion_006.json",
+        "completion_lm_file_0013_record_00003_completion_006.json",
+        "completion_lm_file_0014_record_00003_completion_006.json",
+        "completion_lm_file_0015_record_00003_completion_006.json",
+        "completion_lm_file_0016_record_00005_completion_006.json",
+        "completion_lm_file_0017_record_00004_completion_006.json",
+        "completion_lm_file_0018_record_00004_completion_006.json",
+        "completion_lm_file_0031_record_00003_completion_006.json",
+        "completion_lm_file_0029_record_00003_completion_006.json",
+        "completion_lm_file_0030_record_00002_completion_006.json",
+        "completion_lm_file_0028_record_00003_completion_006.json",
+        "completion_lm_file_0027_record_00003_completion_006.json",
+        "completion_lm_file_0025_record_00003_completion_006.json",
+        "completion_lm_file_0026_record_00003_completion_006.json",
+        "completion_lm_file_0024_record_00005_completion_006.json",
+        "completion_lm_file_0023_record_00003_completion_006.json",
+        "completion_lm_file_0022_record_00003_completion_006.json",
+        "completion_lm_file_0020_record_00003_completion_006.json",
+        "completion_lm_file_0021_record_00003_completion_006.json",
+        "completion_lm_file_0019_record_00003_completion_006.json"
+      ]
+    }
+  }
+}
