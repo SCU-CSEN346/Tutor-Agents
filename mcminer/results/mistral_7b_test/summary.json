@@ -1,0 +1,26 @@
+{
+  "run_timestamp": "2026-05-01T17:47:42.342654",
+  "input_directory": "dataset/corrupted_codes_best",
+  "output_directory": "/WAVE/projects2/CSEN-346-Sp26/Group2/mcminer/results/mistral_7b_test",
+  "llm_provider": "vllm",
+  "llm_model": "/WAVE/projects2/CSEN-346-Sp26/Group2/models/Mistral-7B-Instruct-v0.2",
+  "processing_mode": "individual",
+  "reasoning_enabled": false,
+  "template_type": "zeroshot-no-reasoning",
+  "statistics": {
+    "new_codes_analyzed": 2,
+    "total_codes_in_file": 2,
+    "correct_codes_analyzed": 1,
+    "corrupted_codes_analyzed": 1,
+    "successful_parses": 2,
+    "parse_success_rate": 1.0,
+    "total_misconceptions_found": 2,
+    "average_misconceptions_per_code": 1.0,
+    "codes_with_no_misconceptions": 0,
+    "correct_codes_no_misconceptions": 0,
+    "corrupted_codes_no_misconceptions": 0,
+    "none_substitutions": 1,
+    "none_substitution_rate": 0.5,
+    "append_mode": false
+  }
+}

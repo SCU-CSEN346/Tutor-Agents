@@ -1,0 +1,26 @@
+{
+  "run_timestamp": "2026-05-01T22:06:08.923734",
+  "input_directory": "dataset/completion_lm_student_codes",
+  "output_directory": "results/completion_lm_mistral_test",
+  "llm_provider": "vllm",
+  "llm_model": "/WAVE/projects2/CSEN-346-Sp26/Group2/models/Mistral-7B-Instruct-v0.2",
+  "processing_mode": "batch",
+  "reasoning_enabled": false,
+  "template_type": "zeroshot-no-reasoning",
+  "statistics": {
+    "new_codes_analyzed": 3,
+    "total_codes_in_file": 3,
+    "correct_codes_analyzed": 0,
+    "corrupted_codes_analyzed": 3,
+    "successful_parses": 3,
+    "parse_success_rate": 1.0,
+    "total_misconceptions_found": 3,
+    "average_misconceptions_per_code": 1.0,
+    "codes_with_no_misconceptions": 0,
+    "correct_codes_no_misconceptions": 0,
+    "corrupted_codes_no_misconceptions": 0,
+    "none_substitutions": 0,
+    "none_substitution_rate": 0.0,
+    "append_mode": false
+  }
+}

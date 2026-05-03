@@ -1,0 +1,6 @@
+prediction_id,source_completion_lm_file,namespace,completion_index,parse_success,no_predicted_misconceptions,predicted_description
+completion_lm_file_0012_record_00002_completion_004.json_0,mcminer/searcharray/traver/Llama-3.1-70B-Instruct/high_level/round_5/completion_lm.jsonl,searcharray.postings.SearchArray.index,4,False,True,NONE
+completion_lm_file_0038_record_00009_completion_008.json_0,Coding-Tutor/output/student_posttest/easyvolcap/traver/Llama-3.1-70B-Instruct/high_level/round_3/completion_lm.jsonl,easyvolcap.utils.fcds_utils.get_pulsar_camera_params,8,False,True,NONE
+completion_lm_file_0022_record_00000_completion_004.json_0,mcminer/searcharray/traver/Llama-3.1-70B-Instruct/low_level/round_7/completion_lm.jsonl,searcharray.postings.SearchArray.positions,4,False,True,NONE
+completion_lm_file_0037_record_00009_completion_007.json_0,Coding-Tutor/output/student_posttest/easyvolcap/traver/Llama-3.1-70B-Instruct/high_level/round_2/completion_lm.jsonl,easyvolcap.utils.data_utils.add_batch,7,False,True,NONE
+completion_lm_file_0055_record_00002_completion_003.json_0,Coding-Tutor/output/student_posttest/easyvolcap/traver/Llama-3.1-70B-Instruct/med_level/round_4/completion_lm.jsonl,easyvolcap.utils.fcds_utils.get_pytorch3d_camera_params,3,False,True,NONE

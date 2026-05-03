@@ -1,0 +1,3 @@
+run,model,template,processing_mode,items_analyzed,codes_analyzed,successful_parses,parse_success_rate,misconceptions_found,avg_misconceptions,no_misconception_items
+McMiner-S,/WAVE/projects2/CSEN-346-Sp26/Group2/models/Mistral-7B-Instruct-v0.2,zeroshot-no-reasoning,batch,200,200,200,1.0,200,1.0,0
+McMiner-M,/WAVE/projects2/CSEN-346-Sp26/Group2/models/Mistral-7B-Instruct-v0.2,zeroshot-no-reasoning-multi,multi-code-grouping,70,200,70,1.0,70,1.0,0
