@@ -47,93 +47,81 @@ Problem contexts: **22**
 
 ## McMiner-M Results
 
-I also ran McMiner-M on the same converted input set. McMiner-M groups multiple code samples together before asking the model to infer a shared misconception, so these results are group-level rather than one prediction per code sample.
+I also ran McMiner-M on the same converted input set. McMiner-M groups multiple code samples together before asking the model to infer a shared misconception, so these results are group-level rather than one prediction per individual code sample.
+
+### Why There Are Two McMiner-M Runs
+
+The first McMiner-M run was useful as a test, but it exposed a problem in the local run configuration. I requested 2-3 codes per group, but when `--bags-per-misconception 1` was used, the script still passed the full misconception group into some prompts. Some groups contained up to 24 code samples, so many prompts exceeded Mistral's 8192-token context window and failed to parse.
+
+I then patched `run_infer_misc_multi.py` so the actual prompt always samples the requested number of code examples. I verified before rerunning that all 220 prompts contained exactly 2 rendered student-code examples.
 
 ### McMiner-M Run Settings
 
-| Setting | Value |
-| --- | --- |
-| Tool | McMiner-M |
-| LLM provider | `vllm` |
-| Model | `/WAVE/projects2/CSEN-346-Sp26/Group2/models/Mistral-7B-Instruct-v0.2` |
-| Template | `zeroshot-no-reasoning-multi` |
-| Reasoning enabled | `False` |
-| Processing mode | `multi-code-grouping` |
-| Input directory | `dataset/mcminer_60_completion_lm_student_codes` |
-| Output directory | `results/mcminer_m_60_completion_lm_mistral_ctx8192` |
-| Requested group size | 2-3 codes per group |
-| Correct-only groups | 0 |
-| Bags per misconception | 1 |
-| vLLM max model length | 8192 tokens |
+| Setting | First McMiner-M run | Fixed 2-code McMiner-M run |
+| --- | --- | --- |
+| Tool | McMiner-M | McMiner-M |
+| LLM provider | `vllm` | `vllm` |
+| Model | `/WAVE/projects2/CSEN-346-Sp26/Group2/models/Mistral-7B-Instruct-v0.2` | `/WAVE/projects2/CSEN-346-Sp26/Group2/models/Mistral-7B-Instruct-v0.2` |
+| Template | `zeroshot-no-reasoning-multi` | `zeroshot-no-reasoning-multi` |
+| Reasoning enabled | `False` | `False` |
+| Processing mode | `multi-code-grouping` | `multi-code-grouping` |
+| Output directory | `results/mcminer_m_60_completion_lm_mistral_ctx8192` | `results/mcminer_m_60_completion_lm_mistral_2codes_ctx8192` |
+| Requested group size | 2-3 codes | exactly 2 codes |
+| Verified rendered codes per prompt | no; some prompts included many codes | yes; min=2, max=2 |
+| vLLM max model length | 8192 tokens | 8192 tokens |
 
 ### McMiner-M Summary Metrics
 
-| Metric | Value |
-| --- | ---: |
-| Total groups | 220 |
-| Misconception groups | 220 |
-| Total codes represented | 3670 |
-| Successful parses | 80 |
-| Parse success rate | 36.36% |
-| Total misconceptions found | 80 |
-| Average misconceptions per group | 0.3636 |
-| Groups with no extracted misconception | 140 |
+| Metric | First McMiner-M run | Fixed 2-code McMiner-M run |
+| --- | ---: | ---: |
+| Total groups | 220 | 220 |
+| Misconception groups | 220 | 220 |
+| Codes represented by grouping | 3670 | 3670 |
+| Codes actually placed into prompts | 3670 | 440 |
+| Successful parses | 80 | 220 |
+| Parse success rate | 36.36% | 100.00% |
+| Total misconceptions found | 80 | 220 |
+| Average misconceptions per group | 0.3636 | 1.0000 |
+| Groups with no extracted misconception | 140 | 0 |
 
-### McMiner-S vs McMiner-M
+### McMiner-S vs Fixed McMiner-M
 
-| Metric | McMiner-S | McMiner-M |
+| Metric | McMiner-S | Fixed McMiner-M |
 | --- | ---: | ---: |
 | Unit of prediction | Code sample | Code group |
 | Units processed | 3670 | 220 |
 | Codes represented | 3670 | 3670 |
-| Successful parses | 3665 | 80 |
-| Parse success rate | 99.86% | 36.36% |
-| Misconceptions found | 3665 | 80 |
-| No extracted misconception | 5 | 140 |
+| Codes actually included in prompts | 3670 | 440 |
+| Successful parses | 3665 | 220 |
+| Parse success rate | 99.86% | 100.00% |
+| Misconceptions found | 3665 | 220 |
+| No extracted misconception | 5 | 0 |
 
-### McMiner-M Important Limitation
+### McMiner-M Interpretation
 
-This McMiner-M run completed, but it is **only partially reliable** with local Mistral. Many grouped prompts exceeded the configured 8192-token context window. The job log contains repeated errors like:
+The fixed 2-code run is the better local Mistral McMiner-M result. It avoided the context-window failures and produced parseable outputs for every group. However, it should be interpreted as a sampled group-level run: each of the 220 misconception groups is represented by 2 sampled code examples, not by every one of the 3670 code samples.
 
-```text
-The decoder prompt ... is longer than the maximum model length of 8192.
-```
+This makes it useful for checking whether McMiner-M can infer a shared misconception from compact examples, but it is not the same as showing all 3670 code samples to McMiner-M. A stronger future run would use a long-context API model or a truncation strategy that can include more examples per group without exceeding context limits.
 
-Because of this, McMiner-M produced valid parsed outputs for only 80 of 220 groups. The lower parse success rate is mostly a context-length limitation, not necessarily evidence that McMiner-M itself is worse. A stronger McMiner-M run should use one of these fixes:
-
-- reduce the grouped prompt size further,
-- truncate long code/problem descriptions before inference,
-- increase the context length if the local model/runtime supports it,
-- or use a long-context API model such as Gemini, Claude, or OpenAI.
-
-### McMiner-M Example Successful Group
+### Fixed McMiner-M Example Successful Group
 
 | Field | Value |
 | --- | --- |
 | Prediction ID | `group_misconception_completion_lm:codeformer_model.setup_model:0_0` |
 | Misconception group | `completion_lm:codeformer_model.setup_model:0` |
-| Number of grouped codes | 3 |
-| Source files | `completion_lm_file_0000_record_00000_completion_000.json`, `completion_lm_file_0001_record_00000_completion_000.json`, `completion_lm_file_0002_record_00000_completion_000.json` |
+| Number of grouped codes | 2 |
+| Source files | `completion_lm_file_0000_record_00000_completion_000.json`, `completion_lm_file_0001_record_00000_completion_000.json` |
 | Parse success | `True` |
-| Predicted misconception | The student believes that initializing a Python class with a directory name does not require importing the necessary modules or defining the class constructor. |
+| Predicted misconception | The student believes that initializing a global list within a function is necessary for adding an instance to the list within the same function. |
 
 McMiner-M explanation:
 
 ```text
-In all three code samples, the students attempt to initialize a Python class
-(FaceRestorerCodeFormer) with a directory name without importing the necessary
-module or defining the constructor.
+Both code samples initialize the global list 'face_restorers' within their
+respective functions 'setup_model'. However, initializing the list within the
+function is not necessary for adding an instance to the list within the same
+function.
 ```
-
-### McMiner-M Example Failed Group
-
-| Field | Value |
-| --- | --- |
-| Prediction ID | `group_misconception_completion_lm:searcharray.postings.SearchArray.positions:0_0` |
-| Misconception group | `completion_lm:searcharray.postings.SearchArray.positions:0` |
-| Number of grouped codes | 24 |
-| Parse success | `False` |
-| Reason | Prompt exceeded the 8192-token context limit in vLLM/Mistral. |
 
 ## Breakdown By Namespace
 
@@ -286,6 +274,8 @@ def index(cls, array: Iterable, tokenizer=ws_tokenizer,
 - `../mcminer_60_completion_lm_mistral/predictions.json`
 - `../mcminer_m_60_completion_lm_mistral_ctx8192/multi_summary.json`
 - `../mcminer_m_60_completion_lm_mistral_ctx8192/multi_predictions.json`
+- `../mcminer_m_60_completion_lm_mistral_2codes_ctx8192/multi_summary.json`
+- `../mcminer_m_60_completion_lm_mistral_2codes_ctx8192/multi_predictions.json`
 
 ## Notes
 
@@ -294,3 +284,4 @@ def index(cls, array: Iterable, tokenizer=ws_tokenizer,
 - The predictions are model outputs, not verified ground truth. The high misconception rate should be manually reviewed before making research claims.
 - Previous result folders were not overwritten; this run writes to `mcminer/results/mcminer_60_completion_lm_mistral`.
 - The McMiner-M result folder is `mcminer/results/mcminer_m_60_completion_lm_mistral_ctx8192`. Its parse rate is much lower because many grouped prompts exceeded the local 8192-token Mistral context.
+- The fixed McMiner-M result folder is `mcminer/results/mcminer_m_60_completion_lm_mistral_2codes_ctx8192`. This rerun was added because the first McMiner-M run did not actually enforce the intended small group size in every prompt.

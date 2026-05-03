@@ -577,22 +577,20 @@ def generate_multi_mining_batches(misconception_groups: Dict[int, List[Dict[str,
         else:
             # Fixed number of bags per misconception
             for bag_idx in range(bags_per_misconception):
-                # For multiple bags, resample the codes
-                if bags_per_misconception > 1 and len(code_group) > 1:
-                    # Determine bag size
-                    if bag_size_mode == "range":
-                        current_bag_size = random.randint(bag_size_min, bag_size_max)
-                    else:
-                        current_bag_size = bag_size_fixed
-                    
-                    # Sample codes for this bag (with replacement if necessary)
-                    if len(code_group) >= current_bag_size:
-                        sampled_codes = random.sample(code_group, current_bag_size)
-                    else:
-                        # If we don't have enough codes, sample with replacement
-                        sampled_codes = random.choices(code_group, k=current_bag_size)
+                # Determine and enforce the actual prompt bag size for every bag.
+                # This matters even when bags_per_misconception == 1; otherwise a
+                # large misconception group can accidentally put every code sample
+                # into a single prompt and exceed the model context window.
+                if bag_size_mode == "range":
+                    current_bag_size = random.randint(bag_size_min, bag_size_max)
                 else:
-                    sampled_codes = code_group
+                    current_bag_size = bag_size_fixed
+
+                # Sample codes for this bag (with replacement if necessary).
+                if len(code_group) >= current_bag_size:
+                    sampled_codes = random.sample(code_group, current_bag_size)
+                else:
+                    sampled_codes = random.choices(code_group, k=current_bag_size)
                 
                 # Replace NONE codes with correct solutions
                 processed_codes, all_were_none = replace_none_with_correct(sampled_codes, correct_solutions)
