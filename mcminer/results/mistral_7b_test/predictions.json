@@ -1,0 +1,56 @@
+[
+  {
+    "prediction_id": "problem_121_misc_1.json_0",
+    "source_file": "problem_121_misc_1.json",
+    "problem_id": 121,
+    "solution_index": 0,
+    "original_misconception": {
+      "id": 1,
+      "description": "Student believes that range(n) produces values from 1 to n inclusive."
+    },
+    "ground_truth_misconception": {
+      "id": "NONE",
+      "description": "No misconception - correct code"
+    },
+    "predicted_misconceptions": [
+      {
+        "description": "The student believes that a list of strings can be processed as a list of strings' lengths instead of a list of strings themselves.",
+        "explanation": "The student's function `len_log(list1)` is intended to find the length of the longest word in a list of words. However, the function processes the list `list1` as a list of strings' lengths, rather than a list of strings themselves. This is evident in the way the function initializes the variable `max` with the length of the first string in the list, and then iterates through the list comparing the length of each string to `max`. This misconception is likely due to the student confusing a list of strings with a list of string lengths."
+      }
+    ],
+    "no_predicted_misconceptions": false,
+    "reasoning": "",
+    "analysis": "",
+    "parse_success": true,
+    "was_none_substituted": true,
+    "code_type": "correct",
+    "metadata": {}
+  },
+  {
+    "prediction_id": "problem_121_misc_10.json_0",
+    "source_file": "problem_121_misc_10.json",
+    "problem_id": 121,
+    "solution_index": 0,
+    "original_misconception": {
+      "id": 10,
+      "description": "Student believes that `str.split()` modifies the original string in place."
+    },
+    "ground_truth_misconception": {
+      "id": 10,
+      "description": "Student believes that `str.split()` modifies the original string in place."
+    },
+    "predicted_misconceptions": [
+      {
+        "description": "The student believes that a function's return statement can be placed anywhere within the function body",
+        "explanation": "The student's function `len_log` has the return statement outside the for loop. In Python, the return statement must be the last statement in the function, or it can be placed within a function definition to return early. In this case, since the student intends to return the maximum length of a word, the return statement should be placed after the for loop."
+      }
+    ],
+    "no_predicted_misconceptions": false,
+    "reasoning": "",
+    "analysis": "",
+    "parse_success": true,
+    "was_none_substituted": false,
+    "code_type": "corrupted",
+    "metadata": {}
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "run_timestamp": "2026-05-01T21:52:08.170683",
+  "input_directory": "dataset/coding_tutor_student_codes",
+  "output_directory": "results/coding_tutor_mistral_test",
+  "llm_provider": "vllm",
+  "llm_model": "/WAVE/projects2/CSEN-346-Sp26/Group2/models/Mistral-7B-Instruct-v0.2",
+  "processing_mode": "batch",
+  "reasoning_enabled": false,
+  "template_type": "zeroshot-no-reasoning",
+  "statistics": {
+    "new_codes_analyzed": 8,
+    "total_codes_in_file": 8,
+    "correct_codes_analyzed": 0,
+    "corrupted_codes_analyzed": 8,
+    "successful_parses": 8,
+    "parse_success_rate": 1.0,
+    "total_misconceptions_found": 8,
+    "average_misconceptions_per_code": 1.0,
+    "codes_with_no_misconceptions": 0,
+    "correct_codes_no_misconceptions": 0,
+    "corrupted_codes_no_misconceptions": 0,
+    "none_substitutions": 0,
+    "none_substitution_rate": 0.0,
+    "append_mode": false
+  }
+}

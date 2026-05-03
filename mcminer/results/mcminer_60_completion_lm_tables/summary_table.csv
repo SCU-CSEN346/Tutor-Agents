@@ -1,0 +1,2 @@
+run,model,template,processing_mode,reasoning_enabled,codes_analyzed,successful_parses,parse_success_rate,misconceptions_found,avg_misconceptions_per_code,codes_with_no_misconceptions
+McMiner-S 60 completion_lm files,/WAVE/projects2/CSEN-346-Sp26/Group2/models/Mistral-7B-Instruct-v0.2,zeroshot-no-reasoning,batch,False,3670,3665,0.9986376021798365,3665,0.9986376021798365,5
