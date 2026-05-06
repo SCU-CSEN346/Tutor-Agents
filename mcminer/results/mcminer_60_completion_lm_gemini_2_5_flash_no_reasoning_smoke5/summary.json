@@ -1,0 +1,26 @@
+{
+  "run_timestamp": "2026-05-05T12:33:57.320840",
+  "input_directory": "dataset/mcminer_60_completion_lm_student_codes",
+  "output_directory": "results/mcminer_60_completion_lm_gemini_2_5_flash_no_reasoning_smoke5",
+  "llm_provider": "gemini",
+  "llm_model": "gemini-2.5-flash",
+  "processing_mode": "individual",
+  "reasoning_enabled": false,
+  "template_type": "zeroshot-no-reasoning",
+  "statistics": {
+    "new_codes_analyzed": 5,
+    "total_codes_in_file": 5,
+    "correct_codes_analyzed": 0,
+    "corrupted_codes_analyzed": 5,
+    "successful_parses": 5,
+    "parse_success_rate": 1.0,
+    "total_misconceptions_found": 5,
+    "average_misconceptions_per_code": 1.0,
+    "codes_with_no_misconceptions": 0,
+    "correct_codes_no_misconceptions": 0,
+    "corrupted_codes_no_misconceptions": 0,
+    "none_substitutions": 0,
+    "none_substitution_rate": 0.0,
+    "append_mode": false
+  }
+}

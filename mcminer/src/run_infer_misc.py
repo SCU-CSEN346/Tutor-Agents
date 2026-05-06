@@ -664,6 +664,8 @@ def main():
                        help="Process only NONE samples (codes that were previously skipped)")
     parser.add_argument("--append-results", action="store_true",
                        help="Append results to existing predictions file instead of overwriting")
+    parser.add_argument("--checkpoint-every", type=int, default=0,
+                       help="Save partial predictions every N completed requests in individual mode")
     
     args = parser.parse_args()
     
@@ -747,7 +749,7 @@ def main():
     # Process mining requests
     all_results = []
     
-    if args.use_batch and args.llm != "gemini":
+    if args.use_batch:
         print(f"🔄 Processing {len(batches)} requests in batch mode")
         
         all_metadata = [item[0] for item in batches]
@@ -769,6 +771,14 @@ def main():
                 # Use vLLM offline mode with thinking control for Qwen3
                 enable_thinking = getattr(args, 'vllm_enable_thinking', False)
                 responses = llm_client.create_batch_messages_with_thinking(all_messages, enable_thinking=enable_thinking, **kwargs)
+            elif args.llm == "gemini":
+                responses = llm_client.create_batch_messages(
+                    all_messages,
+                    reasoning=args.reasoning,
+                    polling_interval=300,
+                    max_duration=86400,
+                    **kwargs
+                )
             else:
                 responses = llm_client.create_batch_messages(all_messages, **kwargs)
                 
@@ -785,6 +795,27 @@ def main():
                 "metadata": metadata,
                 "parsed_response": parsed_response
             })
+
+            if args.checkpoint_every and len(all_results) % args.checkpoint_every == 0:
+                print(f"\nCheckpoint: saving {len(all_results)} completed predictions...")
+                checkpoint_info = {
+                    "provider": args.llm,
+                    "model": get_model_name(args, llm_client),
+                    "processing_mode": "individual",
+                    "reasoning_enabled": args.reasoning
+                }
+                checkpoint_run_info = {
+                    "timestamp": datetime.now().isoformat(),
+                    "input_dir": args.input_dir,
+                    "template_type": template_type
+                }
+                save_mining_results(
+                    all_results,
+                    args.output_dir,
+                    checkpoint_info,
+                    checkpoint_run_info,
+                    append_mode=True
+                )
     
     else:
         # Individual processing
