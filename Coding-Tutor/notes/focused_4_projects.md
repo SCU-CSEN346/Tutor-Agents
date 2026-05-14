@@ -1,7 +1,7 @@
 # 🎯 Focused Analysis: 4 Target Projects — Evaluation Results
 
 **Goal:** Close the pass@k gap between our results and the paper on these 4 projects.
-**Updated:** 2026-04-29 (Colab evaluation complete)
+**Updated:** 2026-05-14 (McMiner-Thorough searcharray added from latest zip)
 
 ---
 
@@ -138,6 +138,19 @@ Common failures:
 - `ModuleNotFoundError: anserini` — model imports nonexistent libraries
 - `int('50%')` — doesn't strip `%` before converting
 - Shape mismatches `(5,) (2,)` in numpy comparisons
+
+### McMiner-Thorough (12 rounds) — 🆕 Updated 2026-05-14
+
+McMiner-Thorough (dedup + dynamic rounds R8→R12 + accumulated context) was run for searcharray across all levels:
+
+| Level | R1 | R2 | R3-R12 | Best |
+|-------|----|----|--------|------|
+| low_level | 0% | 0% | 0% | 0% |
+| med_level | 0% | 0% | 0% | 0% |
+| **high_level** | **11.7%** (P@10=16.7%) | 5.0% (P@10=16.7%) | 0% | **11.7% (R1)** |
+
+> [!NOTE]
+> McMiner-Thorough at high_level R1 shows 11.7% P@1 (1/6 tasks pass), but this is **lower than baseline's 15.0% at R8**. Extended rounds (R9-R12) don't help. searcharray remains fundamentally hard — all McMiner conditions (Loop, Clean, Dedup, Clean-Ctx, Thorough) fail to match the baseline.
 
 ---
 

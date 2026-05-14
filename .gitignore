@@ -33,6 +33,14 @@ mcminer/dataset
 # Vanilla baseline outputs (regenerable)
 Coding-Tutor/vanilla_output/
 
+# Drive / extracted output (large, regenerable)
+drive_output/
+output_latest/
+human_eval/
+paper/
+analyze_all_latest.py
+comprehensive_results_output.txt
+
 # Benchmark data & builds (large, fetch separately)
 EvoCodeBench-main/
 benchmark/
