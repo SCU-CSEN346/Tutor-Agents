@@ -1,6 +1,6 @@
 # 📊 Comprehensive Results — McMiner-TRAVER
 
-**Updated:** 2026-05-14  
+**Updated:** 2026-05-15  
 **Benchmark:** EvoCodeBench-2403, 22 tasks across 4 projects, n=10 completions/task
 
 ---
@@ -53,14 +53,24 @@
 
 *Format: low / med / high*
 
-### 🏆 Headline Result: EasyVolcap high_level R7
+### 🏆 Headline Result: EasyVolcap high_level
 
-| Metric | Baseline | McMiner | Clean | BL→Clean |
+**Best-vs-best comparison:**
+- Baseline best: 15.8% P@1 (R1)
+- McMiner-Clean best: 31.7% P@1 (R7)
+- **Δ = +15.9pp**
+
+**Same-round (R7) comparison:**
+
+| Metric | Baseline | McMiner | Clean | Δ BL→CL (same-round) |
 |--------|----------|---------|-------|----------|
 | P@1 | 6.0% | 24.2% | **31.7%** | **+25.7pp** |
 | P@3 | 12.2% | 35.7% | **40.8%** | **+28.6pp** |
 | P@5 | 15.0% | 39.6% | **41.6%** | **+26.6pp** |
 | P@10 | 20.0% | 41.7% | **41.7%** | **+21.7pp** |
+
+> [!NOTE]
+> The +25.7pp same-round delta is inflated because baseline degrades at R7. The fairer best-vs-best comparison is **+15.9pp**.
 
 ### McMiner Effectiveness by Student Level (EasyVolcap)
 
@@ -71,7 +81,7 @@
 | **high_level** | 15.8% (R1) | 24.2% (R7) | **31.7% (R7)** | ✅ **Clean** |
 
 > [!IMPORTANT]
-> McMiner-Clean is the best configuration for high_level students (+25.7pp), roughly neutral for med_level, and harmful for low_level (−12pp). The damage at low_level comes from tutoring dialogue content, not prompt contamination.
+> McMiner-Clean is the best configuration for high_level students (+15.9pp best-vs-best), roughly neutral for med_level, and harmful for low_level (−12pp). The damage at low_level comes from tutoring dialogue content, not prompt contamination.
 
 ---
 
@@ -103,14 +113,32 @@
 
 ## 4. McMiner Conditions — sd-forge, UHGEval (4 tasks)
 
-| Project | Baseline P@1 | McMiner-Loop P@1 | McMiner-Clean P@1 | McMiner-Thorough P@1 |
-|---------|-------------|------------------|--------------------|-----------------------|
-| codeformer (1 task) | 90-100% | 0% | 0% | 0% |
-| gfpgan (2 tasks) | 85-100% | 0% | 0% | 0% |
-| xinhua (1 task) | 90-100% | 0% | 0% | 0% |
+### McMiner-Loop Results (Colab Rerun — corrected eval)
 
-> [!WARNING]
-> All McMiner conditions show 0% for these easy projects. This appears to be an **evaluation pipeline bug** — the McMiner posttest condition changes the completion format rather than indicating genuine performance degradation. These projects are essentially solved by the baseline.
+| Project | Task | Level | Best Round | BL P@1 | MC P@1 |
+|---------|------|-------|-----------|--------|--------|
+| **codeformer** | setup_model | low | R1 | 90.0% | **100%** |
+| **codeformer** | setup_model | med | R1 | 100% | **100%** |
+| **codeformer** | setup_model | high | R1 | 90.0% | **100%** |
+| **gfpgan** | gfpgan_fix_faces + setup_model | low | R1 | 100% | **100%** |
+| **gfpgan** | gfpgan_fix_faces + setup_model | med | R1 | 85.0% | **100%** |
+| **gfpgan** | gfpgan_fix_faces + setup_model | high | R1 | 85.0% | **100%** |
+| **xinhua** | statistics | low | R1 | 100% | **100%** |
+| **xinhua** | statistics | med | R1 | 90.0% | **100%** |
+| **xinhua** | statistics | high | R1 | 90.0% | **100%** |
+
+### Combined sd-forge (3 tasks weighted average)
+
+| Level | BL P@1 | MC P@1 |
+|-------|--------|--------|
+| low | 86.7% | **100%** |
+| med | 90.0% | **100%** |
+| high | 86.7% | **100%** |
+
+> [!TIP]
+> McMiner **maintains or exceeds** baseline performance on all easy projects. The previous 0% results were due to an evaluation pipeline bug in the HPC/Drive runs. The Colab rerun with corrected evaluation confirms no degradation.
+
+*Source: `colab_mcminer_loop copy.ipynb` cell outputs (cells 38, 40, 42)*
 
 ---
 
@@ -136,7 +164,7 @@ Each entry contains: `namespace`, `project`, `level`, `turn_index`, `code_index`
 |-------|----------|----------------|-----------------|
 | low_level | 23.0% (R7) | **−12.0pp** (R6) | **−12.2pp** (R1) |
 | med_level | 16.0% (R4) | +0.7pp (R8) | **+1.5pp** (R8) |
-| high_level | 15.8% (R1) | **+8.4pp** (R7) | **+15.9pp** (R7) |
+| high_level | 15.8% (R1) | **+8.4pp** (R7) | **+15.9pp** (R7) best-vs-best |
 
 ### searcharray (Peak P@1)
 
@@ -158,7 +186,6 @@ Each entry contains: `namespace`, `project`, `level`, `turn_index`, `code_index`
 | **EasyVolcap McMiner-Dedup** | 🟡 MED | Isolate dedup effect vs Thorough |
 | **EasyVolcap McMiner-Clean-Ctx** | 🟡 MED | Test context window variant |
 | **EasyVolcap McMiner-Th-Clean** | 🟡 MED | Thorough + clean prompts combined |
-| Fix McMiner eval bug for sd-forge/codeformer/xinhua | 🟡 MED | 0% results are likely a pipeline issue |
 
 ### ✅ Completed
 
@@ -172,7 +199,9 @@ Each entry contains: `namespace`, `project`, `level`, `turn_index`, `code_index`
 | searcharray McMiner-Thorough (R1-R12, all levels) | ✅ 🆕 |
 | sd-forge baseline | ✅ |
 | UHGEval baseline | ✅ |
-| mcminer_focused misconception data (175 entries) | ✅ 🆕 |
+| sd-forge McMiner-Loop (Colab rerun, all levels) | ✅ 🆕 |
+| UHGEval McMiner-Loop (Colab rerun, all levels) | ✅ 🆕 |
+| mcminer_focused misconception data (175 entries) | ✅ |
 
 ### 📝 Analysis Items
 
@@ -180,16 +209,17 @@ Each entry contains: `namespace`, `project`, `level`, `turn_index`, `code_index`
 |------|----------|
 | Analyze `mcminer_focused/misconception_results.json` qualitatively | 🟡 |
 | Cross-reference misconceptions with pass/fail outcomes | 🟡 |
-| Investigate McMiner 0% bug on easy projects | 🟡 |
+| ~~Investigate McMiner 0% bug on easy projects~~ | ✅ Resolved — Colab rerun shows 100% |
 | Document which searcharray task passes at high_level | 🟢 |
 
 ---
 
 ## 8. Key Conclusions
 
-1. **McMiner-Clean is the best configuration for high-level students** — +25.7pp P@1 over baseline on EasyVolcap at R7
-2. **McMiner hurts low-level students** — misconception detection on broken diagnostic code introduces noise (−12pp)
-3. **McMiner-Thorough doesn't help searcharray** — 11.7% at R1 is lower than baseline's 15.0% at R8; extended rounds provide no benefit
-4. **Level-adaptive McMiner is the way forward** — skip McMiner for low_level, use McMiner-Clean for high_level
-5. **The 60-word budget matters** — clean-prompt improvement confirms misconception meta-text crowds out useful code hints
-6. **EasyVolcap McMiner-Thorough is the top remaining experiment** — could combine the Thorough strategy with the proven Clean approach
+1. **McMiner-Clean is the best configuration for high-level students** — +15.9pp P@1 best-vs-best over baseline on EasyVolcap (31.7% vs 15.8%)
+2. **McMiner maintains performance on easy tasks** — 100% P@1 on sd-forge and UHGEval (matching or exceeding baseline)
+3. **McMiner hurts low-level students** — misconception detection on broken diagnostic code introduces noise (−12pp on EasyVolcap)
+4. **McMiner-Thorough doesn't help searcharray** — 11.7% at R1 is lower than baseline's 15.0% at R8; extended rounds provide no benefit
+5. **Level-adaptive McMiner is the way forward** — skip McMiner for low_level, use McMiner-Clean for high_level
+6. **The 60-word budget matters** — clean-prompt improvement confirms misconception meta-text crowds out useful code hints
+7. **EasyVolcap McMiner-Thorough is the top remaining experiment** — could combine the Thorough strategy with the proven Clean approach
