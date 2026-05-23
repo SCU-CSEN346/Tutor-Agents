@@ -207,6 +207,7 @@ This is a **prompt-only modification** — no model retraining required.
 - Python 3.10+
 - Conda environment (HPC) or local venv
 - HuggingFace API token (`HF_TOKEN`)
+- Google Gemini API key (for McMiner misconception detection)
 - Access to the SCU WAVE HPC cluster (for GPU evaluation)
 
 ### Local Setup
