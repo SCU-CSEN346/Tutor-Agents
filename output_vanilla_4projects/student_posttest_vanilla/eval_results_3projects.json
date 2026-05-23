@@ -1,0 +1,526 @@
+{
+  "searcharray": {
+    "low_level": {
+      "round_1": {
+        "pass_at_k": {
+          "pass@1": 0.0,
+          "pass@3": 0.0,
+          "pass@5": 0.0,
+          "pass@10": 0.0
+        },
+        "n_tasks": 6,
+        "n_passed_tasks": 0
+      },
+      "round_2": {
+        "pass_at_k": {
+          "pass@1": 0.0,
+          "pass@3": 0.0,
+          "pass@5": 0.0,
+          "pass@10": 0.0
+        },
+        "n_tasks": 6,
+        "n_passed_tasks": 0
+      },
+      "round_3": {
+        "pass_at_k": {
+          "pass@1": 0.0,
+          "pass@3": 0.0,
+          "pass@5": 0.0,
+          "pass@10": 0.0
+        },
+        "n_tasks": 4,
+        "n_passed_tasks": 0
+      },
+      "round_4": {
+        "pass_at_k": {
+          "pass@1": 0.0,
+          "pass@3": 0.0,
+          "pass@5": 0.0,
+          "pass@10": 0.0
+        },
+        "n_tasks": 2,
+        "n_passed_tasks": 0
+      },
+      "round_5": {
+        "pass_at_k": {
+          "pass@1": 0.0,
+          "pass@3": 0.0,
+          "pass@5": 0.0,
+          "pass@10": 0.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 0
+      },
+      "round_6": {
+        "pass_at_k": {
+          "pass@1": 0.0,
+          "pass@3": 0.0,
+          "pass@5": 0.0,
+          "pass@10": 0.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 0
+      },
+      "round_7": {
+        "pass_at_k": {
+          "pass@1": 0.0,
+          "pass@3": 0.0,
+          "pass@5": 0.0,
+          "pass@10": 0.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 0
+      },
+      "round_8": {
+        "pass_at_k": {
+          "pass@1": 0.0,
+          "pass@3": 0.0,
+          "pass@5": 0.0,
+          "pass@10": 0.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 0
+      }
+    },
+    "med_level": {
+      "round_1": {
+        "pass_at_k": {
+          "pass@1": 1.67,
+          "pass@3": 5.0,
+          "pass@5": 8.33,
+          "pass@10": 16.67
+        },
+        "n_tasks": 6,
+        "n_passed_tasks": 1
+      },
+      "round_2": {
+        "pass_at_k": {
+          "pass@1": 0.0,
+          "pass@3": 0.0,
+          "pass@5": 0.0,
+          "pass@10": 0.0
+        },
+        "n_tasks": 6,
+        "n_passed_tasks": 0
+      },
+      "round_3": {
+        "pass_at_k": {
+          "pass@1": 0.0,
+          "pass@3": 0.0,
+          "pass@5": 0.0,
+          "pass@10": 0.0
+        },
+        "n_tasks": 3,
+        "n_passed_tasks": 0
+      },
+      "round_4": {
+        "pass_at_k": {
+          "pass@1": 30.0,
+          "pass@3": 48.33,
+          "pass@5": 50.0,
+          "pass@10": 50.0
+        },
+        "n_tasks": 2,
+        "n_passed_tasks": 1
+      },
+      "round_5": {
+        "pass_at_k": {
+          "pass@1": 30.0,
+          "pass@3": 70.83,
+          "pass@5": 91.67,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      },
+      "round_6": {
+        "pass_at_k": {
+          "pass@1": 20.0,
+          "pass@3": 53.33,
+          "pass@5": 77.78,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      },
+      "round_7": {
+        "pass_at_k": {
+          "pass@1": 10.0,
+          "pass@3": 30.0,
+          "pass@5": 50.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      },
+      "round_8": {
+        "pass_at_k": {
+          "pass@1": 0.0,
+          "pass@3": 0.0,
+          "pass@5": 0.0,
+          "pass@10": 0.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 0
+      }
+    },
+    "high_level": {
+      "round_1": {
+        "pass_at_k": {
+          "pass@1": 3.33,
+          "pass@3": 8.89,
+          "pass@5": 12.96,
+          "pass@10": 16.67
+        },
+        "n_tasks": 6,
+        "n_passed_tasks": 1
+      },
+      "round_2": {
+        "pass_at_k": {
+          "pass@1": 0.0,
+          "pass@3": 0.0,
+          "pass@5": 0.0,
+          "pass@10": 0.0
+        },
+        "n_tasks": 5,
+        "n_passed_tasks": 0
+      },
+      "round_3": {
+        "pass_at_k": {
+          "pass@1": 0.0,
+          "pass@3": 0.0,
+          "pass@5": 0.0,
+          "pass@10": 0.0
+        },
+        "n_tasks": 4,
+        "n_passed_tasks": 0
+      },
+      "round_4": {
+        "pass_at_k": {
+          "pass@1": 0.0,
+          "pass@3": 0.0,
+          "pass@5": 0.0,
+          "pass@10": 0.0
+        },
+        "n_tasks": 3,
+        "n_passed_tasks": 0
+      },
+      "round_5": {
+        "pass_at_k": {
+          "pass@1": 0.0,
+          "pass@3": 0.0,
+          "pass@5": 0.0,
+          "pass@10": 0.0
+        },
+        "n_tasks": 2,
+        "n_passed_tasks": 0
+      },
+      "round_6": {
+        "pass_at_k": {
+          "pass@1": 0.0,
+          "pass@3": 0.0,
+          "pass@5": 0.0,
+          "pass@10": 0.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 0
+      },
+      "round_7": {
+        "pass_at_k": {
+          "pass@1": 0.0,
+          "pass@3": 0.0,
+          "pass@5": 0.0,
+          "pass@10": 0.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 0
+      },
+      "round_8": {
+        "pass_at_k": {
+          "pass@1": 0.0,
+          "pass@3": 0.0,
+          "pass@5": 0.0,
+          "pass@10": 0.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 0
+      }
+    }
+  },
+  "UHGEval": {
+    "low_level": {
+      "round_1": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      },
+      "round_2": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      },
+      "round_3": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      },
+      "round_4": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      }
+    },
+    "med_level": {
+      "round_1": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      },
+      "round_2": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      },
+      "round_3": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      }
+    },
+    "high_level": {
+      "round_1": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      }
+    }
+  },
+  "sd-webui-forge": {
+    "low_level": {
+      "round_1": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 3,
+        "n_passed_tasks": 3
+      },
+      "round_2": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 3,
+        "n_passed_tasks": 3
+      },
+      "round_3": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 3,
+        "n_passed_tasks": 3
+      },
+      "round_4": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 2,
+        "n_passed_tasks": 2
+      },
+      "round_5": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      }
+    },
+    "med_level": {
+      "round_1": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 3,
+        "n_passed_tasks": 3
+      },
+      "round_2": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      },
+      "round_3": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      },
+      "round_4": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      },
+      "round_5": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      },
+      "round_6": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      },
+      "round_7": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      }
+    },
+    "high_level": {
+      "round_1": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 3,
+        "n_passed_tasks": 3
+      },
+      "round_2": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 2,
+        "n_passed_tasks": 2
+      },
+      "round_3": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 2,
+        "n_passed_tasks": 2
+      },
+      "round_4": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      },
+      "round_5": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      },
+      "round_6": {
+        "pass_at_k": {
+          "pass@1": 100.0,
+          "pass@3": 100.0,
+          "pass@5": 100.0,
+          "pass@10": 100.0
+        },
+        "n_tasks": 1,
+        "n_passed_tasks": 1
+      }
+    }
+  }
+}
