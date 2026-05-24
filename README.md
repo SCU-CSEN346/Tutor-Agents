@@ -83,7 +83,7 @@ Comparing against the paper's reported results on the **same 4 projects** (apple
 | Role | Model | Notes |
 |------|-------|-------|
 | **Tutor** | `Llama-3.1-70B-Instruct` | Primary tutor (also `Llama-3.3-70B-Instruct` in some runs) |
-| **Student** | `Meta-Llama-3-8B-Instruct` | Simulated student for dialogue |
+| **Student** | `Mistral-7B-Instruct-v0.2` | Simulated student for dialogue |
 | **Code Generation** | `Llama-3.1-8B-Instruct` | n=10, T=0.4, top_p=0.95, max_tokens=1024 |
 | **Verifier** | Fine-tuned `Llama-3.3-70B-Instruct` | Trained on vanilla dialogue outcome data |
 | **McMiner** | `Gemini 2.5 Flash` | Misconception detection via Google API |
