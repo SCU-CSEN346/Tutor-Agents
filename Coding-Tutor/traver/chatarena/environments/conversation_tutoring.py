@@ -17,7 +17,8 @@ class TutoringConversation(Conversation):
     type_name = "tutoring_conversation"
 
     def __init__(self, player_names: List[str], moderator: Union[Moderator, AgentConfig],
-                 parallel: bool = False, moderator_visibility="all", moderator_period="turn", **kwargs):
+                 parallel: bool = False, moderator_visibility="all", moderator_period="turn",
+                 min_moderator_rounds: int = 0, **kwargs):
 
         super().__init__(player_names=player_names, parallel=parallel, **kwargs)
 
@@ -33,6 +34,7 @@ class TutoringConversation(Conversation):
         self.moderator = moderator
         self.moderator_visibility = moderator_visibility
         self.moderator_period = moderator_period
+        self.min_moderator_rounds = min_moderator_rounds
     
     def reset(self):
         self._current_turn = 0
@@ -96,7 +98,9 @@ class TutoringConversation(Conversation):
             #self.message_pool.append_message(moderator_message)
 
             # We only use Moderator to determine whether the conversation should be ended
-            terminal = self.moderator.is_terminal(moderator_history) or self.is_terminal()
+            completed_rounds = len(moderator_history) // self.num_players
+            moderator_can_stop = completed_rounds >= self.min_moderator_rounds
+            terminal = (moderator_can_stop and self.moderator.is_terminal(moderator_history)) or self.is_terminal()
         else:
             terminal = self.is_terminal()
 
