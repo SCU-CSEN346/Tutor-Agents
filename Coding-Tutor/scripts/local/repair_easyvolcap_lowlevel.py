@@ -141,6 +141,8 @@ def main():
     parser.add_argument("--api_base", default="https://router.huggingface.co/v1")
     parser.add_argument("--api_key", default=os.environ.get("HF_TOKEN", ""))
     parser.add_argument("--max_tasks", type=int, default=12)
+    parser.add_argument("--repairs_per_namespace", type=int, default=1)
+    parser.add_argument("--zero_pass_only", action="store_true")
     args = parser.parse_args()
 
     metadata = {d["namespace"]: d for d in load_jsonl(args.metadata_file)}
@@ -163,49 +165,53 @@ def main():
         if len(repaired) >= args.max_tasks:
             break
         candidates = completions.get(namespace, [])
+        if args.zero_pass_only and passed[namespace]:
+            continue
         failing = [c for c in candidates if c["completion"] not in passed[namespace]]
         if not failing:
             continue
 
-        original = failing[0]
-        ok, test_name, failure = run_tests_capture(
-            args.source_code_root,
-            metadata[namespace],
-            original["completion"],
-        )
-        if ok:
-            continue
+        for original in failing[: args.repairs_per_namespace]:
+            if len(repaired) >= args.max_tasks:
+                break
+            ok, test_name, failure = run_tests_capture(
+                args.source_code_root,
+                metadata[namespace],
+                original["completion"],
+            )
+            if ok:
+                continue
 
-        prompt = build_prompt(
-            namespace,
-            prompts.get(namespace, ""),
-            original["completion"],
-            test_name,
-            failure,
-            source_context(args.source_code_root, metadata[namespace]),
-        )
-        response = client.chat.completions.create(
-            model=args.model,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.2,
-            top_p=0.95,
-            max_tokens=1024,
-        )
-        body = extract_body(response.choices[0].message.content)
-        repaired.append(
-            {
-                "namespace": namespace,
-                "completion": body,
-                "idx": 0,
-                "original_idx": original.get("idx"),
-                "failed_test": test_name,
-            }
-        )
-        print(f"repaired {len(repaired)}: {namespace} from idx={original.get('idx')}")
+            prompt = build_prompt(
+                namespace,
+                prompts.get(namespace, ""),
+                original["completion"],
+                test_name,
+                failure,
+                source_context(args.source_code_root, metadata[namespace]),
+            )
+            response = client.chat.completions.create(
+                model=args.model,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0.2,
+                top_p=0.95,
+                max_tokens=1024,
+            )
+            body = extract_body(response.choices[0].message.content)
+            repaired.append(
+                {
+                    "namespace": namespace,
+                    "completion": body,
+                    "idx": original.get("idx"),
+                    "original_idx": original.get("idx"),
+                    "failed_test": test_name,
+                }
+            )
+            print(f"repaired {len(repaired)}: {namespace} from idx={original.get('idx')}")
 
-        with open(args.output_file, "w", encoding="utf-8") as f:
-            for row in repaired:
-                f.write(json.dumps(row) + "\n")
+            with open(args.output_file, "w", encoding="utf-8") as f:
+                for row in repaired:
+                    f.write(json.dumps(row) + "\n")
 
     print(f"wrote {len(repaired)} repairs to {args.output_file}")
 
