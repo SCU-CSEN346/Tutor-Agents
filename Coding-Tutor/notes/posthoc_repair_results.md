@@ -31,6 +31,21 @@ then re-evaluated with the same test suite.
 For searcharray med-level, repair generated three candidates per task, so the
 reported repaired metric is P@3 rather than P@10.
 
+## Same-model Low-level Check
+
+We also ran a smaller low-level check with the same model family used by TRAVER
+for repair, rather than the stronger Llama-3.3-70B repair model.
+
+| Project group | TRAVER baseline | Same-model repair | Strong repair | Result |
+| --- | ---: | ---: | ---: | --- |
+| EasyVolcap low-level | 3/12 | 5/12 | 4/12 | same-model repair was best |
+| gfpgan/xinhua low-level | 2/3 | 3/3 | 3/3 | both repair variants rescued xinhua |
+| searcharray low-level | 0/6 | 0/6 | 0/6 | neither repair variant helped |
+| codeformer_model low-level | 10/10 | not run | not run | baseline was already solved |
+
+This suggests that some of the gain comes from execution feedback itself, not
+only from using a stronger repair model.
+
 ## Per-Project Notes
 
 ### EasyVolcap low-level
