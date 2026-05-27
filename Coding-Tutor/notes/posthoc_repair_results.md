@@ -31,20 +31,38 @@ then re-evaluated with the same test suite.
 For searcharray med-level, repair generated three candidates per task, so the
 reported repaired metric is P@3 rather than P@10.
 
-## Same-model Low-level Check
+## Low-level Repair Model Checks
 
-We also ran a smaller low-level check with the same model family used by TRAVER
-for repair, rather than the stronger Llama-3.3-70B repair model.
+We also ran smaller low-level checks to separate the effect of repair feedback
+from the effect of model strength.
 
-| Project group | TRAVER baseline | Same-model repair | Strong repair | Result |
+| Project group | TRAVER baseline | 8B repair | 8B peer repair | 70B repair | Strong repair | Result |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| EasyVolcap low-level | 3/12 | 0/12 | 0/12 | 5/12 | 4/12 | repair helped only with a 70B-class model |
+| gfpgan/xinhua low-level | 2/3 | not run | not run | 3/3 | 3/3 | both 70B repair variants rescued xinhua |
+| searcharray low-level | 0/6 | not run | not run | 0/6 | 0/6 | neither 70B repair variant helped |
+| codeformer_model low-level | 10/10 | not run | not run | not run | not run | baseline was already solved |
+
+The EasyVolcap 8B checks are the fairest comparison with the original code
+generator. They did not improve results. This means the 70B repair gain should
+not be described as evidence that pytest feedback alone helps; it also depends
+on stronger model capacity.
+
+## Second-student Prompt Check
+
+We tested a fair second-student setup on EasyVolcap using the same 8B code
+generator. The prompt included task metadata and previous failed student
+attempts with their failure summaries, but no source-code answer or reference
+solution.
+
+| Project | Level | Baseline TRAVER | Second-student 8B prompt | Result |
 | --- | ---: | ---: | ---: | --- |
-| EasyVolcap low-level | 3/12 | 5/12 | 4/12 | same-model repair was best |
-| gfpgan/xinhua low-level | 2/3 | 3/3 | 3/3 | both repair variants rescued xinhua |
-| searcharray low-level | 0/6 | 0/6 | 0/6 | neither repair variant helped |
-| codeformer_model low-level | 10/10 | not run | not run | baseline was already solved |
+| EasyVolcap | low | 3/12 | 0/12 | worse |
+| EasyVolcap | med | about 3/10 | 0/10 | worse |
 
-This suggests that some of the gain comes from execution feedback itself, not
-only from using a stronger repair model.
+The failed attempts and errors appear to pollute the prompt for the 8B model.
+Instead of learning from the previous student, the model often repeats or
+overreacts to broken patterns.
 
 ## Per-Project Notes
 
