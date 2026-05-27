@@ -82,11 +82,20 @@ Comparing against the paper's reported results on the **same 4 projects** (apple
 
 | Role | Model | Notes |
 |------|-------|-------|
-| **Tutor** | `Llama-3.1-70B-Instruct` | Primary tutor (also `Llama-3.3-70B-Instruct` in some runs) |
-| **Student** | `Mistral-7B-Instruct-v0.2` | Simulated student for dialogue |
-| **Code Generation** | `Llama-3.1-8B-Instruct` | n=10, T=0.4, top_p=0.95, max_tokens=1024 |
-| **Verifier** | Fine-tuned `Llama-3.3-70B-Instruct` | Trained on vanilla dialogue outcome data |
+| **Tutor** | `Llama-3.1-70B-Instruct` | Primary tutor via HF Inference API (also `Llama-3.3-70B-Instruct` in some runs) |
+| **Student** | `Mistral-7B-Instruct-v0.2` | Simulated student for dialogue (downloaded locally on Colab) |
+| **Code Generation** | `Llama-3.1-8B-Instruct` | n=10, T=0.4, top_p=0.95, max_tokens=1024 via HF API |
+| **Verifier** | Fine-tuned `Mistral-7B-v0.1` | Trained on vanilla dialogue outcome data |
 | **McMiner** | `Gemini 2.5 Flash` | Misconception detection via Google API |
+
+> **Note — Deviation from the original paper:** The TRAVER paper uses the same student model (Mixtral-8x7B-Instruct) for both dialogue simulation and post-test code generation. We used **Mistral-7B-Instruct-v0.2** for dialogue but **Llama-3.1-8B-Instruct** for code generation because we could not load the Mistral model on HPC due to memory constraints. Code generation is an isolated step — the model receives the dialogue transcript as input context and generates code from it, with no learning or state carried over from the dialogue phase. The choice of code generation model affects output quality but not the tutoring interaction itself.
+
+### Pipeline Split: Colab + HPC
+
+Due to resource constraints, our pipeline was split across two environments:
+
+1. **Dialogue generation (Colab):** Tutor (`Llama-3.1-70B`) and student (`Mistral-7B`) dialogues were generated on Google Colab using the HuggingFace Inference API, since loading these models locally on HPC exceeded available GPU memory.
+2. **Code generation + evaluation (HPC):** Post-test code generation (`Llama-3.1-8B` via HF API) and test execution were done on the SCU WAVE HPC cluster. EasyVolcap in particular could not be evaluated on Colab due to dependency issues (requires a different Python version and Linux-only CUDA extensions), so we created an isolated pyenv on HPC with the specific requirements needed to run the full evaluation pipeline there.
 
 ---
 
@@ -127,6 +136,22 @@ This is a **prompt-only modification** — no model retraining required.
 
 > **Why Clean-Prompt?** Misconception meta-text (e.g., "I notice you have a misconception about...") can confuse the codegen model. Stripping it lets the model focus on technical code hints. The +15.9pp improvement over baseline confirms that the **60-word budget matters** — pedagogical framing crowds out useful code hints.
 
+### Post-hoc Repair (TRAVER + Repair)
+
+A **second-stage debugger** applied after TRAVER code generation. This does not modify the tutoring dialogue — it operates entirely on failed completions:
+
+1. Run TRAVER as normal to generate code completions
+2. Execute tests on each completion to capture **pytest failure output**
+3. For each failing completion, build a repair prompt containing: the original task, source-code context from the repository, the failed completion, and the concrete test failure
+4. A repair model (`Llama-3.3-70B-Instruct`) rewrites only the target function body
+5. Re-evaluate the repaired completion against the same test suite
+
+Repair uses **concrete execution feedback** rather than static analysis, making it effective when the initial completion is close but has API or logic errors.
+
+### Evidence-Grounded TRAVER
+
+An experiment to improve code generation by injecting **repository evidence** into the post-test prompt. Before final code generation, `Llama-3.3-70B-Instruct` generates a ≤90-word evidence note from source-code excerpts and test file contents, identifying visible variables, methods, return types, and test expectations without giving the solution algorithm. The note is inserted into the TRAVER posttest prompt.
+
 ---
 
 ## Experimental Timeline
@@ -143,7 +168,9 @@ This is a **prompt-only modification** — no model retraining required.
 | 4 | May 8 | McMiner-Thorough (searcharray) | 11.7% at R1 (below baseline 15% at R8) |
 | 4 | May 8 | McMiner-Thorough-Clean (EasyVolcap) | Extended rounds evaluation |
 | 5 | May 15 | Colab rerun (sd-forge, UHGEval) | McMiner achieves 100% P@1 on easy projects |
-| 5 | May 23 | Vanilla EasyVolcap (4-project output) | In progress |
+| 5 | May 23 | Low-Level Scaffolded TRAVER | Implemented two variants (full + light) for low-level students |
+| 5 | May 25 | Post-hoc Repair (EasyVolcap + searcharray) | Rescued searcharray med from 0% → 22.2% P@1 |
+| 5 | May 26 | Evidence-Grounded TRAVER (EasyVolcap low R7) | Failed — 0% across all P@k metrics |
 
 ---
 
@@ -187,6 +214,30 @@ This is a **prompt-only modification** — no model retraining required.
 
 > McMiner **maintains or exceeds** baseline performance on easy projects.
 
+### Post-hoc Repair Results
+
+> For full details, see [**Post-hoc Repair Results**](Coding-Tutor/notes/posthoc_repair_results.md).
+
+| Project | Level | TRAVER P@1 | TRAVER P@10 | TRAVER+Repair P@1 | TRAVER+Repair best | Result |
+|---------|-------|-----------|------------|-------------------|-------------------|--------|
+| EasyVolcap | low | 23.0% | 30.0% | 25.3% | 40.0% P@10 | Small improvement |
+| EasyVolcap | med | 16.0% | 30.0% | 16.8% | 37.7% P@10 | Small improvement |
+| searcharray | low | 0% | 0% | 0% | 0% | No rescue |
+| searcharray | med | 0% | 0% | **22.2%** | **33.3% P@3** | **Rescued 2/6 tasks** ✅ |
+
+> The strongest result is searcharray med-level — both TRAVER and McMiner scored 0%, but post-hoc repair rescued 2 out of 6 tasks using concrete pytest failure feedback. Repair is most effective when the initial completion is close enough for execution feedback to guide correction.
+
+### Evidence-Grounded TRAVER Results
+
+> For full details, see [**Evidence-Grounded TRAVER Results**](Coding-Tutor/notes/evidence_traver_results.md).
+
+| Method | Setting | P@1 | P@3 | P@5 | P@10 |
+|--------|---------|-----|-----|-----|------|
+| TRAVER baseline | EasyVolcap low R7 | 23.0% | 27.1% | 29.2% | 30.0% |
+| Evidence-grounded TRAVER | EasyVolcap low R7 | 0% | 0% | 0% | 0% |
+
+> **Failed.** Static repository-context notes were too weak to prevent wrong API guesses. Completions were syntactically valid but missed tensor details, internal helper behavior, and exact repository conventions. Post-hoc repair with concrete test feedback remains the stronger direction.
+
 ---
 
 ## Conclusions
@@ -196,7 +247,9 @@ This is a **prompt-only modification** — no model retraining required.
 3. **McMiner hurts low-level students** — misconception detection on broken diagnostic code introduces noise (−12pp)
 4. **Level-adaptive McMiner is the way forward** — skip McMiner for low_level, use McMiner-Clean for high_level
 5. **The 60-word budget matters** — clean-prompt improvement confirms misconception meta-text crowds out useful code hints
-6. **We outperform the original paper** by +6.8pp average P@1 across the 22 focused tasks
+6. **Post-hoc repair rescues hard cases** — searcharray med went from 0% (both TRAVER and McMiner) to 22.2% P@1 using concrete pytest failure feedback
+7. **Static context injection fails** — evidence-grounded TRAVER dropped to 0%, confirming that repository-reading notes alone cannot substitute for execution-based feedback
+8. **We outperform the original paper** by +6.8pp average P@1 across the 22 focused tasks
 
 ---
 
