@@ -59,8 +59,10 @@ python3 traver/run_low_scaffold_traver.py \
   --student_model_name_or_path /path/to/student/model
 ```
 
-## Hypothesis
+## Status
 
-Low-level performance should improve over raw McMiner/Clean and may improve over
-baseline if the extra scaffolded rounds preserve the R7 benefit while reducing
-student confusion.
+This direction was not promising in the follow-up checks. The scaffold supplied
+more structure, but the generated code still guessed wrong project APIs and did
+not reliably improve low-level results. We therefore shifted to post-hoc repair,
+which uses failed TRAVER completions plus pytest feedback instead of changing the
+tutoring dialogue.

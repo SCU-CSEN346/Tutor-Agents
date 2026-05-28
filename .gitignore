@@ -31,18 +31,6 @@ hpc_subset/
 # ignore the dataset of McMiner
 mcminer/dataset
 
-# Hanie personal directory
-hanie/
-
-# Local machine/cache artifacts
-.hf_cache/
-.pull-backups/
-.python_userbase/
-.vscode/
-models/
-hhedayati_runs/
-Coding-Tutor/.eval_venv/
-
 # Vanilla baseline outputs (regenerable)
 Coding-Tutor/vanilla_output/
 
@@ -74,3 +62,8 @@ models.json
 func_call.log
 1
 2502.13311v3.pdf
+
+# API secrets (never commit)
+.env
+demo/.env
+demo/config.js
