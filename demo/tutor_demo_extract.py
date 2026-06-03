@@ -5,9 +5,21 @@ ACTUAL McMiner-Clean tutor dialogues that were produced by the McMiner-in-the-Lo
 pipeline (with [MISCONCEPTION FEEDBACK] injected into the tutor's role description
 between rounds).
 
+NOTE (2026-06): This script references file paths from an original cloud session
+  (/sessions/dazzling-zealous-davinci/mnt/Tutor-Agents/...) that is no longer
+  accessible. The pre-extracted output (tutor_demo_data.json) is committed to the
+  repo and is the preferred way to run the demo.
+
+  The updated tutor_demo.html fetches tutor_demo_data.json dynamically from
+  Google Drive or a local file — no need to re-run this extraction.
+
+  If you need to re-extract, update the ROOT path below to point to a local
+  copy of the output data, or download from the shared Google Drive folder:
+  https://drive.google.com/drive/folders/1OrDsWpk2b4rIGJ8k61Nuc5wMU2cMpUI1
+
 Sources:
   - Baseline dialogues: output_vanilla_4projects/dialogue_vanilla/{proj_dir}/
-                        dialogue/vanilla/Llama-3.1-70B-Instruct/{level}/simulated_dialogs.jsonl
+                         dialogue/vanilla/Llama-3.1-70B-Instruct/{level}/simulated_dialogs.jsonl
   - McMiner-Clean dialogues: embedded in the prompt field of
                              Coding-Tutor/output/student_posttest_mcminer_clean/{proj}/
                              traver/Llama-3.1-70B-Instruct/{level}/prompt_round_N.jsonl
