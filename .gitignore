@@ -38,7 +38,15 @@ Coding-Tutor/vanilla_output/
 drive_output/
 output_latest/
 human_eval/
-paper/
+# paper/ — PDFs tracked, LaTeX build artifacts ignored
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex*
 analyze_all_latest.py
 comprehensive_results_output.txt
 
@@ -64,6 +72,6 @@ func_call.log
 2502.13311v3.pdf
 
 # API secrets (never commit)
-.env
-demo/.env
+demo/backup_demo/.env
+demo/backup_demo/.env
 demo/config.js

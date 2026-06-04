@@ -1,0 +1,566 @@
+\documentclass[11pt]{article}
+
+% Change "review" to "final" to generate the final (sometimes called camera-ready) version.
+% Change to "preprint" to generate a non-anonymous version with page numbers.
+\usepackage[review]{acl}
+% \usepackage{acl}
+
+% Standard package includes
+\usepackage{times}
+\usepackage{latexsym}
+
+% For proper rendering and hyphenation of words containing Latin characters (including in bib files)
+\usepackage[T1]{fontenc}
+
+% This assumes your files are encoded as UTF8
+\usepackage[utf8]{inputenc}
+
+% This is not strictly necessary, and may be commented out,
+% but it will improve the layout of the manuscript,
+% and will typically save some space.
+\usepackage{microtype}
+
+% This is also not strictly necessary, and may be commented out.
+% However, it will improve the aesthetics of text in
+% the typewriter font.
+\usepackage{inconsolata}
+
+%Including images in your LaTeX document requires adding
+%additional package(s)
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{multirow}
+
+\title{Bridging Misconception Detection and Dialogue-Based Tutoring for Enhanced Learning in Programming Education}
+
+\author{Catherine Awad \\
+  \texttt{email@domain} \\\And
+  Ruiwen Guan \\
+  \texttt{email@domain} \\\And
+  Hanieh Hedayati \\
+  \texttt{hhedayati@scu.edu}}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Students learning programming often develop misconceptions that make learning difficult. 
+While recent work shows that large language models (LLMs) can reduce instructional workload 
+\cite{tian-etal-2025-implementation}, it remains unclear whether they effectively support student 
+learning. Current AI tutoring systems do not fully address this issue: some provide step-by-step guidance, while others detect mistakes in code, but they do not combine both in an effective way. 
+In this work, we combine two existing approaches: misconception detection \cite{al-hossami-bunescu-2026-mcmining} and dialogue-based tutoring \cite{wang2025training}. Our system first identifies potential misconceptions and then guides students through interactive dialogue to help them understand and correct their mistakes. 
+Our work highlights the potential of integrating misconception detection with dialogue-based tutoring to better support conceptual understanding in programming education. By focusing on helping students recognize and correct their own misunderstandings, our approach aims to provide a more effective alternative to answer-driven tutoring systems. \footnote{Github: \href{https://github.com/SCU-CSEN346/Tutor-Agents?tab=readme-ov-file}{Link}, Hugging Face: \href{https://huggingface.co/datasets/nlpscu/Tutor-Agents}{Link}.}
+\end{abstract}
+
+% we might revise the abstract and make it more concrete after having the experiment results and evaluations. 
+
+\section{Introduction}
+The role of LLMs in education has shifted from something that needs to be restricted to something that should be integrated. Recent work shows that LLMs can meaningfully reduce teacher workload \cite{tian-etal-2025-implementation}, but whether students actually learn from conversations led by an LLM tutor remains an open question \cite{10.3389/bjbs.2024.14048}. This question is especially pressing in introductory programming courses, where students frequently develop persistent misconceptions—false beliefs about language semantics that cause bugs, hinder progress on related concepts, and accumulate throughout a course \cite{al-hossami-bunescu-2026-mcmining}. Educators do not want students to bypass their misunderstandings by receiving direct answers from generative AI, as this prevents them from building a solid foundation.
+
+Existing LLM-based tutoring systems for coding largely sidestep this problem. Dialogue-based tutors such as TRAVER \cite{wang2025training} model a student's knowledge state as a set of missing knowledge components and guide them toward filling those gaps. However, a missing concept and an actively incorrect belief are different failure modes: a student who believes $range(n)$ produces values from $1$ to $n$ will not be helped by being told the correct steps. Instead, they need the misconception itself surfaced and corrected. Conversely, McMiner \cite{al-hossami-bunescu-2026-mcmining} can mine misconceptions from student code, but it offers no pedagogical path afterwards once one misconception is found.
+
+Therefore, we present our combination of the misconception detection tool \cite{al-hossami-bunescu-2026-mcmining} with the dialogue-based tutor system \cite{wang2025training} specifically for students who are learning how to code. Our workflow aims to guide students to identify their own misconceptions, leading them to recognize the false belief before progressing toward task completion.
+
+
+
+\section{Related Work}
+In this section, we briefly discuss the existing work and benchmarks.
+\subsection{Misconception Detection in Programming}
+Identifying where and why students go wrong in code has a long history in CS education research. Early systems such as PROUST \cite{10.5555/800054.801994} and later rule-based tools relied on hand-crafted patterns targeting a small set of known misconceptions. A common limitation is that these approaches either operate over a fixed taxonomy \cite{10.1145/2994154}, or they simply flag the bug without articulating the underlying false belief. 
+
+McMining addresses this gap by framing misconception discovery as a generative task: given a bag of problem-code pairs from a student, an LLM-based miner produces a natural-language description of the misconception the code exhibits, including novel misconceptions outside any predefined bank. We build on McMining as the diagnostic component of our pipeline, using its output as a grounding signal for downstream remediation.
+
+\subsection{Dialogue-Based Task Tutoring with LLMs}
+LLM-powered tutoring agents have been explored across many educational domains, including language learning\cite{kwon-etal-2024-llms}, math \cite{wang-etal-2024-bridging}, and science \cite{zhang-etal-2024-comprehensive-survey}. However, most of this work targets knowledge delivery that helps students understand a specific concept, and evaluates success through closed-form assessments such as question answering or multiple-choice tests. 
+
+Coding tutoring is a harder regime: tasks are open-ended, require understanding cross-file dependencies, and admit many valid solutions, thus making it harder to evaluate \cite{wang2025training}. Early LLM-based code tutors such as CHATTUTOR \cite{10.1145/3627673.3679665} primarily plays a reactive role, answering student questions or clarifying doubts on demand. TreeInstruct \cite{zhao-etal-2024-tree}  moves toward proactive guidance using Socratic tree-based questioning for code debugging, but does not explicitly model task completion as the tutoring objective.
+
+TRAVER \cite{wang2025training} addresses this by combining knowledge tracing with a turn-by-turn verifier that scores candidate tutor utterances against the likelihood of eventual task completion. 
+
+\section{Dataset}
+
+We evaluate on EvoCodeBench \citep{li2024evocodebench}, a repository-level coding benchmark containing 275 tasks across 25 Python repositories. Each task requires completing a function body given varying levels of context (function signature, dependency paths, or surrounding code). The original TRAVER paper \cite{wang2025training} filtered this to 100 tasks by excluding functions with zero cross-file dependencies, since those do not exercise the knowledge-tracing component of the tutoring pipeline.
+
+We further restrict to a subset of \textbf{22 tasks across 4 repositories}: EasyVolcap (12 tasks, volumetric video capture), searcharray (6 tasks, information retrieval), stable-diffusion-webui-forge (3 tasks, image generation), and UHGEval/xinhua (1 task, hallucination evaluation). This reduction was necessary because each repository requires its own virtual environment ($\sim$5\,GB each) with project-specific dependencies. Additionally, EasyVolcap required an isolated \texttt{pyenv} environment on HPC due to its Linux-only CUDA extensions and Python version constraints. The selected repositories span a range of task difficulties, from near-trivial (sd-forge, UHGEval) to extremely challenging (searcharray), providing a representative cross-section of the benchmark.
+
+\section{Methodology}
+
+We follow the original authors' approach to run the baseline. However, we made several modifications due to resource constraints.
+\subsection{Model Constraints}
+TRAVER used Mixtral-8x7B, which is a Sparse Mixture-of-Experts model, for the student agent during dialogue simulation. However, it is no longer available via hosted inference APIs, and it requires $\sim$90GB of VRAM which exceeds our available compute budget. To avoid potential data contamination with the coding benchmark, the original authors require the student agent's model to have a release date prior to October 2023. Hence, we substitute Mistral-7B-Instruct-v0.2 for the student dialogue model, as it satisfies this constraint. For posttest code generation, we use Llama-3.1-8B-Instruct via the HuggingFace Inference API with $N{=}10$ samples, $T{=}0.4$, and $\text{top\_p}{=}0.95$. Table~\ref{tab:stats} summarizes the differences between our setup and the original paper.
+
+
+\subsection{Infrastructure}
+Due to GPU memory constraints on a single machine, we employ a split-compute architecture. The tutor agent (Llama-3.1-70B-Instruct) runs via the HuggingFace Serverless Inference API, as it exceeds local VRAM capacity. The student dialogue agent (Mistral-7B) and the verifier (Mistral-7B base with LoRA fine-tuned head) are loaded locally in 4-bit NF4 quantization, sharing the GPU. Each verifier partition runs in a separate subprocess to avoid CUDA memory leaks across partition boundaries.
+
+\subsection{Implementation Details}
+Our pipeline combines TRAVER's tutor–student dialogue framework with McMining's misconception extraction. The pipeline proceeds in three stages: baseline dialogue generation, misconception analysis, and McMiner-in-the-loop tutoring.
+
+\paragraph{Baseline dialogue generation.} Following TRAVER, we instantiate a tutor agent (Llama-3.1-70B-Instruct) and a student agent (Mistral-7B-Instruct-v0.2) and run multi-turn tutoring dialogues on each selected EvoCodeBench task. Each dialogue runs for up to 8 rounds, with early stopping when the verifier determines the student has acquired sufficient knowledge. After dialogue completion, we generate posttest prompts for each round by truncating the dialogue to that round's turns, and use Llama-3.1-8B-Instruct to generate $k{=}10$ candidate code completions per prompt. We evaluate these against the task's test suite using pass@$k$, following the original TRAVER evaluation protocol. This constitutes our baseline.
+
+\paragraph{Misconception analysis.} We first applied McMining~\cite{al-hossami-bunescu-2026-mcmining} to student-generated code from the completed baseline dialogues to assess the prevalence of misconceptions. Using Gemini~2.5~Flash as the mining model, we found that McMiner detected candidate misconceptions in 81.1\% of code samples (Section~\ref{sec:mcminer-analysis}). This high detection rate raised the question of how to best incorporate misconception information into the tutoring pipeline. Injecting all detected misconceptions at once into the tutor's prompt risked overwhelming the model with noisy or redundant signals, particularly since many detections reflected surface-level code errors rather than genuine conceptual misunderstandings.
+
+\paragraph{McMiner-in-the-loop tutoring.} Instead of batch injection, we integrate McMiner directly into TRAVER's dialogue loop. After each student response, we (1) generate a diagnostic code completion from the current dialogue context, (2) run McMiner on that code to detect any misconception, and (3) inject only the latest detected misconception into the tutor's system prompt for the next round. When McMiner outputs \texttt{NONE}, the tutor reverts to its original TRAVER prompt. This round-by-round approach ensures the tutor receives targeted, timely feedback about the student's current misunderstanding rather than an accumulated list of all past misconceptions. All other settings---turn limit, student model, decoding parameters---are held fixed, and we recompute pass@$k$ on the resulting student solutions to measure the effect.
+
+\section{Experiments and Results}
+
+\subsection{Experimental Setup}
+
+Each task is evaluated at three student proficiency levels: \textit{low\_level} (function signature only), \textit{med\_level} (+ dependency paths), and \textit{high\_level} (+ surrounding code context). For each level, we generate posttest prompts from each of the 8 dialogue rounds and produce $N{=}10$ code completions per prompt. Pass@$k$ is computed using the unbiased estimator from \citet{chen2021evaluating}.
+
+\begin{table}[t]
+  \centering
+  \begin{tabular}{lcc}
+    \toprule
+    \textbf{Setting} & \textbf{TRAVER} & \textbf{Ours} \\
+    \midrule
+    Student (dialogue) & Mixtral-8x7B & Mistral-7B \\
+    Student (codegen)  & Llama-3.1-8B & Llama-3.1-8B \\
+    Tutor              & Llama-3.1-70B & Llama-3.1-70B \\
+    Verifier           & Mistral-7B+LoRA & Mistral-7B+LoRA \\
+    \midrule
+    Repositories       & 25 & 4 \\
+    Tasks              & 100 & 22 \\
+    Quantization       & FP16 & 4-bit NF4 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Comparison of experimental settings between our reproduction and the original TRAVER paper.}
+  \label{tab:stats}
+\end{table}
+
+\subsection{Baseline Results}
+
+Table~\ref{tab:results-per-project} shows the best-round Pass@1 and Pass@10 for each project and level, compared to the paper's reported values on the same repositories.
+
+\begin{table}[t]
+  \centering
+  \small
+  \begin{tabular}{llcccc}
+    \toprule
+    \textbf{Project} & \textbf{Level} & \multicolumn{2}{c}{\textbf{Paper}} & \multicolumn{2}{c}{\textbf{Ours}} \\
+    \cmidrule(lr){3-4} \cmidrule(lr){5-6}
+    & & P@1 & P@10 & P@1 & P@10 \\
+    \midrule
+    \multirow{3}{*}{sd-forge}
+    & low  & 43.3 & 100 & \textbf{86.7} & 100 \\
+    & med  & 83.3 & 100 & \textbf{90.0} & 100 \\
+    & high & 40.0 & 100 & \textbf{86.7} & 100 \\
+    \midrule
+    \multirow{3}{*}{UHGEval}
+    & low  & 20.0 & 100 & \textbf{100} & 100 \\
+    & med  & 40.0 & 100 & \textbf{90.0} & 100 \\
+    & high & 30.0 & 100 & \textbf{90.0} & 100 \\
+    \midrule
+    \multirow{3}{*}{searcharray}
+    & low  & \textbf{3.3} & \textbf{16.7} & 0.0 & 0.0 \\
+    & med  & \textbf{5.0} & \textbf{16.7} & 0.0 & 0.0 \\
+    & high & 0.0 & 0.0 & \textbf{15.0} & \textbf{25.0} \\
+    \midrule
+    \multirow{3}{*}{EasyVolcap}
+    & low  & 23.3 & 33.3 & 23.0 & 33.3 \\
+    & med  & 14.2 & 25.0 & \textbf{16.0} & \textbf{30.0} \\
+    & high & \textbf{23.3} & 33.3 & 15.8 & 33.3 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Best-round Pass@$k$ (\%) per project and level. Bold indicates the higher value. Our results use the best-performing round for each project-level combination.}
+  \label{tab:results-per-project}
+\end{table}
+
+\paragraph{Simple tasks.} On sd-forge and UHGEval, our system dramatically exceeds the paper (86--100\% vs.\ 20--83\% Pass@1). These tasks involve short, well-defined functions (model setup, JSON aggregation) where even minimal tutoring context is sufficient. All dialogues terminated early via the verifier's early-stop mechanism, typically after 1--2 rounds.
+
+\paragraph{Complex tasks.} On searcharray, we observe 0\% Pass@1 at low and med levels across all 8 rounds, consistent with the paper. However, at high level, we observe a notable improvement: Pass@1 rises from 0\% at R1--R3 to 15\% at R8, exceeding the paper's 0\%. This suggests that additional tutoring rounds provide genuine value for complex tasks with sufficient context.
+
+\paragraph{EasyVolcap.} Results closely match the paper. At low level, Pass@1 improves from 12.5\% (R1) to 23.0\% (R7), nearly matching the paper's 23.3\%. At med level, we exceed the paper (16.0\% vs.\ 14.2\%). High level trails slightly (15.8\% vs.\ 23.3\%) but matches Pass@10.
+
+\paragraph{Aggregate comparison.} Averaging across all 22 tasks (using each project-level's best round), our baseline achieves \textbf{27.5\% Pass@1} versus the paper's 20.8\% (\textbf{+6.8pp}), with comparable Pass@10 (38.0\% vs.\ 37.9\%). The improvement is largest at high level (+9.1pp), suggesting our configuration benefits most when the student has access to richer code context.
+
+\subsection{Round-by-Round Analysis}
+
+Figure~\ref{fig:rounds} illustrates how Pass@1 evolves across tutoring rounds for EasyVolcap, our largest project (12 tasks).
+
+\begin{table}[t]
+  \centering
+  \small
+  \begin{tabular}{lccc}
+    \toprule
+    \textbf{Round} & \textbf{Low} & \textbf{Med} & \textbf{High} \\
+    \midrule
+    R1 & 12.5 & 3.3  & \textbf{15.8} \\
+    R2 & 6.0  & 8.0  & 15.0 \\
+    R3 & 4.0  & 10.0 & 12.0 \\
+    R4 & 0.0  & \textbf{16.0} & 9.0 \\
+    R5 & 15.0 & 8.0  & 8.0 \\
+    R6 & 16.0 & 8.0  & 5.0 \\
+    R7 & \textbf{23.0} & 10.0 & 6.0 \\
+    R8 & 21.0 & 10.0 & 6.0 \\
+    \bottomrule
+  \end{tabular}
+  \caption{EasyVolcap Pass@1 (\%) by round and level. Low-level students improve with more tutoring (R1: 12.5\% $\rightarrow$ R7: 23.0\%), while high-level students degrade (R1: 15.8\% $\rightarrow$ R8: 6.0\%).}
+  \label{fig:rounds}
+\end{table}
+
+Two opposing trends emerge:
+\begin{itemize}
+  \item \textbf{Tutoring helps low-level students.} Pass@1 nearly doubles from R1 to R7 (12.5\% $\rightarrow$ 23.0\%), as the tutor gradually fills knowledge gaps.
+  \item \textbf{Over-tutoring hurts high-level students.} Pass@1 degrades from R1 to R8 (15.8\% $\rightarrow$ 6.0\%), suggesting that additional rounds introduce noise or conflicting guidance for students who already have sufficient context.
+\end{itemize}
+
+This pattern motivates our misconception-conditioned approach: rather than providing more tutoring rounds indiscriminately, the tutor should be informed about \emph{what} the student is getting wrong and address it directly.
+
+\subsection{McMiner Analysis on Baseline Dialogues}
+\label{sec:mcminer-analysis}
+
+Before integrating McMiner into the tutoring loop, we applied it to 175 code samples across 17 tasks from all four projects using Gemini~2.5~Flash. McMiner detected misconceptions in 142 samples (\textbf{81.1\%}), with 92.3\% at high confidence. Detection rates were uniform across proficiency levels ($\sim$80\%) but varied by dialogue turn (41.2\% at Turn~1, rising to 96.0\% by Turn~15), as early turns produce incomplete code that is harder to diagnose. Detected misconceptions clustered into three themes: \textit{tensor/array operations} (53.5\%), \textit{OOP/class structure} (30.3\%), and \textit{control flow} (16.2\%). Per-project detection rates are reported in Appendix~\ref{sec:appendix-mcminer}. The high detection rate motivated integrating McMiner directly into the TRAVER tutoring loop.
+
+\subsection{McMiner-in-the-Loop Results}
+
+We evaluate the effect of conditioning the tutor on McMiner-detected misconceptions. We compare three conditions on EasyVolcap (12 tasks), our largest and most diagnostically rich project:
+\begin{itemize}
+  \item \textbf{Baseline}: Standard TRAVER tutoring (no misconception information).
+  \item \textbf{McMiner}: McMiner-in-the-loop tutoring, where detected misconceptions are injected into the tutor's system prompt each round.
+  \item \textbf{Clean}: Same as McMiner, but misconception-related jargon is stripped from the posttest prompts before code generation, retaining only code-relevant guidance.
+\end{itemize}
+
+\paragraph{EasyVolcap results.} Table~\ref{tab:mcminer-easyvolcap} shows the best-round Pass@1 for each condition and level.
+
+\begin{table}[t]
+  \centering
+  \small
+  \begin{tabular}{lccc}
+    \toprule
+    \textbf{Level} & \textbf{Baseline} & \textbf{McMiner} & \textbf{Clean} \\
+    \midrule
+    low  & \textbf{23.0} (R7) & 11.0 (R6) & 10.8 (R1) \\
+    med  & 16.0 (R4) & 16.7 (R8) & \textbf{17.5} (R8) \\
+    high & 15.8 (R1) & 24.2 (R7) & \textbf{31.7} (R7) \\
+    \bottomrule
+  \end{tabular}
+  \caption{EasyVolcap best-round Pass@1 (\%) across conditions. McMiner-Clean achieves +15.9pp over the baseline's best round at high level, but degrades low-level performance by 12pp.}
+  \label{tab:mcminer-easyvolcap}
+\end{table}
+
+The effect of misconception conditioning is \textbf{strongly level-dependent}. At high level, McMiner-Clean achieves 31.7\% Pass@1 at R7---a \textbf{+15.9 percentage point improvement} over the baseline's best round of 15.8\% (R1). Comparing at the same round (R7), the gap is even larger: the baseline drops to 6.0\% while McMiner-Clean reaches 31.7\% (+25.7pp), as shown in Table~\ref{tab:mcminer-headline}.
+
+\begin{table}[t]
+  \centering
+  \small
+  \begin{tabular}{lcccc}
+    \toprule
+    \textbf{Metric} & \textbf{Baseline} & \textbf{McMiner} & \textbf{Clean} & \textbf{$\Delta$BL$\rightarrow$CL} \\
+    \midrule
+    Pass@1  & 6.0  & 24.2 & \textbf{31.7} & +25.7 \\
+    Pass@3  & 12.2 & 35.7 & \textbf{40.8} & +28.6 \\
+    Pass@5  & 15.0 & 39.6 & \textbf{41.6} & +26.6 \\
+    Pass@10 & 20.0 & 41.7 & \textbf{41.7} & +21.7 \\
+    \midrule
+    \multicolumn{5}{l}{\footnotesize Best-round baseline: 15.8\% P@1 (R1) $\rightarrow$ $\Delta$\,=\,+15.9} \\
+    \bottomrule
+  \end{tabular}
+  \caption{EasyVolcap high\_level Round~7: Pass@$k$ (\%) comparison. All values are from the same round (R7). The $\Delta$ column shows the same-round gap; comparing against the baseline's best round (15.8\% at R1) yields +15.9pp.}
+  \label{tab:mcminer-headline}
+\end{table}
+
+However, at low level, both McMiner and Clean \textbf{degrade performance} by approximately 12 percentage points relative to the baseline. Both conditions degrade identically, confirming that the damage originates from the tutoring dialogue content itself---not from misconception jargon in the posttest prompts. Low-level students produce code with fundamental errors (e.g., missing imports, wrong function signatures), which McMiner misinterprets as conceptual misconceptions, causing the tutor to focus on the wrong issues.
+
+At med level, the three conditions perform comparably, with Clean showing a marginal edge (+1.5pp over baseline at R8). The clean-prompt ablation provides a small but consistent benefit in early rounds (R1: 7.5\% vs.\ baseline 3.3\%) and late rounds (R8: 17.5\% vs.\ baseline 10.0\%).
+
+\paragraph{Cross-project comparison.} Table~\ref{tab:mcminer-all} shows best-round Pass@1 for all projects under the three conditions.
+
+\begin{table}[t]
+  \centering
+  \small
+  \begin{tabular}{llccc}
+    \toprule
+    \textbf{Project} & \textbf{Level} & \textbf{BL} & \textbf{MC} & \textbf{Clean} \\
+    \midrule
+    \multirow{3}{*}{sd-forge}
+    & low  & 86.7 & \textbf{100}  & --- \\
+    & med  & 90.0 & \textbf{100}  & --- \\
+    & high & 86.7 & \textbf{100}  & --- \\
+    \midrule
+    \multirow{3}{*}{UHGEval}
+    & low  & \textbf{100}  & \textbf{100}  & --- \\
+    & med  & 90.0 & \textbf{100}  & --- \\
+    & high & 90.0 & \textbf{100}  & --- \\
+    \midrule
+    \multirow{3}{*}{searcharray}
+    & low  & 0.0 & 0.0 & 0.0 \\
+    & med  & 0.0 & 0.0 & 0.0 \\
+    & high & \textbf{15.0} & 11.7\textsuperscript{$\star$} & 0.0 \\
+    \midrule
+    \multirow{3}{*}{EasyVolcap}
+    & low  & \textbf{23.0} & 11.0 & 10.8 \\
+    & med  & 16.0 & 16.7 & \textbf{17.5} \\
+    & high & 15.8 & 24.2 & \textbf{31.7} \\
+    \bottomrule
+    \multicolumn{5}{l}{\footnotesize \textsuperscript{$\star$}McMiner-Thorough variant (12 rounds + dedup).} \\
+  \end{tabular}
+  \caption{Best-round Pass@1 (\%) across all projects and conditions. McMiner maintains or improves performance on easy tasks (sd-forge, UHGEval) and improves EasyVolcap at high level, but degrades searcharray and EasyVolcap low level. ``---'' indicates the Clean ablation was not run.}
+  \label{tab:mcminer-all}
+\end{table}
+
+On sd-forge and UHGEval, McMiner achieves 100\% Pass@1 across all levels---matching or exceeding the baseline. These tasks involve short, well-defined functions where misconception-aware tutoring does not interfere with code quality.
+
+On searcharray (6 tasks), all McMiner conditions produce 0\% Pass@1 across all levels and rounds, compared to the baseline's 15.0\% at high level R8. We also evaluated an extended ``Thorough'' configuration with semantic deduplication and 12 rounds; McMiner-Thorough achieves 11.7\% Pass@1 at high level R1 (1/6 tasks), but this remains below the baseline. searcharray tasks require precise knowledge of an unfamiliar API (roaring bitmaps, custom postings lists), where misconception detection provides limited value.
+
+\paragraph{Clean-prompt ablation.} The consistent advantage of Clean over raw McMiner on EasyVolcap reveals an important finding about prompt design: misconception-related pedagogical language (e.g., ``I notice your code has a fundamental error in how you handle\ldots'') consumes context budget that would otherwise contain actionable code hints. For high-level students who already understand the API surface, removing this meta-discussion and retaining only code-focused guidance yields a +7.5pp improvement over raw McMiner at R7 (31.7\% vs.\ 24.2\%).
+
+\subsection{Summary of Findings}
+
+Table~\ref{tab:summary-findings} synthesizes our key findings across all conditions.
+
+\begin{table}[t]
+  \centering
+  \small
+  \begin{tabular}{lcp{4.2cm}}
+    \toprule
+    \textbf{Level} & \textbf{$\Delta$P@1} & \textbf{Interpretation} \\
+    \midrule
+    low  & $-$12.2 & McMiner hurts: noisy code $\rightarrow$ false misconceptions \\
+    med  & +1.5 & Roughly neutral; Clean has marginal edge \\
+    high & \textbf{+15.9} & McMiner-Clean excels: targeted guidance works \\
+    \bottomrule
+  \end{tabular}
+  \caption{Effect of McMiner-Clean vs.\ Baseline on EasyVolcap best-round Pass@1 (pp), by student level.}
+  \label{tab:summary-findings}
+\end{table}
+
+
+\section{Conclusion}
+
+We presented an approach that combines misconception detection with dialogue-based tutoring for programming education. Our baseline reproduction of TRAVER on 4 repositories (22 tasks) achieves an overall Pass@1 of 27.5\% compared to the paper's 20.8\% on the same tasks (+6.8pp).
+
+Our round-by-round analysis reveals an important asymmetry: low-level students benefit from extended tutoring (Pass@1 nearly doubles from R1 to R7), while high-level students show degradation with additional rounds. This motivated our core contribution---integrating McMiner's misconception detection into the tutoring loop.
+
+Our McMiner experiments demonstrate that misconception conditioning is \textbf{strongly level-dependent}. The headline result is on EasyVolcap at high level, where McMiner-Clean achieves 31.7\% Pass@1 at R7---a +15.9pp improvement over the baseline's best round (15.8\% at R1). Notably, at the same round (R7), the baseline has degraded to just 6.0\%, yielding a same-round gap of +25.7pp. This shows that misconception-aware tutoring not only produces better peak performance, but also sustains it across rounds where standard tutoring degrades.
+
+However, the same approach \textbf{hurts low-level students} by $\sim$12pp, because McMiner misidentifies syntactic errors as conceptual misconceptions, misdirecting the tutor. The clean-prompt ablation confirms that the degradation originates from the dialogue content rather than prompt contamination.
+
+These results suggest that the optimal tutoring strategy is \textbf{level-adaptive}: misconception-aware tutoring should be applied selectively for students with sufficient context, while low-level students benefit more from conventional knowledge-gap tutoring. Future work should explore online McMiner integration with adaptive thresholds that trigger misconception conditioning only when the student's code quality exceeds a minimum diagnostic threshold.
+
+
+\section*{Limitations}
+
+Our evaluation is limited to 4 of the 25 EvoCodeBench repositories (22 of 100 tasks) due to storage and environment constraints. Additionally, we substitute Mistral-7B for the original Mixtral-8x7B student model and use 4-bit quantization for local models, which may affect generation quality.
+
+Our McMiner evaluation focuses primarily on EasyVolcap (12 tasks), as searcharray (6 tasks) proved too difficult for all conditions. The remaining projects (sd-forge, UHGEval) are essentially solved by the baseline, leaving limited room for McMiner to demonstrate improvement. A broader evaluation across more repositories would strengthen the generalizability of our level-dependent findings.
+
+\section*{Acknowledgments}
+Gemini Code Assist was used to help with debugging scripts and refining the language of the paper.
+
+% Custom bibliography entries only
+\bibliography{custom}
+
+\appendix
+
+\section{McMiner Detection Rates}
+\label{sec:appendix-mcminer}
+
+Table~\ref{tab:mcminer-detection} shows McMiner's misconception detection rates on baseline dialogue code, broken down by project.
+
+\begin{table}[h]
+  \centering
+  \small
+  \begin{tabular}{lrrr}
+    \toprule
+    \textbf{Project} & \textbf{Samples} & \textbf{Detected} & \textbf{Rate} \\
+    \midrule
+    EasyVolcap     & 117 & 102 & 87.2\% \\
+    searcharray    & 51  & 36  & 70.6\% \\
+    xinhua         & 4   & 2   & 50.0\% \\
+    codeformer     & 2   & 2   & 100\%  \\
+    gfpgan         & 1   & 0   & 0\%    \\
+    \midrule
+    \textbf{Total} & 175 & 142 & \textbf{81.1\%} \\
+    \bottomrule
+  \end{tabular}
+  \caption{McMiner misconception detection rates on baseline dialogue code, by project.}
+  \label{tab:mcminer-detection}
+\end{table}
+
+\section{Per-Project Round-by-Round Results}
+\label{sec:appendix-rounds}
+
+This appendix provides complete Pass@$k$ ($k \in \{1,3,5,10\}$) results for all projects, levels, and tutoring rounds. BL = Baseline, MC = McMiner-Loop, CL = McMiner-Clean.
+
+\subsection{sd-forge (3 tasks) and UHGEval (1 task)}
+
+These projects are essentially solved: all conditions achieve near-perfect scores. Table~\ref{tab:app-easy} reports the baseline alongside McMiner-Loop results from the corrected Colab evaluation.
+
+\begin{table}[h]
+  \centering
+  \small
+  \begin{tabular}{llccccc}
+    \toprule
+    \textbf{Project} & \textbf{Level} & \textbf{Cond.} & \textbf{P@1} & \textbf{P@3} & \textbf{P@5} & \textbf{P@10} \\
+    \midrule
+    \multirow{6}{*}{\rotatebox{90}{codeformer}}
+    & \multirow{2}{*}{low}  & BL R1 & 90.0 & 100 & 100 & 100 \\
+    &                       & MC R1--3 & 100 & 100 & 100 & 100 \\
+    & \multirow{2}{*}{med}  & BL R1 & 100 & 100 & 100 & 100 \\
+    &                       & MC R1--3 & 100 & 100 & 100 & 100 \\
+    & \multirow{2}{*}{high} & BL R1 & 90.0 & 100 & 100 & 100 \\
+    &                       & MC R1--3 & 100 & 100 & 100 & 100 \\
+    \midrule
+    \multirow{6}{*}{\rotatebox{90}{gfpgan}}
+    & \multirow{2}{*}{low}  & BL R1 & 85.0 & 100 & 100 & 100 \\
+    &                       & MC R1--3 & 95--100 & 100 & 100 & 100 \\
+    & \multirow{2}{*}{med}  & BL R1 & 85.0 & 100 & 100 & 100 \\
+    &                       & MC R1--3 & 100 & 100 & 100 & 100 \\
+    & \multirow{2}{*}{high} & BL R1 & 85.0 & 100 & 100 & 100 \\
+    &                       & MC R1--8 & 100 & 100 & 100 & 100 \\
+    \midrule
+    \multirow{6}{*}{\rotatebox{90}{xinhua}}
+    & \multirow{2}{*}{low}  & BL R1 & 100 & 100 & 100 & 100 \\
+    &                       & MC R1--3 & 100 & 100 & 100 & 100 \\
+    & \multirow{2}{*}{med}  & BL R1 & 90.0 & 100 & 100 & 100 \\
+    &                       & MC R1--3 & 100 & 100 & 100 & 100 \\
+    & \multirow{2}{*}{high} & BL R1 & 90.0 & 100 & 100 & 100 \\
+    &                       & MC R1--3 & 100 & 100 & 100 & 100 \\
+    \bottomrule
+  \end{tabular}
+  \caption{sd-forge and UHGEval Pass@$k$ (\%). McMiner matches or exceeds baseline across all rounds (all rounds identical; range shown). BL early-stopped at R1--R3; MC continued for 3--8 rounds.}
+  \label{tab:app-easy}
+\end{table}
+
+\paragraph{Analysis.} These four tasks---\texttt{codeformer\_model.setup\_model} (model initialization), \texttt{gfpgan\_model.gfpgan\_fix\_faces} and \texttt{gfpgan\_model.setup\_model} (face restoration setup), and \texttt{xinhua.XinhuaHallucinations.statistics} (JSON aggregation)---involve short, well-defined functions (1--10 lines) with clear signatures and minimal API surface. The baseline already achieves 85--100\% P@1 at R1, indicating that even a single tutoring round provides sufficient context for the student model to generate correct completions. McMiner maintains or slightly improves these scores: misconception-aware tutoring neither helps nor harms when the underlying task is simple enough that the code generation model can solve it from the function signature alone. The baseline conversations early-stop after 1--3 rounds because the tutor recognizes the student has converged, while McMiner conversations extend to 3--8 rounds due to the misconception injection prompting additional dialogue turns. Despite these extra rounds, performance remains saturated at 100\%, confirming that McMiner does not introduce harmful noise for easy tasks.
+
+\subsection{searcharray (6 tasks)}
+
+\subsubsection{Baseline (R1--R8)}
+
+Low and med levels produce 0\% on all metrics across all 8 rounds. Table~\ref{tab:app-sa-bl} shows the high\_level detail.
+
+\begin{table}[h]
+  \centering
+  \small
+  \begin{tabular}{lcccc}
+    \toprule
+    \textbf{Round} & \textbf{P@1} & \textbf{P@3} & \textbf{P@5} & \textbf{P@10} \\
+    \midrule
+    R1 & 0.0 & 0.0 & 0.0 & 0.0 \\
+    R2 & 0.0 & 0.0 & 0.0 & 0.0 \\
+    R3 & 0.0 & 0.0 & 0.0 & 0.0 \\
+    R4 & 7.5 & 17.7 & 22.9 & 25.0 \\
+    R5 & 0.0 & 0.0 & 0.0 & 0.0 \\
+    R6 & 12.5 & 22.9 & 24.9 & 25.0 \\
+    R7 & 7.5 & 17.7 & 22.9 & 25.0 \\
+    R8 & \textbf{15.0} & \textbf{24.2} & \textbf{25.0} & \textbf{25.0} \\
+    \bottomrule
+  \end{tabular}
+  \caption{searcharray baseline high\_level Pass@$k$ (\%). The only task that passes is \texttt{searcharray.solr.edismax}. Low and med = 0\% for all rounds.}
+  \label{tab:app-sa-bl}
+\end{table}
+
+\paragraph{Baseline analysis.} searcharray is the hardest project in our benchmark. Its 6 tasks require knowledge of roaring bitmaps, custom postings lists, and the \texttt{searcharray} library's internal API---none of which appear in standard training data. At low and med levels, no task passes across any round: the simulated students produce code with wrong attribute names (e.g., \texttt{positions\_dict} instead of the correct accessor), import nonexistent libraries (\texttt{anserini}), or trigger infinite loops in while-based bit counting. At high level, a single task (\texttt{searcharray.solr.edismax}) begins passing at R4, reaching 15\% P@1 by R8. This task involves query parsing logic that is more amenable to iterative refinement through tutoring. The intermittent zero at R5 (between non-zero R4 and R6) reflects the stochastic nature of code generation: the model occasionally regresses before recovering in subsequent rounds. The gap between P@1 (15\%) and P@10 (25\%) at R8 indicates that correct solutions exist in the completion distribution but are not consistently the top-ranked output.
+
+\subsubsection{McMiner-Thorough (R1--R12)}
+
+Low and med levels remain 0\% for all 12 rounds. Table~\ref{tab:app-sa-mc} shows the high\_level detail.
+
+\begin{table}[h]
+  \centering
+  \small
+  \begin{tabular}{lcccc}
+    \toprule
+    \textbf{Round} & \textbf{P@1} & \textbf{P@3} & \textbf{P@5} & \textbf{P@10} \\
+    \midrule
+    R1 & \textbf{11.7} & \textbf{16.5} & \textbf{16.7} & \textbf{16.7} \\
+    R2 & 5.0 & 11.8 & 15.3 & 16.7 \\
+    R3--R12 & 0.0 & 0.0 & 0.0 & 0.0 \\
+    \bottomrule
+  \end{tabular}
+  \caption{searcharray McMiner-Thorough high\_level Pass@$k$ (\%). Best result is 11.7\% P@1 at R1 (1/6 tasks), below baseline's 15.0\% at R8.}
+  \label{tab:app-sa-mc}
+\end{table}
+
+\paragraph{McMiner-Thorough analysis.} The Thorough configuration applies semantic deduplication to misconception prompts and extends tutoring to 12 rounds with accumulated context. Despite these enhancements, searcharray remains largely unsolved. The best result---11.7\% P@1 at high\_level R1---solves the same single task (\texttt{edismax}) as the baseline, but with lower probability. Critically, performance degrades to 0\% by R3 and never recovers through R12, whereas the baseline improves from R4 to R8. This suggests that McMiner's misconception injection actively interferes with the tutoring trajectory for API-heavy tasks: the tutor spends dialogue turns addressing perceived conceptual misunderstandings when the real bottleneck is the student model's lack of domain-specific API knowledge. Extended rounds (R9--R12) provide no recovery, confirming that more tutoring cannot compensate for fundamentally misaligned misconception feedback.
+
+\subsection{EasyVolcap (12 tasks) --- Full 3-Way Comparison}
+
+\subsubsection{low\_level}
+
+\begin{table*}[t]
+  \centering
+  \small
+  \begin{tabular}{l|ccc|ccc|ccc|ccc}
+    \toprule
+    & \multicolumn{3}{c|}{\textbf{Pass@1}} & \multicolumn{3}{c|}{\textbf{Pass@3}} & \multicolumn{3}{c|}{\textbf{Pass@5}} & \multicolumn{3}{c}{\textbf{Pass@10}} \\
+    \textbf{Rd} & BL & MC & CL & BL & MC & CL & BL & MC & CL & BL & MC & CL \\
+    \midrule
+    R1 & 12.5 & 10.8 & 10.8  & 22.2 & 15.3 & 17.8  & 27.1 & 19.0 & 23.1  & \textbf{33.3} & 25.0 & \textbf{33.3} \\
+    R2 & 6.0 & 4.0 & 5.0    & 15.4 & 8.3 & 11.3   & 21.9 & 9.8 & 14.8   & \textbf{30.0} & 10.0 & 20.0 \\
+    R3 & 4.0 & 7.0 & 6.0    & 10.1 & 17.2 & 15.4   & 14.2 & 23.3 & 21.9  & 20.0 & \textbf{30.0} & \textbf{30.0} \\
+    R4 & 0.0 & 2.0 & 2.0    & 0.0 & 5.3 & 5.3     & 0.0 & 7.8 & 7.8    & 0.0 & 10.0 & 10.0 \\
+    R5 & \textbf{15.0} & 7.0 & 8.0  & \textbf{19.7} & 9.9 & 10.0  & \textbf{20.0} & 10.0 & 10.0 & 20.0 & 10.0 & 10.0 \\
+    R6 & \textbf{16.0} & 11.0 & 10.0 & \textbf{20.0} & 13.0 & 10.0 & \textbf{20.0} & 15.0 & 10.0 & 20.0 & 20.0 & 10.0 \\
+    R7 & \textbf{23.0} & 10.0 & 8.0  & \textbf{27.1} & 10.0 & 10.0 & \textbf{29.2} & 10.0 & 10.0 & \textbf{30.0} & 10.0 & 10.0 \\
+    R8 & \textbf{21.0} & 5.0 & 4.0  & \textbf{23.0} & 9.2 & 8.3  & \textbf{25.0} & 10.0 & 9.8  & \textbf{30.0} & 10.0 & 10.0 \\
+    \bottomrule
+  \end{tabular}
+  \caption{EasyVolcap low\_level: full Pass@$k$ (\%) for all conditions. Baseline dominates consistently from R5 onward across all metrics.}
+  \label{tab:app-ev-low}
+\end{table*}
+
+\paragraph{Low-level analysis.} McMiner consistently degrades low\_level performance, with the gap widening as rounds increase. At R1, the three conditions are nearly identical (12.5/10.8/10.8\% P@1), but by R7 the baseline reaches 23.0\% while both McMiner (10.0\%) and Clean (8.0\%) plateau around 10\%. This divergence pattern is consistent across all Pass@$k$ values: at R7, the baseline achieves 27.1/29.2/30.0\% (P@3/5/10) while McMiner and Clean are stuck at 10\%. The root cause is that low-level students produce syntactically broken diagnostic code that McMiner misinterprets as conceptual misconceptions. For example, a student who writes \texttt{self.data = None} (a placeholder) triggers a misconception about ``fundamental misunderstanding of data initialization,'' causing the tutor to spend subsequent rounds correcting a non-existent conceptual error rather than guiding the student toward the correct API usage. Crucially, the Clean ablation provides no benefit over raw McMiner at this level ($\sim$1pp difference), confirming that the damage originates in the \emph{tutoring dialogue content itself}, not in residual misconception jargon in the posttest prompt. The baseline's R7 peak (23.0\%) followed by slight decline at R8 (21.0\%) suggests an optimal tutoring window of 6--7 rounds for low-level students.
+
+\subsubsection{med\_level}
+
+\begin{table*}[t]
+  \centering
+  \small
+  \begin{tabular}{l|ccc|ccc|ccc|ccc}
+    \toprule
+    & \multicolumn{3}{c|}{\textbf{Pass@1}} & \multicolumn{3}{c|}{\textbf{Pass@3}} & \multicolumn{3}{c|}{\textbf{Pass@5}} & \multicolumn{3}{c}{\textbf{Pass@10}} \\
+    \textbf{Rd} & BL & MC & CL & BL & MC & CL & BL & MC & CL & BL & MC & CL \\
+    \midrule
+    R1 & 3.3 & 2.5 & \textbf{7.5}  & 8.9 & 6.9 & \textbf{17.3}  & 13.0 & 10.6 & \textbf{22.3}  & 16.7 & 16.7 & \textbf{25.0} \\
+    R2 & 8.0 & 5.0 & \textbf{8.3}  & 16.2 & 11.4 & 15.0  & 19.1 & 14.6 & 16.5  & \textbf{20.0} & 16.7 & 16.7 \\
+    R3 & \textbf{10.0} & 5.0 & 3.3  & \textbf{15.3} & 8.1 & 6.9  & \textbf{17.8} & 8.3 & 8.1  & \textbf{20.0} & 8.3 & 8.3 \\
+    R4 & \textbf{16.0} & 0.0 & 1.7  & \textbf{23.7} & 0.0 & 4.4  & \textbf{27.5} & 0.0 & 6.5  & \textbf{30.0} & 0.0 & 8.3 \\
+    R5 & 8.0 & 2.5 & 4.2  & 15.7 & 5.9 & 7.6  & \textbf{20.0} & 7.6 & 8.3  & \textbf{30.0} & 8.3 & 8.3 \\
+    R6 & 8.0 & 7.5 & 7.5  & 10.0 & 8.3 & 8.3  & 10.0 & 8.3 & 8.3  & 10.0 & 8.3 & 8.3 \\
+    R7 & 10.0 & 15.0 & \textbf{16.7} & 10.0 & \textbf{16.7} & \textbf{16.7} & 10.0 & \textbf{16.7} & \textbf{16.7} & 10.0 & \textbf{16.7} & \textbf{16.7} \\
+    R8 & 10.0 & 16.7 & \textbf{17.5} & 13.0 & 16.7 & \textbf{19.2} & 15.0 & 16.7 & \textbf{20.8} & 20.0 & 16.7 & \textbf{25.0} \\
+    \bottomrule
+  \end{tabular}
+  \caption{EasyVolcap med\_level: full Pass@$k$ (\%) for all conditions. Roughly neutral; Clean has an edge at R1 and R7--R8.}
+  \label{tab:app-ev-med}
+\end{table*}
+
+\paragraph{Med-level analysis.} The med\_level results exhibit a distinctive two-phase pattern. In \emph{Phase 1} (R1--R5), the baseline generally outperforms McMiner conditions, with the baseline peaking at 16.0\% P@1 at R4 while McMiner collapses to 0.0\% and Clean to 1.7\% at the same round. The R4 collapse is particularly striking: it coincides with the point where McMiner misconception feedback accumulates enough to derail the tutoring trajectory, while the baseline tutor continues productive instruction. In \emph{Phase 2} (R6--R8), the relationship inverts: McMiner conditions recover and surpass the baseline, with Clean reaching 17.5\% P@1 at R8 versus the baseline's 10.0\%. This recovery suggests that after enough rounds, the accumulated tutoring context overcomes the initial misconception-induced noise. Clean consistently outperforms raw McMiner by 0.8--4.2pp at P@1 across most rounds, with the advantage most pronounced at R1 (7.5\% vs.\ 2.5\%). This pattern holds across all Pass@$k$: at R1, Clean achieves 17.3/22.3/25.0\% (P@3/5/10) versus McMiner's 6.9/10.6/16.7\%, indicating that removing misconception jargon from the posttest prompt frees context budget for code-relevant hints. The net effect is roughly neutral: baseline best (16.0\% at R4) versus Clean best (17.5\% at R8) yields a modest +1.5pp gain.
+
+\subsubsection{high\_level}
+
+\begin{table*}[t]
+  \centering
+  \small
+  \begin{tabular}{l|ccc|ccc|ccc|ccc}
+    \toprule
+    & \multicolumn{3}{c|}{\textbf{Pass@1}} & \multicolumn{3}{c|}{\textbf{Pass@3}} & \multicolumn{3}{c|}{\textbf{Pass@5}} & \multicolumn{3}{c}{\textbf{Pass@10}} \\
+    \textbf{Rd} & BL & MC & CL & BL & MC & CL & BL & MC & CL & BL & MC & CL \\
+    \midrule
+    R1 & 15.8 & 15.8 & \textbf{19.2}  & 25.0 & 28.0 & \textbf{28.8}  & 28.5 & 31.4 & \textbf{31.4}  & 33.3 & 33.3 & 33.3 \\
+    R2 & 15.0 & 13.3 & \textbf{16.7}  & 25.4 & \textbf{26.0} & \textbf{26.0}  & 28.9 & \textbf{30.8} & 29.0  & 30.0 & \textbf{33.3} & \textbf{33.3} \\
+    R3 & 12.0 & \textbf{15.0} & 10.0  & 20.1 & \textbf{24.9} & 17.2  & 24.2 & \textbf{29.6} & 21.3  & 30.0 & \textbf{33.3} & 25.0 \\
+    R4 & 9.0 & 15.0 & \textbf{16.7}  & 16.8 & 21.1 & \textbf{23.5}  & 19.2 & 23.1 & \textbf{24.8}  & 20.0 & \textbf{25.0} & \textbf{25.0} \\
+    R5 & 8.0 & 23.3 & \textbf{22.5}  & 12.9 & 27.4 & \textbf{31.2}  & 15.0 & 29.2 & \textbf{33.1}  & 20.0 & \textbf{33.3} & \textbf{33.3} \\
+    R6 & 5.0 & 21.7 & \textbf{22.5}  & 11.3 & \textbf{29.2} & 28.7  & 14.8 & \textbf{31.5} & 31.4  & 20.0 & \textbf{33.3} & \textbf{33.3} \\
+    R7 & 6.0 & 24.2 & \textbf{31.7}  & 12.2 & 35.7 & \textbf{40.8}  & 15.0 & 39.6 & \textbf{41.6}  & 20.0 & \textbf{41.7} & \textbf{41.7} \\
+    R8 & 6.0 & \textbf{21.7} & 15.0  & 9.7 & \textbf{24.7} & 19.1  & 10.0 & \textbf{25.0} & 20.8  & 10.0 & \textbf{25.0} & \textbf{25.0} \\
+    \bottomrule
+  \end{tabular}
+  \caption{EasyVolcap high\_level: full Pass@$k$ (\%) for all conditions. McMiner-Clean dominates from R4 onward across all metrics. At R7, Clean achieves 31.7\%/40.8\%/41.6\%/41.7\% (P@1/3/5/10) vs.\ baseline's 6.0\%/12.2\%/15.0\%/20.0\%.}
+  \label{tab:app-ev-high}
+\end{table*}
+
+\paragraph{High-level analysis.} This is our headline finding. The high\_level results show a dramatic and consistent advantage for McMiner conditions, with the effect amplifying through later rounds. The baseline peaks at R1 (15.8\% P@1) and degrades steadily to 6.0\% by R7---a pattern we attribute to ``over-tutoring,'' where additional dialogue rounds introduce noise and conflicting guidance for students who already understand the API surface. McMiner reverses this trajectory: performance \emph{improves} from 15.8\% (R1) to 24.2\% (R7), a +8.4pp gain over the same-round baseline. Clean amplifies this further to 31.7\% at R7, yielding a +25.7pp same-round delta.
+
+The Clean advantage over raw McMiner (31.7\% vs.\ 24.2\% at R7, +7.5pp) reveals an important prompt engineering insight: misconception-related pedagogical language (e.g., ``I notice your code has a fundamental error in how you handle\ldots'') consumes the 60-word posttest prompt budget. For high-level students who already understand the concepts, this meta-discussion displaces actionable code hints. Stripping it leaves more room for concrete API guidance that the code generation model can directly leverage.
+
+The improvement is consistent across all Pass@$k$. At R7, Clean achieves 40.8\% P@3, 41.6\% P@5, and 41.7\% P@10, versus baseline's 12.2/15.0/20.0\%. The narrowing gap between P@1 and P@10 for Clean (31.7\% vs.\ 41.7\%) compared to baseline (6.0\% vs.\ 20.0\%) indicates that McMiner-Clean not only increases the probability of correct solutions but also concentrates them toward the top of the generation distribution.
+
+The R8 dip in Clean (15.0\% vs.\ McMiner's 21.7\%) is likely attributable to variance at the tutoring ceiling: by R8, most improvable tasks have already been solved, and the remaining unsolved tasks are resistant to further tutoring.
+
+\end{document}
+

@@ -4,6 +4,27 @@
 
 This project reproduces and extends the **TRAVER** (Training and Verifying Reasoning-Enhanced Tutoring) framework for building LLM-based coding tutors. We introduce **McMiner-in-the-Loop**, a pedagogical strategy that integrates automated misconception detection into the tutoring dialogue, and evaluate its impact on student code generation outcomes using the EvoCodeBench-2403 benchmark.
 
+## 📌 Resources
+
+| Resource | Link |
+|----------|------|
+| 🌐 **Live Demo** | [mcminer-coding-tutor.netlify.app](https://mcminer-coding-tutor.netlify.app) |
+| 📄 **Paper** | [Bridging Misconception Detection and Dialogue-Based Tutoring for Programming Education (PDF)](paper/Bridging%20Misconception%20Detection%20and%20Dialogue-Based%20Tutoring%20for%20Programming%20Education.pdf) |
+| 🎤 **Presentation** | [Mcminer-coding-tutor (PDF)](paper/Mcminer-coding-tutor.pdf) |
+| 🪧 **Poster** | [Poster mcminer-tutor (PDF)](paper/poster%20mcminer-tutor.pdf) |
+
+### Demo Modes
+
+The demo has two modes:
+
+1. **Dialogue Replay** (default) — Browse pre-recorded tutoring dialogues comparing baseline TRAVER vs McMiner-TRAVER side by side. Select different tasks and student levels to see how McMiner's misconception detection changes the conversation. No API keys needed.
+
+2. **Semi-Live Auto-Play** — Watch real tutoring sessions generated live by calling the actual LLM APIs. Both TRAVER-only and McMiner-TRAVER run simultaneously in side-by-side panes so you can compare them in real time. **Requires two API keys:**
+   - **HuggingFace API key** — for the tutor (Llama 70B), student (Qwen 7B), and codegen (Llama 8B) models. Get one free at [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens).
+   - **Google Gemini API key** — for McMiner misconception detection (Gemini 2.5 Flash). Get one free at [aistudio.google.com/apikey](https://aistudio.google.com/apikey).
+
+   Keys stay in your browser session only — they are never sent to any server other than the official API endpoints.
+
 ![TRAVER Overview](Coding-Tutor/assets/overview.png)
 
 ---
@@ -11,6 +32,7 @@ This project reproduces and extends the **TRAVER** (Training and Verifying Reaso
 ## Table of Contents
 
 - [Overview](#overview)
+- [Resources](#-resources)
 - [Key Results](#key-results)
 - [Models](#models)
 - [Methodology](#methodology)
