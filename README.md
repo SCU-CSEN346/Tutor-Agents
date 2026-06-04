@@ -9,8 +9,8 @@ This project reproduces and extends the **TRAVER** (Training and Verifying Reaso
 | Resource | Link |
 |----------|------|
 | 🌐 **Live Demo** | [mcminer-coding-tutor.netlify.app](https://mcminer-coding-tutor.netlify.app) |
-| 📄 **Paper** | [Bridging Misconception Detection and Dialogue-Based Tutoring for Programming Education (PDF)](paper/Bridging%20Misconception%20Detection%20and%20Dialogue-Based%20Tutoring%20for%20Programming%20Education.pdf) |
-| 🎤 **Presentation** | [Mcminer-coding-tutor (PDF)](paper/Mcminer-coding-tutor.pdf) |
+| 📄 **Paper** | [Mcminer-coding-tutor (PDF)](paper/Mcminer-coding-tutor.pdf) |
+| 🎤 **Presentation** | [Bridging Misconception Detection and Dialogue-Based Tutoring for Programming Education (PDF)](paper/Bridging%20Misconception%20Detection%20and%20Dialogue-Based%20Tutoring%20for%20Programming%20Education.pdf) |
 | 🪧 **Poster** | [Poster mcminer-tutor (PDF)](paper/poster%20mcminer-tutor.pdf) |
 
 ### Demo Modes
