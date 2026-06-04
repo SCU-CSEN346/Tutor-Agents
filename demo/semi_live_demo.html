@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>McMiner-TRAVER — Semi-Live Auto-Play Demo</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+    color: #1a1f2e;
+    background: #f7f8fb;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+  /* ── Header ── */
+  header {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2c4d7a 100%);
+    color: white;
+    padding: 18px 24px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+  }
+  .hdr-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+  .hdr-left { flex: 1; }
+  header h1 { margin: 0 0 4px 0; font-size: 18px; font-weight: 600; letter-spacing: 0.2px; }
+  header .sub { font-size: 13px; opacity: 0.85; margin-bottom: 4px; }
+  header .sub-models { font-size: 11px; opacity: 0.7; }
+  .nav-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
+    color: white; padding: 8px 16px; border-radius: 8px;
+    font-size: 13px; font-weight: 500; text-decoration: none;
+    transition: all 0.2s; white-space: nowrap; margin-top: 4px;
+  }
+  .nav-link:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.4); }
+  .nav-link .nav-icon { font-size: 16px; }
+
+  /* ── API Config Panel ── */
+  .api-config {
+    background: white;
+    border: 1px solid #e3e7ee;
+    border-left: 4px solid #f4c441;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+  }
+  .api-config h3 { margin: 0 0 12px 0; font-size: 14px; font-weight: 600; color: #1a1f2e; }
+  .api-config-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .api-config-field label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #5a6478;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .api-config-field input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d6dae3;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: "SF Mono", "Menlo", Consolas, monospace;
+    background: #f7f8fb;
+    color: #1a1f2e;
+    transition: border-color 0.2s;
+  }
+  .api-config-field input:focus { outline: none; border-color: #4a7ba8; background: white; }
+  .api-config-helper {
+    font-size: 11px;
+    color: #8a93a8;
+    margin-bottom: 10px;
+  }
+  .api-config-actions { display: flex; align-items: center; gap: 12px; }
+  .api-config-actions .btn { font-size: 13px; }
+  .key-status {
+    font-size: 12px;
+    color: #8a93a8;
+    transition: color 0.3s;
+  }
+  .key-status.saved { color: #2d8959; }
+  .key-status.missing { color: #b54a3a; }
+
+  /* ── Task Picker ── */
+  .task-picker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    border: 1px solid #e3e7ee;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+  }
+  .task-picker label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #5a6478;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .task-picker select {
+    flex: 1;
+    padding: 7px 10px;
+    border: 1px solid #d6dae3;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: inherit;
+    background: #f7f8fb;
+    color: #1a1f2e;
+    cursor: pointer;
+  }
+  .task-picker select:focus { outline: none; border-color: #4a7ba8; }
+
+  /* ── Side-by-Side Panes ── */
+  .panes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  @media (max-width: 900px) { .panes { grid-template-columns: 1fr; } }
+
+  .pane {
+    background: white;
+    border: 1px solid #e3e7ee;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 520px;
+  }
+  .pane-header {
+    padding: 10px 16px;
+    border-bottom: 1px solid #e3e7ee;
+    background: #f7f8fb;
+    font-weight: 600;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .pane-header .label-traver { color: #5a6478; }
+  .pane-header .label-mcminer { color: #1e3a5f; }
+  .pane-header .badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+  .pane.traver .pane-header { background: #fafbfc; }
+  .pane.traver .badge { background: #e8ecf2; color: #5a6478; }
+  .pane.mcminer .pane-header { background: linear-gradient(90deg, #fff8eb 0%, #fafbfc 100%); }
+  .pane.mcminer .badge { background: #f4d27d; color: #6b4d10; }
+
+  .transcript {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px 16px;
+    background: #fcfcfd;
+  }
+
+  /* ── Turn / Message Styles ── */
+  .turn {
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+    animation: fadeIn 0.25s ease-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .turn.tutor { background: #eef3f8; border-left: 3px solid #4a7ba8; }
+  .turn.student { background: #f0f9f4; border-left: 3px solid #34d399; }
+  .turn .role {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    opacity: 0.7;
+  }
+  .turn.tutor .role { color: #2c4d7a; }
+  .turn.student .role { color: #16a34a; }
+  .turn.system {
+    background: #fff8eb; border: 1px solid #f4c441;
+    text-align: center; font-size: 12px; color: #6b4d10;
+  }
+  .turn pre.code {
+    background: #1e2433; color: #e6e9f0; padding: 10px 12px;
+    border-radius: 6px; overflow-x: auto; font-size: 12px;
+    margin: 8px 0; font-family: "SF Mono", "Menlo", Consolas, monospace;
+  }
+  .turn code.inline {
+    background: rgba(0,0,0,0.06); padding: 1px 5px; border-radius: 3px;
+    font-family: "SF Mono", "Menlo", Consolas, monospace; font-size: 12px;
+  }
+
+  /* ── McMiner Callout ── */
+  .mcminer-callout {
+    background: linear-gradient(135deg, #fff4d6 0%, #ffe8b5 100%);
+    border: 1px solid #f4c441;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin: 10px 0;
+    font-size: 13px;
+    animation: pulseIn 0.4s ease-out;
+    box-shadow: 0 2px 8px rgba(244, 196, 65, 0.2);
+  }
+  @keyframes pulseIn {
+    0%   { opacity: 0; transform: scale(0.96); }
+    60%  { opacity: 1; transform: scale(1.01); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  .mcminer-callout .title { font-weight: 600; color: #6b4d10; margin-bottom: 6px; }
+  .mcminer-callout .desc { color: #3d2f0a; }
+
+  /* ── Typing Indicator ── */
+  .typing-indicator {
+    display: inline-flex;
+    gap: 4px;
+    padding: 10px 14px;
+    background: #f0f2f7;
+    border-radius: 8px;
+  }
+  .typing-indicator span {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #8a93a8;
+    animation: bounce 1.2s infinite ease-in-out;
+  }
+  .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+  }
+
+  /* ── Empty / Welcome State ── */
+  .empty-state { padding: 40px 20px; text-align: center; color: #8a93a8; font-style: italic; }
+
+  /* ── Controls Bar ── */
+  .controls {
+    background: white; border: 1px solid #e3e7ee; border-radius: 10px;
+    padding: 12px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .btn {
+    background: #1e3a5f;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: inherit;
+    transition: background 0.2s;
+  }
+  .btn:hover { background: #2c4d7a; }
+  .btn:disabled { background: #c5cad4; cursor: not-allowed; }
+  .btn.secondary {
+    background: white;
+    color: #1e3a5f;
+    border: 1px solid #d6dae3;
+  }
+  .btn.secondary:hover { border-color: #1e3a5f; background: #f7f8fb; }
+  .btn.secondary:disabled { opacity: 0.5; cursor: not-allowed; background: white; }
+  .rounds-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #5a6478;
+  }
+  .rounds-label select {
+    padding: 5px 8px;
+    border: 1px solid #d6dae3;
+    border-radius: 5px;
+    font-size: 12px;
+    font-family: inherit;
+    background: white;
+    cursor: pointer;
+  }
+  .latency-display {
+    margin-left: auto;
+    font-size: 12px;
+    font-family: "SF Mono", "Menlo", Consolas, monospace;
+    color: #8a93a8;
+  }
+
+  /* ── Session Info ── */
+  .session-info {
+    background: white; border: 1px solid #e3e7ee; border-radius: 10px;
+    padding: 14px 20px; margin-top: 14px;
+    display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap;
+  }
+  .info-group { display: flex; flex-direction: column; gap: 4px; }
+  .info-header { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #5a6478; font-weight: 600; margin-bottom: 2px; }
+  .info-item { font-size: 13px; color: #4a5366; }
+  .info-item span { font-family: "SF Mono", "Menlo", Consolas, monospace; font-weight: 500; color: #1a1f2e; }
+  .info-divider { width: 1px; background: #e3e7ee; align-self: stretch; }
+  .api-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #5a6478;
+  }
+  .api-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #d6dae3;
+    flex-shrink: 0;
+    transition: background 0.3s;
+  }
+  .api-dot.active { background: #f4c441; animation: pulse-dot 1s infinite; }
+  .api-dot.success { background: #34d399; }
+  .api-dot.error { background: #ef4444; }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .api-badge {
+    margin-left: auto;
+    font-size: 10px;
+    font-family: "SF Mono", "Menlo", Consolas, monospace;
+    color: #8a93a8;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    margin-top: 16px;
+    text-align: center;
+    color: #8a93a8;
+    font-size: 11px;
+    padding-bottom: 20px;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .api-config-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ═══ HEADER ═══ -->
+  <header>
+    <div class="hdr-row">
+      <div class="hdr-left">
+        <h1>McMiner-TRAVER</h1>
+        <div class="sub">Semi-Live Auto-Play Demo</div>
+        <div class="sub-models">Tutor: Llama 70B · Student: Qwen 7B · Codegen: Llama 8B · McMiner: Gemini 2.5 Flash</div>
+      </div>
+      <a href="tutor_demo.html" class="nav-link">
+        <span class="nav-icon">📋</span> ← Dialogue Replay
+      </a>
+    </div>
+  </header>
+
+  <!-- ═══ API KEY CONFIG ═══ -->
+  <div class="api-config">
+    <h3>🔑 API Configuration</h3>
+    <div class="api-config-row">
+      <div class="api-config-field">
+        <label>HuggingFace API Key</label>
+        <input type="password" id="hfKeyInput" placeholder="hf_..." autocomplete="off" />
+      </div>
+      <div class="api-config-field">
+        <label>Google Gemini API Key</label>
+        <input type="password" id="geminiKeyInput" placeholder="AI..." autocomplete="off" />
+      </div>
+    </div>
+    <div class="api-config-helper">Keys stay in your browser only — never sent to any server except the official API endpoints.</div>
+    <div class="api-config-actions">
+      <button class="btn" id="saveKeysBtn" onclick="saveKeys()">Save Keys</button>
+      <span class="key-status" id="keyStatus"></span>
+    </div>
+  </div>
+
+  <!-- ═══ TASK PICKER ═══ -->
+  <div class="task-picker">
+    <label>Task</label>
+    <select id="liveFunctionSelect">
+      <option value="inner_outer"
+        data-desc="Constructs inner and outer measures based on cumulative sums for volumetric rendering using PyTorch tensor operations."
+        data-code="def inner_outer(t0, t1, y1):&#10;    # TODO: implement volumetric rendering helper&#10;    pass">EasyVolcap — inner_outer (volume rendering)</option>
+      <option value="upload_to_texture"
+        data-desc="Uploads image data to an OpenGL texture, handling format conversion and texture parameter setup."
+        data-code="def upload_to_texture(self, image, texture_id=None):&#10;    # TODO: implement OpenGL texture upload&#10;    pass">EasyVolcap — upload_to_texture (GL utils)</option>
+      <option value="to_cuda"
+        data-desc="Recursively moves nested data structures (dicts, lists, tensors) to a CUDA device."
+        data-code="def to_cuda(batch, device='cuda'):&#10;    # TODO: implement recursive CUDA transfer&#10;    pass">EasyVolcap — to_cuda (data utils)</option>
+      <option value="setup_model"
+        data-desc="Initializes the CodeFormer face restoration model by loading pretrained weights and configuring the inference pipeline."
+        data-code="def setup_model(self):&#10;    # TODO: initialize CodeFormer model&#10;    pass">sd-forge — setup_model (face restoration)</option>
+      <option value="edismax"
+        data-desc="Implements eDisMax query parser for the searcharray library, handling term boosting, phrase proximity, and field weighting."
+        data-code="def edismax(self, query_str, qf=None, mm=None, pf=None, ps=None, tie=None):&#10;    # TODO: implement eDisMax query parser&#10;    pass">searcharray — edismax (query parsing)</option>
+    </select>
+  </div>
+
+  <!-- ═══ SIDE-BY-SIDE PANES ═══ -->
+  <div class="panes">
+    <div class="pane traver">
+      <div class="pane-header">
+        <span class="label-traver">Baseline tutor (vanilla TRAVER, no McMiner)</span>
+        <span class="badge">NO MISCONCEPTION MINING</span>
+      </div>
+      <div class="transcript" id="pane-traver">
+        <div class="empty-state">
+          ▶ Press <strong>Start Auto-Play</strong> to begin.<br>
+          Left = baseline tutor. Right = McMiner-in-the-Loop.
+        </div>
+      </div>
+    </div>
+    <div class="pane mcminer">
+      <div class="pane-header">
+        <span class="label-mcminer">+ McMiner-in-the-Loop</span>
+        <span class="badge">MISCONCEPTION DETECTION</span>
+      </div>
+      <div class="transcript" id="pane-mcminer">
+        <div class="empty-state">
+          ▶ Press <strong>Start Auto-Play</strong> to begin.<br>
+          Left = baseline tutor. Right = McMiner-in-the-Loop.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ CONTROLS BAR ═══ -->
+  <div class="controls">
+    <button class="btn" id="startBtn" disabled>▶ Start Auto-Play</button>
+    <button class="btn secondary" id="pauseBtn" disabled>⏸ Pause</button>
+    <button class="btn secondary" id="resetBtn">↻ Reset</button>
+    <div class="rounds-label">
+      Rounds
+      <select id="maxRoundsSelect">
+        <option value="4">4</option>
+        <option value="6">6</option>
+        <option value="8" selected>8</option>
+      </select>
+    </div>
+    <span class="latency-display" id="latencyDisplay"></span>
+  </div>
+
+  <!-- ═══ SESSION INFO ═══ -->
+  <div class="session-info">
+    <div class="info-group">
+      <span class="info-header">TRAVER</span>
+      <span class="info-item">Round: <span id="infoRoundT">0</span></span>
+      <span class="info-item">Turns: <span id="infoTurnsT">0</span></span>
+      <span class="info-item">API Calls: <span id="infoAPICallsT">0</span></span>
+    </div>
+    <div class="info-divider"></div>
+    <div class="info-group">
+      <span class="info-header">McMiner-TRAVER</span>
+      <span class="info-item">Round: <span id="infoRoundM">0</span></span>
+      <span class="info-item">Turns: <span id="infoTurnsM">0</span></span>
+      <span class="info-item">API Calls: <span id="infoAPICallsM">0</span></span>
+      <span class="info-item">Misconceptions: <span id="infoMisconceptions">0</span></span>
+    </div>
+    <div class="info-divider"></div>
+    <div class="info-group">
+      <span class="info-header">API Status</span>
+      <span class="api-row"><span class="api-dot" id="hfDot"></span> HuggingFace <span class="api-badge" id="hfStatus">Idle</span></span>
+      <span class="api-row"><span class="api-dot" id="geminiDot"></span> Gemini <span class="api-badge" id="geminiStatus">Idle</span></span>
+    </div>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <div class="footer">
+    McMiner-TRAVER Semi-Live Demo · CSEN-346-Sp26 Group 2 · Santa Clara University
+  </div>
+
+</div>
+
+<script>
+/* ╔══════════════════════════════════════════════════════════════════════╗
+   ║  McMiner-TRAVER Semi-Live Auto-Play — Direct Browser API Calls     ║
+   ║  No backend server needed. Calls HuggingFace + Gemini directly.    ║
+   ╚══════════════════════════════════════════════════════════════════════╝ */
+
+// ── Model & API Config ──────────────────────────────────────────────
+const TUTOR_MODEL   = 'meta-llama/Llama-3.1-70B-Instruct';
+const STUDENT_MODEL = 'Qwen/Qwen2.5-7B-Instruct';
+const CODEGEN_MODEL = 'meta-llama/Llama-3.1-8B-Instruct';
+const HF_API_URL    = 'https://router.huggingface.co/v1/chat/completions';
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+
+const END_OF_MESSAGE = '<EOS>';
+const STOP_LLAMA3 = ['<|end_of_text|>', '<|eot_id|>'];
+
+// ── Prompt Templates (EXACT copies from server.py) ──────────────────
+
+const TUTOR_SYSTEM_TEMPLATE = `You are a college tutor specializing in Python programming.
+
+You are guiding a student to complete the {function_name} function from a repository:
+\`\`\`Python
+{input_code}
+\`\`\`
+
+{context_section}
+
+Goal Description:
+Your goal is to:
+- Assess the student's current knowledge level through conversation;
+- Provide the necessary knowledge and scaffold their understanding;
+- Lead the student step-by-step to successfully complete the {function_name} function.
+You may use the following strategies during the conversation:
+- Assess knowledge level
+- Describe a dependency path
+- Offer a solution step
+- Explain concepts with code snippets
+- Ask questions or follow-up questions
+- Provide feedback with elaborations or confirmations.
+
+Behavior Guidelines:
+- Start with a friendly greeting.
+- Limit each response to one action (e.g., ask one question, describe one dependency path, or explain one solution step).
+- Keep your response concise (do not exceed 60 words at a time).`;
+
+const STUDENT_SYSTEM_TEMPLATE = `You are a college student who is learning Python programming.
+
+You are going to complete the following {function_name} function from a repository:
+\`\`\`Python
+{input_code}
+\`\`\`
+
+{context_section}
+
+[Behavior Guidelines] Please take your own level of knowledge in response to the tutor. This may involve one of the following acts: saying a greeting, answering or asking questions, and recalling previously learned knowledge. If you don't know or understand something, respond accordingly and ask for clarification. Ask only one question at a time. Don't speak more than 50 words at a time.`;
+
+const MCMINER_PROMPT = `You are an expert programming instructor. Analyze this student code for
+programming MISCONCEPTIONS (fundamental misunderstandings, NOT just bugs/typos).
+
+Student's code:
+\`\`\`python
+{code}
+\`\`\`
+
+If you find a misconception, respond:
+<misconception>
+<description>Concise description</description>
+<explanation>What the student believes vs reality</explanation>
+<confidence>high/medium/low</confidence>
+</misconception>
+
+If no misconception: <misconception>NONE</misconception>`;
+
+
+// ── Two Parallel States ─────────────────────────────────────────────
+
+let stateT = {  // TRAVER only
+  conversation: [], round: 0, apiCalls: 0, running: false, paused: false,
+  currentMisconception: null, allMisconceptions: [],
+};
+let stateM = {  // McMiner-TRAVER
+  conversation: [], round: 0, apiCalls: 0, running: false, paused: false,
+  currentMisconception: null, allMisconceptions: [],
+};
+let shared = {
+  functionName: '', inputCode: '', description: '',
+  maxRounds: 8, running: false, paused: false,
+};
+
+
+// ── API Key Management ──────────────────────────────────────────────
+
+function loadKeys() {
+  const hfKey = sessionStorage.getItem('hf_key') || '';
+  const geminiKey = sessionStorage.getItem('gemini_key') || '';
+  document.getElementById('hfKeyInput').value = hfKey;
+  document.getElementById('geminiKeyInput').value = geminiKey;
+  updateKeyStatus();
+}
+
+function saveKeys() {
+  const hfKey = document.getElementById('hfKeyInput').value.trim();
+  const geminiKey = document.getElementById('geminiKeyInput').value.trim();
+  if (hfKey) sessionStorage.setItem('hf_key', hfKey);
+  if (geminiKey) sessionStorage.setItem('gemini_key', geminiKey);
+  updateKeyStatus();
+}
+
+function updateKeyStatus() {
+  const hfKey = sessionStorage.getItem('hf_key');
+  const geminiKey = sessionStorage.getItem('gemini_key');
+  const statusEl = document.getElementById('keyStatus');
+  const startBtn = document.getElementById('startBtn');
+
+  if (hfKey) {
+    statusEl.textContent = '✅ Keys saved to session';
+    statusEl.className = 'key-status saved';
+    startBtn.disabled = false;
+  } else {
+    statusEl.textContent = '⚠ HuggingFace key required to start';
+    statusEl.className = 'key-status missing';
+    startBtn.disabled = true;
+  }
+}
+
+
+// ── Direct API Call Helpers ──────────────────────────────────────────
+
+async function callHF(model, messages, maxTokens, temperature) {
+  const hfKey = sessionStorage.getItem('hf_key');
+  if (!hfKey) throw new Error('HuggingFace API key not set. Please configure your key above.');
+
+  const resp = await fetch(HF_API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${hfKey}`,
+    },
+    body: JSON.stringify({
+      model: model,
+      messages: messages,
+      max_tokens: maxTokens,
+      temperature: temperature,
+      top_p: 0.95,
+      stop: STOP_LLAMA3,
+    }),
+  });
+
+  const data = await resp.json();
+  if (data.error) throw new Error(typeof data.error === 'string' ? data.error : JSON.stringify(data.error));
+  return data.choices[0].message.content.trim();
+}
+
+async function callGemini(prompt) {
+  const geminiKey = sessionStorage.getItem('gemini_key');
+  if (!geminiKey) throw new Error('Gemini API key not set. Please configure your key above.');
+
+  const resp = await fetch(`${GEMINI_API_URL}?key=${geminiKey}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+    }),
+  });
+
+  const data = await resp.json();
+  if (data.error) throw new Error(data.error.message || JSON.stringify(data.error));
+  return data.candidates[0].content.parts[0].text;
+}
+
+
+// ── Response Cleaning (matching server.py) ───────────────────────────
+
+function cleanResponse(text, role) {
+  let t = text.trim();
+  // Remove [role]: prefix
+  t = t.replace(/^\s*\[.*?]:/, '').trim();
+  // Remove "tutor:" or "student:" prefix
+  t = t.replace(new RegExp(`^\\s*${role}\\s*:`, 'i'), '').trim();
+  // Remove stop tokens
+  t = t.replace(/<\|end_of_text\|>|<\|eot_id\|>/g, '').trim();
+  // Truncate at <EOS>
+  const eosIdx = t.indexOf('<EOS>');
+  if (eosIdx !== -1) t = t.substring(0, eosIdx).trim();
+  return t;
+}
+
+
+// ── Misconception Formatting (exact copy from server.py) ─────────────
+
+function formatMisconception(roundIdx, description) {
+  return (
+    '\n\n[MISCONCEPTION FEEDBACK]\n' +
+    `The student's latest code attempt (after round ${roundIdx}) shows the following misconception. ` +
+    'Address this directly in your next response:\n\n' +
+    `- ${description}\n` +
+    '[END MISCONCEPTION FEEDBACK]'
+  );
+}
+
+
+// ── McMiner Response Parsing (matching server.py regex) ──────────────
+
+function parseMcMinerResponse(raw) {
+  const descMatch = raw.match(/<description>([\s\S]*?)<\/description>/);
+  if (descMatch && !raw.includes('NONE')) {
+    const explanationMatch = raw.match(/<explanation>([\s\S]*?)<\/explanation>/);
+    const confidenceMatch = raw.match(/<confidence>([\s\S]*?)<\/confidence>/);
+    return {
+      detected: true,
+      description: descMatch[1].trim(),
+      explanation: explanationMatch ? explanationMatch[1].trim() : '',
+      confidence: confidenceMatch ? confidenceMatch[1].trim() : 'medium',
+      raw: raw,
+    };
+  }
+  return { detected: false };
+}
+
+
+// ── Tutor Call (mirrors server.py _handle_tutor) ─────────────────────
+
+async function doCallTutor(convState) {
+  const contextSection = shared.description ? `Function description: ${shared.description}` : '';
+
+  let systemPrompt = TUTOR_SYSTEM_TEMPLATE
+    .replace(/\{function_name\}/g, shared.functionName)
+    .replace(/\{input_code\}/g, shared.inputCode || `def ${shared.functionName}(...):\n    # TODO: implement`)
+    .replace(/\{context_section\}/g, contextSection);
+
+  // Inject misconception if present
+  if (convState.currentMisconception) {
+    systemPrompt += formatMisconception(convState.round, convState.currentMisconception);
+  }
+
+  // Build messages (matching VLLMChat.query message construction)
+  const messages = [{ role: 'user', content: systemPrompt }];
+
+  for (const turn of convState.conversation) {
+    if ('tutor' in turn) {
+      messages.push({ role: 'assistant', content: turn.tutor + END_OF_MESSAGE });
+    } else if ('student' in turn) {
+      if (messages[messages.length - 1].role === 'user') {
+        messages[messages.length - 1].content += `\n\n[student]: ${turn.student}${END_OF_MESSAGE}`;
+      } else {
+        messages.push({ role: 'user', content: `[student]: ${turn.student}${END_OF_MESSAGE}` });
+      }
+    }
+  }
+
+  // Append "Now you speak, tutor"
+  if (messages[messages.length - 1].role === 'user') {
+    messages[messages.length - 1].content += `\n\nNow you speak, tutor.${END_OF_MESSAGE}`;
+  } else {
+    messages.push({ role: 'user', content: `Now you speak, tutor.${END_OF_MESSAGE}` });
+  }
+
+  const raw = await callHF(TUTOR_MODEL, messages, 300, 0.4);
+  return cleanResponse(raw, 'tutor');
+}
+
+
+// ── Student Call (mirrors server.py _handle_student) ─────────────────
+
+async function doCallStudent(convState) {
+  const contextSection = shared.description ? `Function description: ${shared.description}` : '';
+
+  const systemPrompt = STUDENT_SYSTEM_TEMPLATE
+    .replace(/\{function_name\}/g, shared.functionName)
+    .replace(/\{input_code\}/g, shared.inputCode || `def ${shared.functionName}(...):\n    # TODO: implement`)
+    .replace(/\{context_section\}/g, contextSection);
+
+  // Build messages (matching VLLMChat.query for student agent)
+  const messages = [{ role: 'user', content: systemPrompt }];
+
+  for (const turn of convState.conversation) {
+    if ('student' in turn) {
+      messages.push({ role: 'assistant', content: turn.student + END_OF_MESSAGE });
+    } else if ('tutor' in turn) {
+      if (messages[messages.length - 1].role === 'user') {
+        messages[messages.length - 1].content += `\n\n[tutor]: ${turn.tutor}${END_OF_MESSAGE}`;
+      } else {
+        messages.push({ role: 'user', content: `[tutor]: ${turn.tutor}${END_OF_MESSAGE}` });
+      }
+    }
+  }
+
+  // Append "Now you speak, student"
+  if (messages[messages.length - 1].role === 'user') {
+    messages[messages.length - 1].content += `\n\nNow you speak, student.${END_OF_MESSAGE}`;
+  } else {
+    messages.push({ role: 'user', content: `Now you speak, student.${END_OF_MESSAGE}` });
+  }
+
+  const raw = await callHF(STUDENT_MODEL, messages, 300, 0.4);
+  return cleanResponse(raw, 'student');
+}
+
+
+// ── McMiner Pipeline (mirrors server.py _handle_misconception) ───────
+
+async function doCallMcMinerPipeline(convState) {
+  // Step 1: Codegen — generate diagnostic code via Llama 8B
+  let codegenPrompt = `Based on the following tutoring conversation about implementing the \`${shared.functionName}\` function, generate the student's current best code attempt.\n\nFunction description: ${shared.description}\n\nConversation:\n`;
+
+  const recentTurns = convState.conversation.slice(-8);
+  for (const turn of recentTurns) {
+    if ('tutor' in turn) {
+      codegenPrompt += `Tutor: ${turn.tutor.substring(0, 200)}\n`;
+    } else if ('student' in turn) {
+      codegenPrompt += `Student: ${turn.student.substring(0, 200)}\n`;
+    }
+  }
+
+  const lastStudent = convState.conversation.filter(t => 'student' in t).pop();
+  const studentText = lastStudent ? lastStudent.student : '';
+  if (studentText) {
+    codegenPrompt += `\nStudent's latest code:\n\`\`\`python\n${studentText}\n\`\`\`\n`;
+  }
+
+  codegenPrompt += `\nGenerate the complete implementation of \`${shared.functionName}\` based on the student's understanding. Only output Python code.`;
+
+  // Inject unique seed to bust cache (matching server.py)
+  const seed = `\n[seed:${Math.random().toString(36).substring(2, 10)}]`;
+  const codegenMessages = [{ role: 'user', content: codegenPrompt + seed }];
+
+  const generatedCode = await callHF(CODEGEN_MODEL, codegenMessages, 1024, 0.4);
+
+  // Step 2: McMiner — run Gemini on generated code
+  const mcminerPrompt = MCMINER_PROMPT.replace('{code}', generatedCode);
+  const mcminerRaw = await callGemini(mcminerPrompt);
+
+  // Step 3: Parse response
+  const result = parseMcMinerResponse(mcminerRaw);
+  result.generated_code = generatedCode.substring(0, 500);
+  return result;
+}
+
+
+// ── Task Picker ──────────────────────────────────────────────────────
+
+document.getElementById('liveFunctionSelect').addEventListener('change', (e) => {
+  if (shared.running) return;
+  const opt = e.target.selectedOptions[0];
+  shared.functionName = opt.value;
+  shared.description = opt.dataset.desc || '';
+  shared.inputCode = opt.dataset.code || '';
+});
+
+// Init from default selection
+(function initTask() {
+  const opt = document.getElementById('liveFunctionSelect').selectedOptions[0];
+  shared.functionName = opt.value;
+  shared.description = opt.dataset.desc || '';
+  shared.inputCode = opt.dataset.code || '';
+})();
+
+
+// ── Controls ─────────────────────────────────────────────────────────
+
+document.getElementById('startBtn').addEventListener('click', startAutoPlay);
+document.getElementById('pauseBtn').addEventListener('click', togglePause);
+document.getElementById('resetBtn').addEventListener('click', resetSession);
+
+function resetSession() {
+  stateT = {
+    conversation: [], round: 0, apiCalls: 0, running: false, paused: false,
+    currentMisconception: null, allMisconceptions: [],
+  };
+  stateM = {
+    conversation: [], round: 0, apiCalls: 0, running: false, paused: false,
+    currentMisconception: null, allMisconceptions: [],
+  };
+  shared.running = false;
+  shared.paused = false;
+
+  document.getElementById('pane-traver').innerHTML = `
+    <div class="empty-state">
+      ▶ Press <strong>Start Auto-Play</strong> to begin.<br>
+      Left = baseline tutor. Right = McMiner-in-the-Loop.
+    </div>
+  `;
+  document.getElementById('pane-mcminer').innerHTML = `
+    <div class="empty-state">
+      ▶ Press <strong>Start Auto-Play</strong> to begin.<br>
+      Left = baseline tutor. Right = McMiner-in-the-Loop.
+    </div>
+  `;
+
+  document.getElementById('startBtn').disabled = !sessionStorage.getItem('hf_key');
+  document.getElementById('startBtn').textContent = '▶ Start Auto-Play';
+  document.getElementById('pauseBtn').disabled = true;
+  document.getElementById('pauseBtn').textContent = '⏸ Pause';
+  document.getElementById('latencyDisplay').textContent = '';
+  document.getElementById('liveFunctionSelect').disabled = false;
+
+  updateInfo();
+  resetAPIStatus();
+}
+
+function togglePause() {
+  shared.paused = !shared.paused;
+  document.getElementById('pauseBtn').textContent = shared.paused ? '▶ Resume' : '⏸ Pause';
+}
+
+
+// ── Main Auto-Play Loop (parallel) ───────────────────────────────────
+
+async function startAutoPlay() {
+  if (shared.running) return;
+
+  resetSession();
+  shared.running = true;
+  shared.maxRounds = parseInt(document.getElementById('maxRoundsSelect').value);
+
+  document.getElementById('startBtn').disabled = true;
+  document.getElementById('startBtn').textContent = '⏳ Running...';
+  document.getElementById('pauseBtn').disabled = false;
+  document.getElementById('liveFunctionSelect').disabled = true;
+
+  // Remove welcome messages
+  const welcomeT = document.querySelector('#pane-traver .empty-state');
+  if (welcomeT) welcomeT.remove();
+  const welcomeM = document.querySelector('#pane-mcminer .empty-state');
+  if (welcomeM) welcomeM.remove();
+
+  // Run both loops in parallel
+  const traverLoop = runLoop(stateT, 'pane-traver', false);   // no McMiner
+  const mcminerLoop = runLoop(stateM, 'pane-mcminer', true);  // with McMiner
+
+  await Promise.all([traverLoop, mcminerLoop]);
+
+  // Session complete
+  shared.running = false;
+  document.getElementById('startBtn').disabled = !sessionStorage.getItem('hf_key');
+  document.getElementById('startBtn').textContent = '▶ Restart';
+  document.getElementById('pauseBtn').disabled = true;
+  document.getElementById('liveFunctionSelect').disabled = false;
+}
+
+async function runLoop(convState, paneId, useMcMiner) {
+  appendTurn(paneId, 'system', `🚀 Starting ${useMcMiner ? 'McMiner-TRAVER' : 'TRAVER'} (${shared.maxRounds} rounds)`);
+
+  for (let rnd = 1; rnd <= shared.maxRounds; rnd++) {
+    if (!shared.running) break;
+
+    // Wait while paused
+    while (shared.paused && shared.running) {
+      await sleep(300);
+    }
+    if (!shared.running) break;
+
+    convState.round = rnd;
+    updateInfo();
+    appendTurn(paneId, 'system', `<strong>── Round ${rnd} ──</strong>`);
+
+    // Step 1: Tutor speaks
+    const tutorOk = await callTutorForPane(convState, paneId);
+    if (!tutorOk || !shared.running) break;
+    await sleep(500);
+
+    // Wait while paused
+    while (shared.paused && shared.running) {
+      await sleep(300);
+    }
+    if (!shared.running) break;
+
+    // Step 2: Student responds
+    const studentOk = await callStudentForPane(convState, paneId);
+    if (!studentOk || !shared.running) break;
+    await sleep(500);
+
+    // Step 3: McMiner pipeline (right pane only)
+    if (useMcMiner && shared.running) {
+      while (shared.paused && shared.running) await sleep(300);
+      if (!shared.running) break;
+      await callMcMinerForPane(convState, paneId);
+      await sleep(300);
+    }
+  }
+
+  if (shared.running) {
+    appendTurn(paneId, 'system', `✅ <strong>Complete!</strong> ${convState.round} rounds, ${convState.apiCalls} API calls`);
+  }
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+
+// ── Wrapped API Calls (per-pane) ─────────────────────────────────────
+
+async function callTutorForPane(convState, paneId) {
+  setAPIStatus('hf', 'active', 'Llama 70B...');
+  showTypingInPane(paneId, 'tutor');
+  const t0 = performance.now();
+
+  try {
+    const response = await doCallTutor(convState);
+    const elapsed = ((performance.now() - t0) / 1000).toFixed(1);
+    removeTypingInPane(paneId);
+
+    setAPIStatus('hf', 'success', `${elapsed}s`);
+    convState.conversation.push({ tutor: response });
+    appendTurn(paneId, 'tutor', response);
+    document.getElementById('latencyDisplay').textContent = `Tutor: ${elapsed}s`;
+    convState.apiCalls++;
+    updateInfo();
+    return true;
+
+  } catch (err) {
+    removeTypingInPane(paneId);
+    setAPIStatus('hf', 'error', 'Failed');
+    appendTurn(paneId, 'system', `⚠️ Tutor error: ${escapeHtml(err.message)}`);
+    return false;
+  }
+}
+
+async function callStudentForPane(convState, paneId) {
+  setAPIStatus('hf', 'active', 'Qwen 7B...');
+  showTypingInPane(paneId, 'student');
+  const t0 = performance.now();
+
+  try {
+    const response = await doCallStudent(convState);
+    const elapsed = ((performance.now() - t0) / 1000).toFixed(1);
+    removeTypingInPane(paneId);
+
+    setAPIStatus('hf', 'success', `${elapsed}s`);
+    convState.conversation.push({ student: response });
+    appendTurn(paneId, 'student', response);
+    document.getElementById('latencyDisplay').textContent = `Student: ${elapsed}s`;
+    convState.apiCalls++;
+    updateInfo();
+    return true;
+
+  } catch (err) {
+    removeTypingInPane(paneId);
+    setAPIStatus('hf', 'error', 'Failed');
+    appendTurn(paneId, 'system', `⚠️ Student error: ${escapeHtml(err.message)}`);
+    return false;
+  }
+}
+
+async function callMcMinerForPane(convState, paneId) {
+  setAPIStatus('hf', 'active', 'Llama 8B codegen...');
+  setAPIStatus('gemini', 'active', 'Waiting...');
+  appendTurn(paneId, 'system', '🔬 McMiner pipeline: codegen (Llama 8B) → misconception analysis (Gemini 2.5 Flash)...');
+
+  const t0 = performance.now();
+
+  try {
+    setAPIStatus('hf', 'active', 'Llama 8B codegen...');
+    const result = await doCallMcMinerPipeline(convState);
+    const elapsed = ((performance.now() - t0) / 1000).toFixed(1);
+
+    setAPIStatus('hf', 'success', 'Done');
+    setAPIStatus('gemini', 'success', `${elapsed}s`);
+    convState.apiCalls += 2; // codegen + mcminer
+
+    if (result.detected) {
+      convState.currentMisconception = result.description;
+      convState.allMisconceptions.push({
+        round: convState.round,
+        description: result.description,
+        explanation: result.explanation || '',
+        confidence: result.confidence || 'medium',
+      });
+      appendMcMinerCallout(paneId, convState.round, result.description);
+      appendTurn(paneId, 'system',
+        `<em style="color:#8a93a8">→ Injecting into tutor prompt for R${convState.round + 1}</em>`
+      );
+    } else {
+      convState.currentMisconception = null;
+      appendTurn(paneId, 'system', `✅ No misconception detected (R${convState.round}). Tutor uses original prompt.`);
+    }
+
+    if (result.generated_code) {
+      appendTurn(paneId, 'system', `📄 Diagnostic code (${result.generated_code.length} chars): <code class="inline">${escapeHtml(result.generated_code.substring(0, 80))}...</code>`);
+    }
+
+    updateInfo();
+
+  } catch (err) {
+    setAPIStatus('hf', 'error', 'Failed');
+    setAPIStatus('gemini', 'error', 'Failed');
+    appendTurn(paneId, 'system', `⚠️ McMiner pipeline error: ${escapeHtml(err.message)}`);
+  }
+}
+
+
+// ── UI Helpers ───────────────────────────────────────────────────────
+
+function escapeHtml(s) {
+  if (!s) return '';
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function formatMsg(text) {
+  if (!text) return '';
+  let f = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  f = f.replace(/```(\w*)\n?([\s\S]*?)```/g, (_, lang, code) => `<pre class="code">${code.trim()}</pre>`);
+  f = f.replace(/`([^`]+)`/g, '<code class="inline">$1</code>');
+  f = f.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  f = f.replace(/\n/g, '<br>');
+  return f;
+}
+
+function appendTurn(paneId, type, content) {
+  const container = document.getElementById(paneId);
+  // Remove empty-state if present
+  const welcome = container.querySelector('.empty-state');
+  if (welcome) welcome.remove();
+
+  const div = document.createElement('div');
+  if (type === 'system') {
+    div.className = 'turn system';
+    div.innerHTML = content;
+  } else {
+    const roleLabel = type === 'tutor' ? '🎓 TUTOR (Llama 70B)' : '👩‍💻 STUDENT (Qwen 7B)';
+    div.className = `turn ${type}`;
+    div.innerHTML = `<div class="role">${roleLabel}</div>${formatMsg(content)}`;
+  }
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function showTypingInPane(paneId, role) {
+  const container = document.getElementById(paneId);
+  const div = document.createElement('div');
+  div.className = `turn ${role}`;
+  div.id = `typing-${paneId}`;
+  const label = role === 'tutor' ? '🎓 TUTOR' : '👩‍💻 STUDENT';
+  div.innerHTML = `<div class="role">${label}</div><div class="typing-indicator"><span></span><span></span><span></span></div>`;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function removeTypingInPane(paneId) {
+  const el = document.getElementById(`typing-${paneId}`);
+  if (el) el.remove();
+}
+
+function appendMcMinerCallout(paneId, round, description) {
+  const container = document.getElementById(paneId);
+  const div = document.createElement('div');
+  div.className = 'mcminer-callout';
+  div.innerHTML = `<div class="title">🔴 Misconception Detected (Round ${round})</div><div class="desc">${escapeHtml(description)}</div>`;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function updateInfo() {
+  document.getElementById('infoRoundT').textContent = stateT.round;
+  document.getElementById('infoTurnsT').textContent = stateT.conversation.length;
+  document.getElementById('infoAPICallsT').textContent = stateT.apiCalls;
+  document.getElementById('infoRoundM').textContent = stateM.round;
+  document.getElementById('infoTurnsM').textContent = stateM.conversation.length;
+  document.getElementById('infoAPICallsM').textContent = stateM.apiCalls;
+  document.getElementById('infoMisconceptions').textContent = stateM.allMisconceptions.length;
+}
+
+function setAPIStatus(api, status, label) {
+  const dot = document.getElementById(api === 'hf' ? 'hfDot' : 'geminiDot');
+  const badge = document.getElementById(api === 'hf' ? 'hfStatus' : 'geminiStatus');
+  dot.className = `api-dot ${status}`;
+  badge.textContent = label;
+}
+
+function resetAPIStatus() {
+  setAPIStatus('hf', '', 'Idle');
+  setAPIStatus('gemini', '', 'Idle');
+}
+
+
+// ── Init ─────────────────────────────────────────────────────────────
+
+loadKeys();
+</script>
+</body>
+</html>
